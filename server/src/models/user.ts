@@ -1,4 +1,5 @@
 import { DataTypes, Sequelize, Model, Optional } from "sequelize";
+import bcrypt from "bcrypt";
 
 interface IUser {
   id: number;
@@ -15,6 +16,11 @@ export class User extends Model<IUser, ICreateUser> implements IUser {
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
+
+  public async setPassword(password: string) {
+    const saltRounds = 10;
+    this.password = await bcrypt.hash(password, saltRounds);
+  }
 }
 
 export function UserFactory(sequelize: Sequelize): typeof User {
@@ -37,6 +43,16 @@ export function UserFactory(sequelize: Sequelize): typeof User {
     {
       tableName: "users",
       sequelize,
+      hooks: {
+        beforeCreate: async (user: User) => {
+          await user.setPassword(user.password);
+        },
+        beforeUpdate: async (user: User) => {
+          if (user.changed("password")) {
+            await user.setPassword(user.password);
+          }
+        },
+      },
     }
   );
 

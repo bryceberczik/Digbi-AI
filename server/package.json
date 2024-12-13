@@ -10,15 +10,19 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "bcrypt": "^5.1.1",
     "cors": "^2.8.5",
     "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2",
     "openai": "^4.76.3",
     "pg": "^8.13.1",
     "sequelize": "^6.37.5"
   },
   "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.0",
+    "@types/jsonwebtoken": "^9.0.7",
     "dotenv": "^16.4.7",
     "nodemon": "^3.1.9",
     "typescript": "^5.7.2"
