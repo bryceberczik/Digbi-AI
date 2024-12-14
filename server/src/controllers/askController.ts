@@ -1,8 +1,10 @@
-import { type Request, type Response } from 'express';
-import { OpenAI } from '@langchain/openai';
-import { PromptTemplate } from '@langchain/core/prompts';
-import { StructuredOutputParser } from 'langchain/output_parsers';
-import dotenv from 'dotenv';
+import { type Request, type Response } from "express";
+import { OpenAI } from "@langchain/openai";
+import { PromptTemplate } from "@langchain/core/prompts";
+import { StructuredOutputParser } from "langchain/output_parsers";
+import fs from "fs";
+import path from "path";
+import dotenv from "dotenv";
 
 dotenv.config();
 
@@ -29,12 +31,15 @@ const formatInstructions = parser.getFormatInstructions();
 const promptTemplate = new PromptTemplate({
   template:
     "You are a expert with json data and will not answer to anything that isnt about the json data you are provided. Your goal is to find patterns in the json data and understand and sort it thoroughly as prompted. If the question is not related to data, do not answer.\n{format_instructions}\n{question}",
-  inputVariables: ["question"],
+  inputVariables: ["question", "json_data"],
   partialVariables: { format_instructions: formatInstructions },
 });
 
-const formatPrompt = async (question: string): Promise<string> => {
-  return await promptTemplate.format({ question });
+const formatPrompt = async (
+  question: string,
+  jsonData: string
+): Promise<string> => {
+  return await promptTemplate.format({ question, json_data: jsonData });
 };
 
 const promptFunc = async (input: string): Promise<string> => {
@@ -60,6 +65,17 @@ const parseResponse = async (
   }
 };
 
+const readJsonFiles = (folderPath: string) => {
+  const files = fs.readdirSync(folderPath);
+  const jsonFiles = files.filter((file) => file.endsWith(".json"));
+
+  return jsonFiles.map((file) => {
+    const filePath = path.join(folderPath, file);
+    const content = fs.readFileSync(filePath, "utf-8");
+    return JSON.parse(content);
+  });
+};
+
 export const askQuestion = async (
   req: Request,
   res: Response
@@ -68,21 +84,33 @@ export const askQuestion = async (
 
   try {
     if (!userQuestion) {
-      res
-        .status(400)
-        .json({
-          question: null,
-          response: "Please provide a question in the request body.",
-          formattedResponse: null,
-        });
+      res.status(400).json({
+        question: null,
+        response: "Please provide a question in the request body.",
+        formattedResponse: null,
+      });
       return;
     }
 
-    const formattedPrompt: string = await formatPrompt(userQuestion);
+    const jsonDataArray = readJsonFiles(path.join(__dirname, "db"));
+
+    if (jsonDataArray.length === 0) {
+      res.status(404).json({
+        question: userQuestion,
+        response: "No JSON files found in db folder.",
+        formattedResponse: null,
+      });
+      return;
+    }
+
+    const jsonData = JSON.stringify(jsonDataArray[0]);
+
+    const formattedPrompt: string = await formatPrompt(userQuestion, jsonData);
     const rawResponse: string = await promptFunc(formattedPrompt);
     const result: { [key: string]: string } = await parseResponse(rawResponse);
     res.json({
       question: userQuestion,
+      jsonData: jsonData,
       prompt: formattedPrompt,
       response: rawResponse,
       formattedResponse: result,
@@ -91,13 +119,11 @@ export const askQuestion = async (
     if (error instanceof Error) {
       console.error("Error:", error.message);
     }
-    res
-      .status(500)
-      .json({
-        question: userQuestion,
-        prompt: null,
-        response: "Internal Server Error",
-        formattedResponse: null,
-      });
+    res.status(500).json({
+      question: userQuestion,
+      prompt: null,
+      response: "Internal Server Error",
+      formattedResponse: null,
+    });
   }
 };
