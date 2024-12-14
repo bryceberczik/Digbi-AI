@@ -92,12 +92,12 @@ export const askQuestion = async (
       return;
     }
 
-    const jsonDataArray = readJsonFiles(path.join(__dirname, "db"));
+    const jsonDataArray = readJsonFiles(path.join(__dirname, "../../db/json"));
 
     if (jsonDataArray.length === 0) {
       res.status(404).json({
         question: userQuestion,
-        response: "No JSON files found in db folder.",
+        response: "No JSON files found in the db/json folder.",
         formattedResponse: null,
       });
       return;
