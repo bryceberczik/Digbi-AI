@@ -3,6 +3,7 @@ import bcrypt from "bcrypt";
 
 interface IUser {
   id: string;
+  username: string;
   email: string;
   password: string;
 }
@@ -11,6 +12,7 @@ interface ICreateUser extends Optional<IUser, "id"> {}
 
 export class User extends Model<IUser, ICreateUser> implements IUser {
   public id!: string;
+  public username!: string;
   public email!: string;
   public password!: string;
 
@@ -30,6 +32,10 @@ export function UserFactory(sequelize: Sequelize): typeof User {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
+      },
+      username: {
+        type: DataTypes.STRING,
+        allowNull: false,
       },
       email: {
         type: DataTypes.STRING,
