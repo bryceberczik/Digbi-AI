@@ -30,7 +30,7 @@ const formatInstructions = parser.getFormatInstructions();
 
 const promptTemplate = new PromptTemplate({
   template:
-    "You are a expert with json data and will not answer to anything that isnt about the json data you are provided. Your goal is to find patterns in the json data and understand and sort it thoroughly as prompted. If the question is not related to data, do not answer.\n{format_instructions}\n{question}",
+    "You are a expert with json data and will not answer to anything that isnt about the json data you are provided. Your goal is to find patterns in the json data and understand and sort it thoroughly as prompted. If the question is not related to data, do not answer.\n{format_instructions}\nHere is the JSON data: {json_data}\n{question}",
   inputVariables: ["question", "json_data"],
   partialVariables: { format_instructions: formatInstructions },
 });
