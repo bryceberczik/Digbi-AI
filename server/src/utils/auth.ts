@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from "express";
+import { Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 
 interface JwtPayload {
@@ -6,7 +6,7 @@ interface JwtPayload {
 }
 
 export const authenticateToken = (
-  req: Request,
+  req: any,
   res: Response,
   next: NextFunction
 ) => {
@@ -16,7 +16,7 @@ export const authenticateToken = (
     const token = authHeader.split(" ")[1];
     const secretKey = process.env.JWT_SECRET_KEY || "";
 
-    jwt.verify(token, secretKey, (err, user) => {
+    jwt.verify(token, secretKey, (err: any, user: any) => {
       if (err) {
         return res.sendStatus(403);
       }

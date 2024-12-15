@@ -5,4 +5,4 @@ const router = express.Router();
 
 router.use("/ask/:id", askQuestion);
 
-export default router;
+export { router as askRouter };
