@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { File } from "../models";
 import fs from "fs";
 
-export const getFiles = async (req: Request, res: Response) => {
+export const getFiles = async (_req: Request, res: Response) => {
   try {
     const files = await File.findAll({
       attributes: ["id", "fileName"],
