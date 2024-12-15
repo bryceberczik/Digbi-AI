@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { File } from "../models";
+import fs from "fs";
 
 export const uploadFile = async (req: Request, res: any) => {
   if (!req.file) {
@@ -7,11 +8,15 @@ export const uploadFile = async (req: Request, res: any) => {
   }
 
   try {
+    const fileContent = fs.readFileSync(req.file.path, "utf-8");
+
+    const parsedContent = JSON.parse(fileContent);
+
     const newFile = await File.create({
       userId: req.body.userId,
       fileName: req.file.originalname,
       fileSize: req.file.size,
-      content: JSON.parse(req.file.buffer.toString()),
+      content: parsedContent,
       uploadedAt: new Date(),
     });
 
