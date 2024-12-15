@@ -7,10 +7,10 @@ export const getFiles = async (req: Request, res: Response) => {
     const files = await File.findAll({
       attributes: ["id", "fileName"],
     });
-    return files;
+    res.json(files);
   } catch (error) {
     console.error("Error fetching file metadata:", error);
-    throw error;
+    res.status(500).json({ error: "Failed to fetch file metadata." });
   }
 };
 
@@ -34,7 +34,7 @@ export const uploadFile = async (req: Request, res: any) => {
 
     res
       .status(200)
-      .json({ message: "File uploaded successfully", file: newFile });
+      .json({ message: "File Uploaded Successfully", file: newFile });
   } catch (error) {
     console.error(error);
     res.status(500).send("Server Error");
