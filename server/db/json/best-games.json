@@ -1,0 +1,93 @@
+[
+    {
+      "id": 1,
+      "name": "The Legend of Zelda: Breath of the Wild",
+      "platforms": ["Nintendo Switch", "Wii U"],
+      "releaseYear": 2017,
+      "genre": ["Action", "Adventure"],
+      "rating": 9.9,
+      "description": "An expansive open-world adventure where players can explore, fight, and solve puzzles in a beautiful rendition of Hyrule."
+    },
+    {
+      "id": 2,
+      "name": "The Witcher 3: Wild Hunt",
+      "platforms": ["PC", "PlayStation 4", "Xbox One", "Nintendo Switch"],
+      "releaseYear": 2015,
+      "genre": ["RPG", "Action"],
+      "rating": 9.8,
+      "description": "A deep and engaging role-playing game with a rich story, complex characters, and breathtaking visuals."
+    },
+    {
+      "id": 3,
+      "name": "Red Dead Redemption 2",
+      "platforms": ["PC", "PlayStation 4", "Xbox One"],
+      "releaseYear": 2018,
+      "genre": ["Action", "Adventure"],
+      "rating": 9.7,
+      "description": "An epic tale of life in America’s unforgiving heartland with unmatched attention to detail and storytelling."
+    },
+    {
+      "id": 4,
+      "name": "Minecraft",
+      "platforms": ["PC", "Xbox", "PlayStation", "Nintendo Switch", "Mobile"],
+      "releaseYear": 2011,
+      "genre": ["Sandbox", "Survival"],
+      "rating": 9.6,
+      "description": "A game about placing blocks and going on adventures, offering unparalleled creativity and freedom."
+    },
+    {
+      "id": 5,
+      "name": "Super Mario Odyssey",
+      "platforms": ["Nintendo Switch"],
+      "releaseYear": 2017,
+      "genre": ["Platformer", "Adventure"],
+      "rating": 9.5,
+      "description": "A delightful platformer that takes Mario on a globe-trotting adventure to save Princess Peach."
+    },
+    {
+      "id": 6,
+      "name": "Dark Souls III",
+      "platforms": ["PC", "PlayStation 4", "Xbox One"],
+      "releaseYear": 2016,
+      "genre": ["Action", "RPG"],
+      "rating": 9.4,
+      "description": "A punishing yet rewarding experience with masterful combat mechanics and atmospheric world design."
+    },
+    {
+      "id": 7,
+      "name": "Half-Life 2",
+      "platforms": ["PC", "Xbox", "PlayStation 3"],
+      "releaseYear": 2004,
+      "genre": ["FPS", "Adventure"],
+      "rating": 9.3,
+      "description": "A groundbreaking first-person shooter that redefined the genre with its storytelling and physics-based gameplay."
+    },
+    {
+      "id": 8,
+      "name": "The Elder Scrolls V: Skyrim",
+      "platforms": ["PC", "PlayStation", "Xbox", "Nintendo Switch"],
+      "releaseYear": 2011,
+      "genre": ["RPG", "Adventure"],
+      "rating": 9.2,
+      "description": "An open-world RPG that allows players to live out their fantasies in a sprawling, richly detailed world."
+    },
+    {
+      "id": 9,
+      "name": "Grand Theft Auto V",
+      "platforms": ["PC", "PlayStation", "Xbox"],
+      "releaseYear": 2013,
+      "genre": ["Action", "Adventure"],
+      "rating": 9.1,
+      "description": "An action-packed crime saga with a massive open world to explore and conquer."
+    },
+    {
+      "id": 10,
+      "name": "Portal 2",
+      "platforms": ["PC", "PlayStation", "Xbox"],
+      "releaseYear": 2011,
+      "genre": ["Puzzle", "Adventure"],
+      "rating": 9.0,
+      "description": "A puzzle-platformer with clever mechanics and a hilarious, memorable story."
+    }
+  ]
+  

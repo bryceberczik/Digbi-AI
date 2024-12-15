@@ -1,0 +1,94 @@
+[
+    {
+      "id": 1,
+      "name": "Breaking Bad",
+      "platforms": ["Netflix", "AMC"],
+      "releaseYear": 2008,
+      "genre": ["Crime", "Drama", "Thriller"],
+      "rating": 9.9,
+      "description": "A high school chemistry teacher turned methamphetamine producer navigates the criminal underworld with his former student."
+    },
+    {
+      "id": 2,
+      "name": "Game of Thrones",
+      "platforms": ["HBO"],
+      "releaseYear": 2011,
+      "genre": ["Fantasy", "Drama", "Action"],
+      "rating": 9.8,
+      "description": "Noble families vie for control of the Iron Throne as an ancient enemy rises in the north."
+    },
+    {
+      "id": 3,
+      "name": "The Sopranos",
+      "platforms": ["HBO"],
+      "releaseYear": 1999,
+      "genre": ["Crime", "Drama"],
+      "rating": 9.7,
+      "description": "A New Jersey mob boss struggles to balance his family life with the responsibilities of leading a criminal organization."
+    },
+    {
+      "id": 4,
+      "name": "The Wire",
+      "platforms": ["HBO"],
+      "releaseYear": 2002,
+      "genre": ["Crime", "Drama", "Thriller"],
+      "rating": 9.6,
+      "description": "A gripping look at the interconnected lives of police, criminals, and residents in Baltimore."
+    },
+    {
+      "id": 5,
+      "name": "Stranger Things",
+      "platforms": ["Netflix"],
+      "releaseYear": 2016,
+      "genre": ["Sci-Fi", "Horror", "Drama"],
+      "rating": 9.5,
+      "description": "A group of kids in a small town uncover supernatural mysteries while searching for their missing friend."
+    },
+    {
+      "id": 6,
+      "name": "Sherlock",
+      "platforms": ["BBC", "Netflix"],
+      "releaseYear": 2010,
+      "genre": ["Crime", "Mystery", "Drama"],
+      "rating": 9.4,
+      "description": "A modern adaptation of the famous detective's adventures with his partner, Dr. Watson."
+    },
+    {
+      "id": 7,
+      "name": "The Office (US)",
+      "platforms": ["Peacock", "Netflix"],
+      "releaseYear": 2005,
+      "genre": ["Comedy"],
+      "rating": 9.3,
+      "description": "A mockumentary-style sitcom exploring the daily lives of employees at Dunder Mifflin."
+    },
+    {
+      "id": 8,
+      "name": "Friends",
+      "platforms": ["HBO Max", "Netflix"],
+      "releaseYear": 1994,
+      "genre": ["Comedy", "Romance"],
+      "rating": 9.2,
+      "description": "The hilarious and heartwarming lives of six friends living in New York City."
+    },
+    {
+      "id": 9,
+      "name": "The Mandalorian",
+      "platforms": ["Disney+"]
+  ,
+      "releaseYear": 2019,
+      "genre": ["Sci-Fi", "Action", "Adventure"],
+      "rating": 9.1,
+      "description": "A lone bounty hunter navigates the galaxy while protecting a mysterious child."
+    },
+    {
+      "id": 10,
+      "name": "The Crown",
+      "platforms": ["Netflix"],
+      "releaseYear": 2016,
+      "genre": ["Drama", "Historical"],
+      "rating": 9.0,
+      "description": "A biographical story about the reign of Queen Elizabeth II and the events that shaped the 20th century."
+    }
+  ]
+  
