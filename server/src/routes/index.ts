@@ -1,5 +1,5 @@
 import express from "express";
-import apiRoutes from "./api/askRoutes";
+import apiRoutes from "./api/index"
 import fileRoutes from "./file/fileRoutes";
 
 const router = express.Router();
