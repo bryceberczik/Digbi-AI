@@ -1,4 +1,5 @@
 import { type Request, type Response } from "express";
+import { File } from "../models";
 import { OpenAI } from "@langchain/openai";
 import { PromptTemplate } from "@langchain/core/prompts";
 import { StructuredOutputParser } from "langchain/output_parsers";
@@ -65,21 +66,13 @@ const parseResponse = async (
   }
 };
 
-const readJsonFiles = (folderPath: string) => {
-  const files = fs.readdirSync(folderPath);
-  const jsonFiles = files.filter((file) => file.endsWith(".json"));
-
-  return jsonFiles.map((file) => {
-    const filePath = path.join(folderPath, file);
-    const content = fs.readFileSync(filePath, "utf-8");
-    return JSON.parse(content);
-  });
-};
+// ! EXPORTED FUNCTION ! //
 
 export const askQuestion = async (
   req: Request,
   res: Response
 ): Promise<void> => {
+  const { id } = req.params;
   const userQuestion: string = req.body.question;
 
   try {
@@ -92,24 +85,25 @@ export const askQuestion = async (
       return;
     }
 
-    const jsonDataArray = readJsonFiles(path.join(__dirname, "../../db/json"));
-
-    if (jsonDataArray.length === 0) {
+    const file = await File.findOne({ where: { id } });
+    if (!file) {
       res.status(404).json({
         question: userQuestion,
-        response: "No JSON files found in the db/json folder.",
+        response: "File not found.",
         formattedResponse: null,
       });
       return;
     }
 
-    const jsonData = JSON.stringify(jsonDataArray[0]);
-
-    const formattedPrompt: string = await formatPrompt(userQuestion, jsonData);
+    const filePath = path.join(__dirname, "../../db/json", file.fileName);
+    const jsonData = JSON.parse(fs.readFileSync(filePath, "utf-8"));
+    const formattedPrompt: string = await formatPrompt(userQuestion, JSON.stringify(jsonData));
     const rawResponse: string = await promptFunc(formattedPrompt);
     const result: { [key: string]: string } = await parseResponse(rawResponse);
+
     res.json({
       question: userQuestion,
+      jsonId: id,
       jsonData: jsonData,
       prompt: formattedPrompt,
       response: rawResponse,
