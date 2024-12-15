@@ -96,26 +96,15 @@ export const askQuestion = async (
     }
 
     const filePath = path.join(__dirname, "../../db/json", file.fileName);
-    if (!fs.existsSync(filePath)) {
-      res.status(404).json({
-        question: userQuestion,
-        response: "JSON file not found on server.",
-        formattedResponse: null,
-      });
-      return;
-    }
-
     const jsonData = JSON.parse(fs.readFileSync(filePath, "utf-8"));
-    const formattedPrompt: string = await formatPrompt(
-      userQuestion,
-      JSON.stringify(jsonData)
-    );
+    const formattedPrompt: string = await formatPrompt(userQuestion, JSON.stringify(jsonData));
     const rawResponse: string = await promptFunc(formattedPrompt);
     const result: { [key: string]: string } = await parseResponse(rawResponse);
 
     res.json({
       question: userQuestion,
-      jsonData,
+      jsonId: id,
+      jsonData: jsonData,
       prompt: formattedPrompt,
       response: rawResponse,
       formattedResponse: result,
