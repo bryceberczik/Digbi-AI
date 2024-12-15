@@ -53,6 +53,7 @@ export function FileFactory(sequelize: Sequelize): typeof File {
     {
       tableName: "json_files",
       sequelize,
+      timestamps: false,
     }
   );
 
