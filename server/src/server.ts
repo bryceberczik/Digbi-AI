@@ -1,9 +1,8 @@
 import cors from "cors";
 import express from "express";
-import path from "path";
 import sequelize from "./config/connection";
-import dotenv from "dotenv";
 import routes from "./routes/index";
+import dotenv from "dotenv";
 
 dotenv.config();
 
