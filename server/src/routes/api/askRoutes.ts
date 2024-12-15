@@ -3,6 +3,6 @@ import { askQuestion } from "../../controllers/askController";
 
 const router = express.Router();
 
-router.use("/ask:id", askQuestion);
+router.use("/ask/:id", askQuestion);
 
 export default router;
