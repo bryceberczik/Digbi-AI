@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { File } from "../models";
 
-export const uploadFile = async (req: Request & { file?: Express.Multer.File }, res: Response) => {
+export const uploadFile = async (req: Request, res: Response) => {
   if (!req.file) {
     return res.status(400).send("No file uploaded.");
   }

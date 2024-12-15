@@ -20,7 +20,7 @@ const fileFilter = (
   if (file.mimetype === "application/json") {
     cb(null, true);
   } else {
-    cb(new Error("Only JSON files are allowed") as any, false);
+    cb(new Error("Only JSON files are allowed.") as any, false);
   }
 };
 
