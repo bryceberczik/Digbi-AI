@@ -2,6 +2,18 @@ import { Request, Response } from "express";
 import { File } from "../models";
 import fs from "fs";
 
+export const getFiles = async (req: Request, res: Response) => {
+  try {
+    const files = await File.findAll({
+      attributes: ["id", "fileName"],
+    });
+    return files;
+  } catch (error) {
+    console.error("Error fetching file metadata:", error);
+    throw error;
+  }
+};
+
 export const uploadFile = async (req: Request, res: any) => {
   if (!req.file) {
     return res.status(400).send("No file uploaded.");
