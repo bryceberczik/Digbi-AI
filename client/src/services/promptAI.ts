@@ -1,6 +1,6 @@
 export const promptAI = async (fileId: string, question: string) => {
   try {
-    const response = await fetch(`http://localhost3001/api/ask/${fileId}`, {
+    const response = await fetch(`http://localhost:3001/api/ask/${fileId}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -11,13 +11,10 @@ export const promptAI = async (fileId: string, question: string) => {
     });
 
     const data = await response.json();
+    const sanitizedResult = data.response.replace(/```json|```/g, "");
+    const parsedResult = JSON.parse(sanitizedResult);
 
-    if (response.ok) {
-      console.log("Response:", data);
-      // Handle the response data (formattedResponse, etc.)
-    } else {
-      console.error("Error:", data.response);
-    }
+    return parsedResult.explanation;
   } catch (error) {
     console.error("Request failed:", error);
   }

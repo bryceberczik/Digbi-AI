@@ -2,6 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect } from "react";
 import { fetchFiles } from "@/services/fetchFiles";
+import { promptAI } from "@/services/promptAI";
 
 import GreyOrb from "../images/Orb_detail.png";
 
@@ -14,8 +15,9 @@ interface File {
 
 const Home = () => {
   const [AIResponse, setAIResponse] = useState<string>("");
+  const [userInput, setUserInput] = useState<string>("");
   const [files, setFiles] = useState<File[]>([]);
-  const [_selectedFile, setSelectedFile] = useState<string>("");
+  const [selectedFile, setSelectedFile] = useState<string>("");
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const handleFetchFiles = async () => {
@@ -81,6 +83,8 @@ const Home = () => {
             type="text"
             placeholder="Ask AI a question or make a request..."
             className="flex-1 focus:outline-none"
+            value={userInput}
+            onChange={(e) => setUserInput(e.target.value)}
           />
 
           <div className="relative">
@@ -116,7 +120,10 @@ const Home = () => {
           </div>
 
           <span className="ml-4 text-gray-400">0/2000</span>
-          <button className="ml-4 text-gray-500 hover:text-gray-700">
+          <button
+            className="ml-4 text-gray-500 hover:text-gray-700"
+            onClick={() => promptAI(selectedFile, userInput)}
+          >
             <FontAwesomeIcon icon={faPaperPlane} />
           </button>
         </div>
