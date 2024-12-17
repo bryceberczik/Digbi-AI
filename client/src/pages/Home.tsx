@@ -45,7 +45,7 @@ const Home = () => {
   useEffect(() => {
     setAIResponse("");
 
-    let i = 0;
+    let i = -1;
     const typeInterval = setInterval(() => {
       if (i < defaultMessage.length) {
         setAIResponse((prev) => prev + defaultMessage[i]);
