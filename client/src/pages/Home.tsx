@@ -15,7 +15,7 @@ interface File {
 const Home = () => {
   const [AIResponse, setAIResponse] = useState<string>("");
   const [files, setFiles] = useState<File[]>([]);
-  const [selectedFile, setSelectedFile] = useState<string>("");
+  const [_selectedFile, setSelectedFile] = useState<string>("");
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const handleFetchFiles = async () => {
@@ -27,6 +27,12 @@ const Home = () => {
     console.log(id);
     setSelectedFile(id);
     setDropdownOpen(false);
+  };
+
+  const handleBlur = () => {
+    setTimeout(() => {
+      setDropdownOpen(false);
+    }, 150);
   };
 
   const toggleDropdown = () => {
@@ -81,6 +87,7 @@ const Home = () => {
             <button
               className="ml-2 bg-gray-200 px-4 py-1 rounded text-gray-700 hover:bg-gray-300"
               onClick={toggleDropdown}
+              onBlur={handleBlur}
             >
               Select JSON
             </button>
