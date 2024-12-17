@@ -6,7 +6,6 @@ export const fetchFiles = async () => {
       `http://localhost:3001/file`
     );
 
-    console.log("JSON Files:", response.data);
     return response.data;
   } catch (error) {
     console.error("Error fetching JSON files:", error);
