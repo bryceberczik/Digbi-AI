@@ -47,9 +47,13 @@ const Home = () => {
       } else {
         clearInterval(typeInterval);
       }
-    }, 15); // In milliseconds.
+    }, 10); // In milliseconds.
 
     return () => clearInterval(typeInterval);
+  }, []);
+
+  useEffect(() => {
+    handleFetchFiles();
   }, []);
 
   return (
@@ -76,10 +80,7 @@ const Home = () => {
           <div className="relative">
             <button
               className="ml-2 bg-gray-200 px-4 py-1 rounded text-gray-700 hover:bg-gray-300"
-              onClick={() => {
-                handleFetchFiles();
-                toggleDropdown();
-              }}
+              onClick={toggleDropdown}
             >
               Select JSON
             </button>
