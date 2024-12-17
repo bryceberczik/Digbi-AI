@@ -41,6 +41,16 @@ const Home = () => {
     setDropdownOpen((prev) => !prev);
   };
 
+  const handleSubmit = async () => {
+    if (!userInput || !selectedFile) {
+      return;
+    }
+
+    setAIResponse("Loading...");
+    const analysis = await promptAI(selectedFile, userInput);
+    setAIResponse(analysis || "No explanation available.");
+  };
+
   const defaultMessage =
     "Hello! How can I assist you today? Feel free to ask about data cleaning, matching leads, or creating a master list!";
 
@@ -122,7 +132,7 @@ const Home = () => {
           <span className="ml-4 text-gray-400">0/2000</span>
           <button
             className="ml-4 text-gray-500 hover:text-gray-700"
-            onClick={() => promptAI(selectedFile, userInput)}
+            onClick={handleSubmit}
           >
             <FontAwesomeIcon icon={faPaperPlane} />
           </button>
