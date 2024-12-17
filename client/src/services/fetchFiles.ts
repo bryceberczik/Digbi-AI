@@ -3,7 +3,7 @@ import axios from "axios";
 export const fetchFiles = async () => {
   try {
     const response = await axios.get(
-      `https://localhost:3001/file`
+      `http://localhost:3001/file`
     );
 
     console.log("JSON Files:", response.data);

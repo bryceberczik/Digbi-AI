@@ -1,5 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
+import { fetchFiles } from "@/services/fetchFiles";
 
 import GreyOrb from "../images/Orb_detail.png";
 
@@ -27,7 +28,7 @@ const Home = () => {
             placeholder="Ask AI a question or make a request..."
             className="flex-1 focus:outline-none"
           />
-          <button className="ml-2 bg-gray-200 px-4 py-1 rounded text-gray-700 hover:bg-gray-300">
+          <button className="ml-2 bg-gray-200 px-4 py-1 rounded text-gray-700 hover:bg-gray-300" onClick={fetchFiles}>
             Select JSON
           </button>
           <span className="ml-4 text-gray-400">0/2000</span>
