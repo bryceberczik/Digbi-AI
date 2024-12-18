@@ -34,6 +34,10 @@ export const createUser = async (req: Request, res: Response) => {
     const user = await User.create({ username, email, password });
     res.status(201).json(user);
   } catch (error: any) {
+    if (error.name === "SequelizeUniqueConstraintError") {
+      console.log("Duplicate entry for username or email");
+    }
+  
     res.status(500).json({ message: error.message });
   }
 };

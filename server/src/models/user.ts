@@ -36,16 +36,37 @@ export function UserFactory(sequelize: Sequelize): typeof User {
       username: {
         type: DataTypes.STRING,
         allowNull: false,
+        unique: true,
+        validate: {
+          notNull: { msg: "Username is required" },
+          notEmpty: { msg: "Username cannot be empty" },
+          len: {
+            args: [6, 20],
+            msg: "Username must be between 6 and 15 characters long",
+          },
+        },
       },
       email: {
         type: DataTypes.STRING,
         allowNull: false,
+        unique: true,
+        validate: {
+          notNull: { msg: "Email is required" },
+          isEmail: { msg: "Email must be valid" },
+        },
       },
       password: {
         type: DataTypes.STRING,
         allowNull: false,
+        validate: {
+          notNull: { msg: "Password is required" },
+          len: {
+            args: [8, 128],
+            msg: "Password must be between 8 and 128 characters long",
+          },
+        },
       },
-    },
+    },    
     {
       tableName: "users",
       sequelize,
