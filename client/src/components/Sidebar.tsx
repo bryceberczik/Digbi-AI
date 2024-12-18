@@ -100,7 +100,7 @@ const Sidebar = () => {
                 className="text-lg text-slate-700 hover:text-slate-500 cursor-pointer"
               />
             </Link>
-            {isOffcanvas ? <h1 className="absolute custom-profilebtn">Log out</h1> : ""}
+            {isOffcanvas ? <h1 className="absolute custom-profilebtn">Sign out</h1> : ""}
               <button className="h-10 w-10 flex justify-center items-center rounded-full bg-white shadow-md hover:bg-gray-200 transition duration-300">
                 <FontAwesomeIcon icon={faRightToBracket} className="text-lg text-slate-700" />
               </button>
