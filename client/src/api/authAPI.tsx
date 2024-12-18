@@ -4,7 +4,7 @@ import { UserLogin } from "../interfaces/UserLogin";  // Import the UserLogin in
 const login = async (userInfo: UserLogin) => {
   try {
     // Send a POST request to '/auth/login' with user login information in JSON format
-    const response = await fetch('/auth/login', {
+    const response = await fetch('http://localhost:3001/auth/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

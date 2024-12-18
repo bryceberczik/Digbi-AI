@@ -5,11 +5,11 @@ import bcrypt from 'bcrypt';  // Import the bcrypt library for password hashing
 
 // Login function to authenticate a user
 export const login = async (req: Request, res: any) => {
-  const { username, password } = req.body;  // Extract username and password from request body
+  const { email, password } = req.body;  // Extract username and password from request body
 
   // Find the user in the database by username
   const user = await User.findOne({
-    where: { username },
+    where: { email },
   });
 
   // If user is not found, send an authentication failed response
@@ -28,7 +28,7 @@ export const login = async (req: Request, res: any) => {
   const secretKey = process.env.JWT_SECRET_KEY || '';
 
   // Generate a JWT token for the authenticated user
-  const token = jwt.sign({ username }, secretKey, { expiresIn: '1h' });
+  const token = jwt.sign({ email }, secretKey, { expiresIn: '1h' });
   return res.json({ token });  // Send the token as a JSON response
 };
 
