@@ -11,7 +11,7 @@ import { useState, useEffect } from "react";
 import { fetchFiles } from "@/services/fetchFiles";
 import { promptAI } from "@/services/promptAI";
 
-import GreyOrb from "../images/Orb_detail.png";
+import GeoComp from "@/components/GeoSphere";
 
 interface File {
   id: string;
@@ -102,8 +102,11 @@ const Home = () => {
 
   return (
     <div className="flex flex-col items-center justify-center h-screen px-4">
-      {/* Image */}
-      <img src={GreyOrb} width={300} alt="grey orb" className="mb-20" />
+      {/* 3D Model */}
+      <div className="w-full h-[400px] mb-20">
+        <GeoComp />
+      </div>
+
 
       {/* AI Response Bubble */}
       <div className="w-full md:w-1/2 mb-16">
