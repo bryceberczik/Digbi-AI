@@ -1,13 +1,16 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 
-import GreyOrb from "../images/Orb_detail.png";
+import GeoComp from "@/components/GeoSphere";
 
 const Home = () => {
   return (
     <div className="flex flex-col items-center justify-center h-screen px-4">
-      {/* Image */}
-      <img src={GreyOrb} width={300} alt="grey orb" className="mb-20" />
+      {/* 3D Model */}
+      <div className="w-full h-[400px] mb-20">
+        <GeoComp />
+      </div>
+
 
       {/* AI Response Bubble */}
       <div className="w-full md:w-1/2 mb-16">
