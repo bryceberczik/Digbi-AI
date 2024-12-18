@@ -15,6 +15,21 @@ export const getFiles = async (_req: Request, res: Response) => {
   }
 };
 
+export const getUserFiles = async (req: Request, res: Response) => {
+  const { userId } = req.params;
+
+  try {
+    const userFiles = await File.findAll({
+      where: { userId },
+      attributes: ["id", "fileName"],
+    });
+    res.json(userFiles);
+  } catch (error) {
+    console.error("Error fetching file metadata:", error);
+    res.status(500).json({ error: "Failed to fetch file metadata." });
+  }
+};
+
 export const uploadFile = async (req: Request, res: any) => {
   if (!req.file) {
     return res.status(400).send("No file uploaded.");
