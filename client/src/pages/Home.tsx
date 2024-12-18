@@ -1,5 +1,12 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+
 import { useState, useEffect } from "react";
 import { fetchFiles } from "@/services/fetchFiles";
 import { promptAI } from "@/services/promptAI";
@@ -119,13 +126,26 @@ const Home = () => {
                   <div className="p-2 text-gray-500">No files found.</div>
                 ) : (
                   files.map((file) => (
-                    <button
-                      key={file.id}
-                      className="w-full text-left px-4 py-2 hover:bg-gray-100"
-                      onClick={() => handleFileSelect(file.id)}
-                    >
-                      {truncateText(file.fileName)}
-                    </button>
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <button
+                            key={file.id}
+                            className="w-full text-left px-4 py-2 hover:bg-gray-100"
+                            onClick={() => handleFileSelect(file.id)}
+                          >
+                            {truncateText(file.fileName)}
+                          </button>
+                        </TooltipTrigger>
+                        <TooltipContent
+                          side="right"
+                          sideOffset={10}
+                          className="border-2"
+                        >
+                          <p>{file.fileName}</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
                   ))
                 )}
               </div>
