@@ -4,6 +4,8 @@ import { signUp } from "../api/authAPI"; // Import the sign up function from the
 import { UserLogin } from "../interfaces/UserLogin"; // Import the interface for UserLogin
 import { Link } from "react-router-dom";
 
+import BrandLogo from "../images/Digbi-AI.png";
+
 const Signup = () => {
   // State to manage sign up form data
   const [signUpData, setSignUpData] = useState<UserLogin>({
@@ -94,8 +96,10 @@ const Signup = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 py-16 px-6 sm:px-8 lg:px-12">
+    <div className="min-h-screen flex items-center justify-center bg-[#F3F4F6] py-16 px-6 sm:px-8 lg:px-12">
       <div className="max-w-lg w-full space-y-12">
+
+        <img src={BrandLogo} alt="brand logo" width={300} className="mx-auto pb-10"/>
         <div>
           <h2 className="mt-6 text-center text-4xl font-bold text-gray-800">
             Create Your Account

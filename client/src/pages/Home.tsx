@@ -10,6 +10,7 @@ import {
 import { useState, useEffect } from "react";
 import { fetchFiles } from "@/services/fetchFiles";
 import { promptAI } from "@/services/promptAI";
+import BrandLogo from "../images/Digbi-AI.png";
 
 import GeoComp from "@/components/GeoSphere";
 
@@ -102,6 +103,8 @@ const Home = () => {
 
   return (
     <div className="flex flex-col items-center justify-center h-screen px-4">
+      <img src={BrandLogo} alt="brand logo" width={300} className="absolute top-5 right-10"/>
+      <h1 className="text-4xl text-slate-700 mb-12">Welcome, TestUser.</h1>
       {/* 3D Model */}
       <div className="w-full h-[400px] mb-20">
         <GeoComp />
@@ -110,7 +113,7 @@ const Home = () => {
 
       {/* AI Response Bubble */}
       <div className="w-full md:w-1/2 mb-16">
-        <div className="relative bg-gray-100 text-gray-700 p-4 rounded-2xl shadow-md text-center">
+        <div className="relative bg-[#ffffff] text-gray-700 p-4 rounded-2xl shadow-md text-center">
           <p>{displayedText}</p>
         </div>
       </div>
