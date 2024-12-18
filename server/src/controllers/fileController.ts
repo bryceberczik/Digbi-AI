@@ -40,3 +40,19 @@ export const uploadFile = async (req: Request, res: any) => {
     res.status(500).send("Server Error");
   }
 };
+
+export const removeFile = async (req: Request, res: any) => {
+  const { id } = req.params;
+
+  try {
+    const file = await File.findByPk(id);
+    if (file) {
+      await file.destroy();
+      res.json({ message: "File deleted." })
+    } else {
+      res.status(404).json({ message: "File metadata not found." });
+    }
+  } catch (error: any) {
+    res.status(500).json({ message: error.message });
+  }
+};
