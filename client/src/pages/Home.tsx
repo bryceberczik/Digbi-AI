@@ -20,6 +20,7 @@ interface File {
 
 const Home = () => {
   const [AIResponse, setAIResponse] = useState<string>("");
+  const [displayedText, setDisplayedText] = useState<string>("");
   const [userInput, setUserInput] = useState<string>("");
   const [files, setFiles] = useState<File[]>([]);
   const [selectedFile, setSelectedFile] = useState<string>("");
@@ -63,20 +64,36 @@ const Home = () => {
     setAIResponse(analysis || "No explanation available.");
   };
 
-  useEffect(() => {
-    setAIResponse("");
+  const handleTypingAnimation = (message: string) => {
+    setDisplayedText(message[0]);
+    let i = 0;
 
-    let i = -1;
     const typeInterval = setInterval(() => {
-      if (i < defaultMessage.length - 1) {
-        setAIResponse((prev) => prev + defaultMessage[i]);
-        i += 1;
+      if (i < message.length - 1) {
+        setDisplayedText((prev) => prev + message[i]);
+        i++;
       } else {
         clearInterval(typeInterval);
       }
     }, 10); // In milliseconds.
 
-    return () => clearInterval(typeInterval);
+    return typeInterval;
+  };
+
+  useEffect(() => {
+    let intervalID: NodeJS.Timeout | undefined;
+
+    if (AIResponse) {
+      intervalID = handleTypingAnimation(AIResponse);
+    }
+
+    return () => {
+      if (intervalID) clearInterval(intervalID);
+    };
+  }, [AIResponse]);
+
+  useEffect(() => {
+    setAIResponse(defaultMessage);
   }, []);
 
   useEffect(() => {
@@ -91,7 +108,7 @@ const Home = () => {
       {/* AI Response Bubble */}
       <div className="w-full md:w-1/2 mb-16">
         <div className="relative bg-gray-100 text-gray-700 p-4 rounded-2xl shadow-md text-center">
-          <p>{AIResponse}</p>
+          <p>{displayedText}</p>
         </div>
       </div>
 
