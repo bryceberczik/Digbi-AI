@@ -16,11 +16,12 @@ export const getFiles = async (_req: Request, res: Response) => {
 };
 
 export const getUserFiles = async (req: Request, res: Response) => {
-  const { userId } = req.params;
-
+  const { id } = req.params;
+  console.log(id);
+  
   try {
     const userFiles = await File.findAll({
-      where: { userId },
+      where: { userId: id },
       attributes: ["id", "fileName"],
     });
     res.json(userFiles);
