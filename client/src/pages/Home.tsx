@@ -11,15 +11,19 @@ interface File {
   fileName: string;
 }
 
-const defaultMessage =
-  "Hello! How can I assist you today? Feel free to ask about data cleaning, matching leads, or creating a master list!";
-
 const Home = () => {
   const [AIResponse, setAIResponse] = useState<string>("");
   const [userInput, setUserInput] = useState<string>("");
   const [files, setFiles] = useState<File[]>([]);
   const [selectedFile, setSelectedFile] = useState<string>("");
   const [dropdownOpen, setDropdownOpen] = useState(false);
+
+  const defaultMessage =
+    "Hello! How can I assist you today? Feel free to ask about data cleaning, matching leads, or creating a master list!";
+
+  const truncateText = (text: string) => {
+    return text.length > 18 ? text.substring(0, 18) + "..." : text;
+  };
 
   const handleFetchFiles = async () => {
     const fetchedFiles = await fetchFiles();
@@ -100,7 +104,7 @@ const Home = () => {
             <button
               className="ml-8 bg-gray-200 px-4 py-1 rounded text-gray-700 hover:bg-gray-300"
               onClick={toggleDropdown}
-              // onBlur={handleBlur}
+              onBlur={handleBlur}
             >
               Select JSON
             </button>
@@ -112,7 +116,7 @@ const Home = () => {
                 className="absolute bottom-full mt-2 bg-white shadow-lg rounded w-48 mb-2"
               >
                 {files.length === 0 ? (
-                  <div className="p-2 text-gray-500">No files found</div>
+                  <div className="p-2 text-gray-500">No files found.</div>
                 ) : (
                   files.map((file) => (
                     <button
@@ -120,7 +124,7 @@ const Home = () => {
                       className="w-full text-left px-4 py-2 hover:bg-gray-100"
                       onClick={() => handleFileSelect(file.id)}
                     >
-                      {file.fileName}
+                      {truncateText(file.fileName)}
                     </button>
                   ))
                 )}
@@ -128,7 +132,7 @@ const Home = () => {
             )}
           </div>
 
-          <span className="ml-4 text-gray-400" >{userInput.length}/500</span>
+          <span className="ml-4 text-gray-400">{userInput.length}/500</span>
           <button
             className="ml-4 text-gray-500 hover:text-gray-700"
             onClick={handleSubmit}
