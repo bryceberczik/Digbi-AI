@@ -91,16 +91,16 @@ const Home = () => {
             type="text"
             placeholder="Ask AI a question or make a request..."
             className="flex-1 focus:outline-none"
-            value={userInput}
             maxLength={500}
+            value={userInput}
             onChange={(e) => setUserInput(e.target.value)}
           />
 
           <div className="relative">
             <button
-              className="ml-2 bg-gray-200 px-4 py-1 rounded text-gray-700 hover:bg-gray-300"
+              className="ml-8 bg-gray-200 px-4 py-1 rounded text-gray-700 hover:bg-gray-300"
               onClick={toggleDropdown}
-              onBlur={handleBlur}
+              // onBlur={handleBlur}
             >
               Select JSON
             </button>
@@ -109,7 +109,7 @@ const Home = () => {
             {dropdownOpen && (
               <div
                 id="dropdown-group"
-                className="absolute bottom-full mt-2 bg-white shadow-lg rounded w-full"
+                className="absolute bottom-full mt-2 bg-white shadow-lg rounded w-48 mb-2"
               >
                 {files.length === 0 ? (
                   <div className="p-2 text-gray-500">No files found</div>
