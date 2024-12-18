@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { File } from "../models";
+import path from "path";
 import fs from "fs";
 
 export const getFiles = async (_req: Request, res: Response) => {
@@ -47,8 +48,12 @@ export const removeFile = async (req: Request, res: any) => {
   try {
     const file = await File.findByPk(id);
     if (file) {
+      const filePath = path.join(__dirname, "../../db/json", file.fileName);
+
+      fs.unlinkSync(filePath);
       await file.destroy();
-      res.json({ message: "File deleted." })
+
+      res.json({ message: "File deleted." });
     } else {
       res.status(404).json({ message: "File metadata not found." });
     }
