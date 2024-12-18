@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { File } from "../models";
+import path from "path";
 import fs from "fs";
 
 export const getFiles = async (_req: Request, res: Response) => {
@@ -38,5 +39,25 @@ export const uploadFile = async (req: Request, res: any) => {
   } catch (error) {
     console.error(error);
     res.status(500).send("Server Error");
+  }
+};
+
+export const removeFile = async (req: Request, res: any) => {
+  const { id } = req.params;
+
+  try {
+    const file = await File.findByPk(id);
+    if (file) {
+      const filePath = path.join(__dirname, "../../db/json", file.fileName);
+
+      fs.unlinkSync(filePath);
+      await file.destroy();
+
+      res.json({ message: "File deleted." });
+    } else {
+      res.status(404).json({ message: "File metadata not found." });
+    }
+  } catch (error: any) {
+    res.status(500).json({ message: error.message });
   }
 };
