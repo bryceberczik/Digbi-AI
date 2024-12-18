@@ -7,6 +7,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 
+import auth from "@/utils/auth";
 import { useState, useEffect } from "react";
 import { fetchFiles } from "@/services/fetchFiles";
 import { promptAI } from "@/services/promptAI";
@@ -28,6 +29,12 @@ const Home = () => {
 
   const defaultMessage =
     "Hello, I'm Digbi AI! How can I assist you today? Feel free to ask about any JSON data in the database and I will review it for you!";
+
+  let userId: string | null = null;
+
+  if (auth.loggedIn()) {
+    const profile = auth.
+  }
 
   const truncateText = (text: string) => {
     return text.length > 18 ? text.substring(0, 18) + "..." : text;
@@ -106,7 +113,6 @@ const Home = () => {
       <div className="w-full h-[400px] mb-20">
         <GeoComp />
       </div>
-
 
       {/* AI Response Bubble */}
       <div className="w-full md:w-1/2 mb-16">
