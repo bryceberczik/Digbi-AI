@@ -39,19 +39,19 @@ const Home = () => {
 
     if (auth.loggedIn()) {
       const profile = auth.getProfile();
+
       if (profile) {
         userId = profile.id;
-        console.log("User ID:", userId);
       } else {
         console.error("User is not logged in.");
       }
+
       const fetchedFiles = await fetchFiles(userId);
       setFiles(fetchedFiles);
     }
   };
 
   const handleFileSelect = (id: string) => {
-    console.log(id);
     setSelectedFile(id);
     setDropdownOpen(false);
   };
@@ -157,7 +157,7 @@ const Home = () => {
                   <div className="p-2 text-gray-500">No files found.</div>
                 ) : (
                   files.map((file) => (
-                    <TooltipProvider>
+                    <TooltipProvider key={file.id}>
                       <Tooltip>
                         <TooltipTrigger asChild>
                           <button
