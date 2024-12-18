@@ -27,7 +27,7 @@ const Home = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const defaultMessage =
-    "Hello! How can I assist you today? Feel free to ask about data cleaning, matching leads, or creating a master list!";
+    "Hello, I'm Digbi AI! How can I assist you today? Feel free to ask about any JSON data in the database and I will review it for you!";
 
   const truncateText = (text: string) => {
     return text.length > 18 ? text.substring(0, 18) + "..." : text;
