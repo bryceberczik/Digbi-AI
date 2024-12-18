@@ -7,6 +7,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 
+import auth from "@/utils/auth";
 import { useState, useEffect } from "react";
 import { fetchFiles } from "@/services/fetchFiles";
 import { promptAI } from "@/services/promptAI";
@@ -34,12 +35,23 @@ const Home = () => {
   };
 
   const handleFetchFiles = async () => {
-    const fetchedFiles = await fetchFiles();
-    setFiles(fetchedFiles);
+    let userId = "";
+
+    if (auth.loggedIn()) {
+      const profile = auth.getProfile();
+
+      if (profile) {
+        userId = profile.id;
+      } else {
+        console.error("User is not logged in.");
+      }
+
+      const fetchedFiles = await fetchFiles(userId);
+      setFiles(fetchedFiles);
+    }
   };
 
   const handleFileSelect = (id: string) => {
-    console.log(id);
     setSelectedFile(id);
     setDropdownOpen(false);
   };
@@ -107,7 +119,6 @@ const Home = () => {
         <GeoComp />
       </div>
 
-
       {/* AI Response Bubble */}
       <div className="w-full md:w-1/2 mb-16">
         <div className="relative bg-gray-100 text-gray-700 p-4 rounded-2xl shadow-md text-center">
@@ -146,7 +157,7 @@ const Home = () => {
                   <div className="p-2 text-gray-500">No files found.</div>
                 ) : (
                   files.map((file) => (
-                    <TooltipProvider>
+                    <TooltipProvider key={file.id}>
                       <Tooltip>
                         <TooltipTrigger asChild>
                           <button
