@@ -1,17 +1,17 @@
 import { Outlet } from "react-router-dom";
 import Sidebar from "./components/Sidebar";
-import Footer from "./components/Footer";
+import auth from "./utils/auth";
 
 const App = () => {
+  const isLoggedIn = auth.loggedIn();
 
   return (
 
     <div>
-      <Sidebar />
+      {isLoggedIn && <Sidebar />}
       <main>
       <Outlet />
       </main>
-      <Footer />
     </div>
   )
 };

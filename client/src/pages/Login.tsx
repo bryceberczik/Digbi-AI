@@ -1,5 +1,5 @@
 import { useState, FormEvent, ChangeEvent } from "react";
-
+import { Link } from "react-router-dom";
 import Auth from '../utils/auth';  // Import the Auth utility for managing authentication state
 import { login } from "../api/authAPI";  // Import the login function from the API
 import { UserLogin } from "../interfaces/UserLogin";  // Import the interface for UserLogin
@@ -43,12 +43,9 @@ const Login = () => {
             </h2>
             <p className="mt-4 text-center text-base text-gray-600">
               Don't have an account yet? 
-              <a
-                href="#"
-                className="font-medium text-gray-700 hover:text-gray-900 ml-2"
-              >
-                Sign up here
-              </a>
+              <Link to="/signup" className="ml-2 underline">
+              Create an account
+            </Link>
             </p>
           </div>
           <form
@@ -70,7 +67,7 @@ const Login = () => {
                   name="email"
                   type="email"
                   required
-                  className="mt-2 block w-full px-4 py-3 border border-gray-300 rounded-md placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-gray-500 focus:border-gray-500 sm:text-lg"
+                  className="mt-2 block w-full px-4 py-3 border border-gray-300 rounded placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-gray-500 focus:border-gray-500 sm:text-lg"
                   placeholder="Enter email"
                   value={loginData.email || ''}
                   onChange={handleChange}
@@ -88,7 +85,7 @@ const Login = () => {
                   name="password"
                   type="password"
                   required
-                  className="mt-2 block w-full px-4 py-3 border border-gray-300 rounded-md placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-gray-500 focus:border-gray-500 sm:text-lg"
+                  className="mt-2 block w-full px-4 py-3 border border-gray-300 rounded placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-gray-500 focus:border-gray-500 sm:text-lg"
                   placeholder="Enter password"
                   value={loginData.password || ''}
                   onChange={handleChange}
@@ -98,7 +95,7 @@ const Login = () => {
             <div>
               <button
                 type="submit"
-                className="group relative w-full flex justify-center py-3 px-6 border border-transparent text-lg font-medium rounded-md text-white bg-gray-700 hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+                className="group relative w-full flex justify-center py-3 px-6 border border-transparent text-lg font-medium rounded text-white bg-gray-700 hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
               >
                 Log in
               </button>

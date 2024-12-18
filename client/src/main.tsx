@@ -3,6 +3,8 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import './styles/index.css'
 import App from './App.tsx'
 
+import AuthGuard from "./components/AuthGuard.tsx";
+
 import Home from "./pages/Home.tsx";
 import Login from "./pages/Login.tsx";
 import Signup from "./pages/Signup.tsx";
@@ -16,7 +18,11 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Home />
+        element: (
+          <AuthGuard>
+            <Home />
+          </AuthGuard>
+        )
       },
       {
         path: "/login",
