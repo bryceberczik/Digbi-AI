@@ -30,25 +30,24 @@ const Home = () => {
   const defaultMessage =
     "Hello, I'm Digbi AI! How can I assist you today? Feel free to ask about any JSON data in the database and I will review it for you!";
 
-  let userId: string;
-
-  if (auth.loggedIn()) {
-    const profile = auth.getProfile();
-    if (profile) {
-      userId = profile.id;
-      console.log("User ID:", userId);
-    } else {
-      console.error("User is not logged in.");
-    }
-  }
-
   const truncateText = (text: string) => {
     return text.length > 18 ? text.substring(0, 18) + "..." : text;
   };
 
   const handleFetchFiles = async () => {
-    const fetchedFiles = await fetchFiles(userId);
-    setFiles(fetchedFiles);
+    let userId = "";
+
+    if (auth.loggedIn()) {
+      const profile = auth.getProfile();
+      if (profile) {
+        userId = profile.id;
+        console.log("User ID:", userId);
+      } else {
+        console.error("User is not logged in.");
+      }
+      const fetchedFiles = await fetchFiles(userId);
+      setFiles(fetchedFiles);
+    }
   };
 
   const handleFileSelect = (id: string) => {
