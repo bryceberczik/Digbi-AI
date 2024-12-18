@@ -11,7 +11,8 @@ interface File {
   fileName: string;
 }
 
-// You can use selectedFile to display to the user which file is currently selected.
+const defaultMessage =
+  "Hello! How can I assist you today? Feel free to ask about data cleaning, matching leads, or creating a master list!";
 
 const Home = () => {
   const [AIResponse, setAIResponse] = useState<string>("");
@@ -51,15 +52,12 @@ const Home = () => {
     setAIResponse(analysis || "No explanation available.");
   };
 
-  const defaultMessage =
-    "Hello! How can I assist you today? Feel free to ask about data cleaning, matching leads, or creating a master list!";
-
   useEffect(() => {
     setAIResponse("");
 
     let i = -1;
     const typeInterval = setInterval(() => {
-      if (i < defaultMessage.length) {
+      if (i < defaultMessage.length - 1) {
         setAIResponse((prev) => prev + defaultMessage[i]);
         i += 1;
       } else {

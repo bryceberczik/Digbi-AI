@@ -12,7 +12,6 @@ export const promptAI = async (fileId: string, question: string) => {
 
     const data = await response.json();
 
-    console.log(data.formattedResponse.error);
     if (data.formattedResponse.error === "Failed to parse the response from the model.") {
       return data.response;
     }
