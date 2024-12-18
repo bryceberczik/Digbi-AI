@@ -92,6 +92,7 @@ const Home = () => {
             placeholder="Ask AI a question or make a request..."
             className="flex-1 focus:outline-none"
             value={userInput}
+            maxLength={500}
             onChange={(e) => setUserInput(e.target.value)}
           />
 
@@ -127,7 +128,7 @@ const Home = () => {
             )}
           </div>
 
-          <span className="ml-4 text-gray-400">0/2000</span>
+          <span className="ml-4 text-gray-400" >{userInput.length}/500</span>
           <button
             className="ml-4 text-gray-500 hover:text-gray-700"
             onClick={handleSubmit}
