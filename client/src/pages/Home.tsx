@@ -135,12 +135,6 @@ const Home = () => {
 
   return (
     <div className="flex flex-col items-center justify-center h-screen px-4">
-      <img
-        src={BrandLogo}
-        alt="brand logo"
-        width={300}
-        className="absolute top-5 right-10"
-      />
       <h1 className="text-4xl text-slate-700 mb-12">Welcome, {username}.</h1>
       {/* 3D Model */}
       <div className="w-full h-[400px] mb-20">
