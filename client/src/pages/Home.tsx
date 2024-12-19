@@ -15,7 +15,6 @@ import auth from "@/utils/auth";
 import { useState, useEffect } from "react";
 import { fetchFiles } from "@/services/fetchFiles";
 import { promptAI } from "@/services/promptAI";
-import BrandLogo from "../images/Digbi-AI.png";
 
 import GeoComp from "@/components/GeoSphere";
 
@@ -155,7 +154,7 @@ const Home = () => {
       <h1 className="text-4xl text-slate-700 mb-12">Welcome, {username}.</h1>
       {/* 3D Model */}
       <div className="w-full h-[400px] mb-20">
-        <GeoComp />
+        <GeoComp loading={AIResponse === "Loading..."} />
       </div>
 
       {/* AI Response Bubble */}
