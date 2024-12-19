@@ -21,6 +21,7 @@ interface File {
 }
 
 const Home = () => {
+  const [audioUrl, setAudioUrl] = useState<string | null>(null);
   const [AIResponse, setAIResponse] = useState<string>("");
   const [displayedText, setDisplayedText] = useState<string>("");
   const [userInput, setUserInput] = useState<string>("");
@@ -74,7 +75,10 @@ const Home = () => {
 
     setAIResponse("Loading...");
     const analysis = await promptAI(selectedFile, userInput);
-    setAIResponse(analysis || "No explanation available.");
+    setAIResponse(
+      analysis?.text || "An error has occured. Please try again later."
+    );
+    setAudioUrl(analysis?.audio || null);
   };
 
   const handleTypingAnimation = (message: string) => {
@@ -110,12 +114,25 @@ const Home = () => {
   }, []);
 
   useEffect(() => {
+    console.log("Audio is here.");
+    if (audioUrl) {
+      const audio = new Audio(audioUrl);
+      audio.play();
+    }
+  }, [audioUrl]);
+
+  useEffect(() => {
     handleFetchFiles();
   }, []);
 
   return (
     <div className="flex flex-col items-center justify-center h-screen px-4">
-      <img src={BrandLogo} alt="brand logo" width={300} className="absolute top-5 right-10"/>
+      <img
+        src={BrandLogo}
+        alt="brand logo"
+        width={300}
+        className="absolute top-5 right-10"
+      />
       <h1 className="text-4xl text-slate-700 mb-12">Welcome, TestUser.</h1>
       {/* 3D Model */}
       <div className="w-full h-[400px] mb-20">
