@@ -3,9 +3,12 @@ import { File } from "../models";
 import { OpenAI } from "@langchain/openai";
 import { PromptTemplate } from "@langchain/core/prompts";
 import { StructuredOutputParser } from "langchain/output_parsers";
+import AWS from "../config/awsConfig";
+import { Readable } from "stream";
 import fs from "fs";
 import path from "path";
 import dotenv from "dotenv";
+import { DstAlphaFactor } from "three";
 
 dotenv.config();
 
@@ -81,6 +84,7 @@ export const askQuestion = async (
         question: null,
         response: "Please provide a question in the request body.",
         formattedResponse: null,
+        audioUrl: null,
       });
       return;
     }
@@ -91,15 +95,41 @@ export const askQuestion = async (
         question: userQuestion,
         response: "File not found.",
         formattedResponse: null,
+        audioUrl: null,
       });
       return;
     }
 
     const filePath = path.join(__dirname, "../../db/json", file.fileName);
     const jsonData = JSON.parse(fs.readFileSync(filePath, "utf-8"));
-    const formattedPrompt: string = await formatPrompt(userQuestion, JSON.stringify(jsonData));
+    const formattedPrompt: string = await formatPrompt(
+      userQuestion,
+      JSON.stringify(jsonData)
+    );
+
     const rawResponse: string = await promptFunc(formattedPrompt);
     const result: { [key: string]: string } = await parseResponse(rawResponse);
+
+    const polly = new AWS.Polly();
+    const speechParams = {
+      Text: result.explanation || "Unable to generate a response.",
+      OutputFormat: "mp3",
+      VoiceId: "Joanna",
+    };
+
+    const speechData = await polly.synthesizeSpeech(speechParams).promise();
+    const audioFileName = `response_${Date.now()}.mp3`;
+    const audioFilePath = path.join(
+      __dirname,
+      "../../db/audio",
+      audioFileName
+    );
+
+    fs.writeFileSync(audioFilePath, speechData.AudioStream as Buffer);
+
+    const audioUrl = `${req.protocol}://${req.get(
+      "host"
+    )}/audio/${audioFileName}`;
 
     res.json({
       question: userQuestion,
@@ -108,16 +138,19 @@ export const askQuestion = async (
       prompt: formattedPrompt,
       response: rawResponse,
       formattedResponse: result,
+      audioUrl: audioUrl,
     });
   } catch (error: unknown) {
     if (error instanceof Error) {
       console.error("Error:", error.message);
     }
+
     res.status(500).json({
       question: userQuestion,
       prompt: null,
       response: "Internal Server Error",
       formattedResponse: null,
+      audioUrl: null,
     });
   }
 };
