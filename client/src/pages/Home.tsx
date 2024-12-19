@@ -84,12 +84,13 @@ const Home = () => {
   };
 
   const handleTypingAnimation = (message: string) => {
-    setDisplayedText(message[0]);
     let i = 0;
+    let currentText = "";
 
     const typeInterval = setInterval(() => {
-      if (i < message.length - 1) {
-        setDisplayedText((prev) => prev + message[i]);
+      if (i < message.length) {
+        currentText += message[i];
+        setDisplayedText(currentText);
         i++;
       } else {
         clearInterval(typeInterval);
