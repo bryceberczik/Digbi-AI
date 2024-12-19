@@ -15,21 +15,20 @@ const JsonFiles = () => {
   const [files, setFiles] = useState<DisplayFile[]>([]);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
-  const handleFetchFiles = async () => {
-    let userId = "";
+  // userId for fetching & uploading files.
+  let userId = "";
 
-    if (auth.loggedIn()) {
-      const profile = auth.getProfile();
+  if (auth.loggedIn()) {
+    const profile = auth.getProfile();
 
-      if (profile) {
-        userId = profile.id;
-      }
-
-      const fetchedFiles = await fetchFiles(userId);
-      setFiles(fetchedFiles);
-    } else {
-      console.error("User is not logged in.");
+    if (profile) {
+      userId = profile.id;
     }
+  }
+
+  const handleFetchFiles = async () => {
+    const fetchedFiles = await fetchFiles(userId);
+    setFiles(fetchedFiles);
   };
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -44,25 +43,12 @@ const JsonFiles = () => {
       return;
     }
 
-    let userId = "";
-
-    if (auth.loggedIn()) {
-      const profile = auth.getProfile();
-
-      if (profile) {
-        userId = profile.id;
-      }
-
-      try {
-        await uploadFile(selectedFile, userId);
-
-        handleFetchFiles();
-        setSelectedFile(null);
-      } catch (error) {
-        console.error("Error uploading files:", error);
-      }
-    } else {
-      console.error("User is not logged in.");
+    try {
+      await uploadFile(selectedFile, userId);
+      handleFetchFiles();
+      setSelectedFile(null);
+    } catch (error) {
+      console.error("Error uploading files:", error);
     }
   };
 
