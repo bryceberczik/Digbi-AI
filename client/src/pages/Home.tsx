@@ -34,6 +34,7 @@ const Home = () => {
   const [selectedFile, setSelectedFile] = useState<string>("");
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
+
   const defaultMessage =
     "Hello, I am Digbi AI. Ask me a question and select a JSON file so I can analyze it.";
 
@@ -71,7 +72,11 @@ const Home = () => {
   };
 
   const toggleDropdown = () => {
-    setDropdownOpen((prev) => !prev);
+    setDropdownOpen(!dropdownOpen);
+  };
+
+  const toggleTTS = () => {
+    setIsMuted(!isMuted);
   };
 
   const handleSubmit = async () => {
@@ -102,10 +107,6 @@ const Home = () => {
     }, 20); // In milliseconds.
 
     return typeInterval;
-  };
-
-  const handleMute = () => {
-    setIsMuted(!isMuted);
   };
 
   useEffect(() => {
@@ -226,7 +227,7 @@ const Home = () => {
           <button
             className="custom-mute-btn"
             onClick={() => {
-              handleMute();
+              toggleTTS();
             }}
           >
             {isMuted ? (
