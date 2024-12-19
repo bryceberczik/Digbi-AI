@@ -73,11 +73,11 @@ const JsonFiles = () => {
                 <span className="font-bold">File:</span> {file.fileName}
               </h1>
               <h1>
-                <span className="font-bold">Size:</span> {file.fileSize}B
+                <span className="font-bold">Size:</span> {file.fileSize} Bytes
               </h1>
               <FontAwesomeIcon
                 icon={faX}
-                className="hover:text-[grey] cursor-pointer"
+                className="hover:text-[grey] cursor-pointer mr-2"
               />
             </div>
           </div>
