@@ -126,11 +126,25 @@ const Home = () => {
   }, []);
 
   useEffect(() => {
+    let audio: any;
+
     if (audioUrl) {
-      const audio = new Audio(audioUrl);
-      audio.play();
+      audio = new Audio(audioUrl);
+
+      if (isMuted === true) {
+        audio.pause();
+      } else {
+        audio.play();
+      }
     }
-  }, [audioUrl]);
+
+    return () => {
+      if (audio) {
+        audio.pause();
+        audio.currentTime = 0;
+      }
+    };
+  }, [audioUrl, isMuted]);
 
   useEffect(() => {
     handleFetchFiles();
