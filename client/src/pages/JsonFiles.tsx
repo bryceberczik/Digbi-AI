@@ -3,16 +3,17 @@ import { faX, faCheck } from "@fortawesome/free-solid-svg-icons";
 
 import auth from "@/utils/auth";
 import { useState, useEffect } from "react";
-import { fetchFiles } from "@/services/fetchFiles";
+import { fetchFiles, uploadFile } from "@/services/fetchFiles";
 
-interface File {
+interface DisplayFile {
   id: string;
   fileName: string;
   fileSize: number;
 }
 
 const JsonFiles = () => {
-  const [files, setFiles] = useState<File[]>([]);
+  const [files, setFiles] = useState<DisplayFile[]>([]);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
   const handleFetchFiles = async () => {
     let userId = "";
@@ -22,12 +23,46 @@ const JsonFiles = () => {
 
       if (profile) {
         userId = profile.id;
-      } else {
-        console.error("User is not logged in.");
       }
 
       const fetchedFiles = await fetchFiles(userId);
       setFiles(fetchedFiles);
+    } else {
+      console.error("User is not logged in.");
+    }
+  };
+
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files[0]) {
+      setSelectedFile(event.target.files[0]);
+    }
+  };
+
+  const handleUploadFile = async () => {
+    if (!selectedFile) {
+      console.error("No file selected.");
+      return;
+    }
+
+    let userId = "";
+
+    if (auth.loggedIn()) {
+      const profile = auth.getProfile();
+
+      if (profile) {
+        userId = profile.id;
+      }
+
+      try {
+        await uploadFile(selectedFile, userId);
+
+        handleFetchFiles();
+        setSelectedFile(null);
+      } catch (error) {
+        console.error("Error uploading files:", error);
+      }
+    } else {
+      console.error("User is not logged in.");
     }
   };
 
@@ -51,16 +86,18 @@ const JsonFiles = () => {
           type="file"
           accept="application/json"
           className="p-2 border border-gray-300 rounded"
+          onChange={handleFileChange}
         />
         <FontAwesomeIcon
           icon={faCheck}
           className="hover:text[grey] cursor-pointer ml-6"
+          onClick={handleUploadFile}
         />
       </div>
 
       {files.length === 0 ? (
         <div className="bg-[#FAFAF8] w-1/4 p-5 rounded shadow-md my-3">
-          im sorry
+          No files uploaded.
         </div>
       ) : (
         files.map((file) => (
