@@ -7,6 +7,7 @@ import AuthGuard from "./components/AuthGuard.tsx";
 
 import Home from "./pages/Home.tsx";
 import JsonFiles from "./pages/JsonFiles.tsx";
+import Feedback from "./pages/Feedback.tsx";
 import Login from "./pages/Login.tsx";
 import Signup from "./pages/Signup.tsx";
 import ErrorPage from "./pages/ErrorPage.tsx";
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
       {
         path: "/json-files",
         element: <JsonFiles />
+      },
+      {
+        path: "/feedback",
+        element: <Feedback />
       },
       {
         path: "/login",
