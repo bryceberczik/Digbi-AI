@@ -1,7 +1,10 @@
 import chokidar from "chokidar";
 import path from "path";
 
-const watcher = chokidar.watch(path.join(__dirname, "../../db"), {
+const audioDir = path.join(__dirname, "../../db/audio");
+const jsonDir = path.join(__dirname, "../../db/json");
+
+const watcher = chokidar.watch([audioDir, jsonDir], {
   persistent: true,
 });
 
