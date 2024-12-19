@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
+import { faPaperPlane, faVolumeXmark, faVolumeHigh } from "@fortawesome/free-solid-svg-icons";
 import {
   Tooltip,
   TooltipContent,
@@ -29,7 +29,7 @@ const Home = () => {
   const [files, setFiles] = useState<File[]>([]);
   const [selectedFile, setSelectedFile] = useState<string>("");
   const [dropdownOpen, setDropdownOpen] = useState(false);
-
+  const [isMuted, setIsMuted] = useState(false);
   const defaultMessage =
     "Hello, I am Digbi AI. Ask me a question and select a JSON file so I can analyze it.";
 
@@ -100,6 +100,11 @@ const Home = () => {
     return typeInterval;
   };
 
+  const handleMute = () => {
+
+    setIsMuted(!isMuted)
+  }
+
   useEffect(() => {
     let intervalID: NodeJS.Timeout | undefined;
 
@@ -150,8 +155,8 @@ const Home = () => {
       </div>
 
       {/* Chat Input Bar */}
-      <div className="w-full md:w-2/3 fixed bottom-8">
-        <div className="flex items-center border border-gray-300 rounded bg-white px-4 py-2 shadow-md">
+      <div className="w-full md:w-2/3 fixed bottom-8 flex flex-row gap-3">
+        <div className="flex items-center border border-gray-300 rounded bg-white w-[1280px] px-4 py-2 shadow-md">
           <input
             type="text"
             placeholder="Ask AI a question or make a request..."
@@ -212,6 +217,14 @@ const Home = () => {
             onClick={handleSubmit}
           >
             <FontAwesomeIcon icon={faPaperPlane} />
+          </button>
+        </div>
+        
+        <div>
+          <button className="custom-mute-btn" onClick={() => {
+            handleMute()
+          }}>
+            {isMuted ? <FontAwesomeIcon icon={faVolumeXmark} className="text-[#6B7280] hover:text-[#374151]" /> : <FontAwesomeIcon icon={faVolumeHigh} className="text-[#6B7280] hover:text-[#374151]" />}
           </button>
         </div>
       </div>
