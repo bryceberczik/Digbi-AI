@@ -1,5 +1,9 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPaperPlane, faVolumeXmark, faVolumeHigh } from "@fortawesome/free-solid-svg-icons";
+import {
+  faPaperPlane,
+  faVolumeXmark,
+  faVolumeHigh,
+} from "@fortawesome/free-solid-svg-icons";
 import {
   Tooltip,
   TooltipContent,
@@ -101,9 +105,8 @@ const Home = () => {
   };
 
   const handleMute = () => {
-
-    setIsMuted(!isMuted)
-  }
+    setIsMuted(!isMuted);
+  };
 
   useEffect(() => {
     let intervalID: NodeJS.Timeout | undefined;
@@ -122,7 +125,6 @@ const Home = () => {
   }, []);
 
   useEffect(() => {
-    console.log("Audio is here.");
     if (audioUrl) {
       const audio = new Audio(audioUrl);
       audio.play();
@@ -219,12 +221,25 @@ const Home = () => {
             <FontAwesomeIcon icon={faPaperPlane} />
           </button>
         </div>
-        
+
         <div>
-          <button className="custom-mute-btn" onClick={() => {
-            handleMute()
-          }}>
-            {isMuted ? <FontAwesomeIcon icon={faVolumeXmark} className="text-[#6B7280] hover:text-[#374151]" /> : <FontAwesomeIcon icon={faVolumeHigh} className="text-[#6B7280] hover:text-[#374151]" />}
+          <button
+            className="custom-mute-btn"
+            onClick={() => {
+              handleMute();
+            }}
+          >
+            {isMuted ? (
+              <FontAwesomeIcon
+                icon={faVolumeXmark}
+                className="text-[#6B7280] hover:text-[#374151]"
+              />
+            ) : (
+              <FontAwesomeIcon
+                icon={faVolumeHigh}
+                className="text-[#6B7280] hover:text-[#374151]"
+              />
+            )}
           </button>
         </div>
       </div>
