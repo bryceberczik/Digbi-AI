@@ -21,6 +21,7 @@ interface File {
 }
 
 const Home = () => {
+  const [username, setUsername] = useState<string>("");
   const [audioUrl, setAudioUrl] = useState<string | null>(null);
   const [AIResponse, setAIResponse] = useState<string>("");
   const [displayedText, setDisplayedText] = useState<string>("");
@@ -30,7 +31,7 @@ const Home = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const defaultMessage =
-    "Hello, I'm Digbi AI! How can I assist you today? Feel free to ask about any JSON data in the database and I will review it for you!";
+    "Hello, I am Digbi AI. Ask me a question and select a JSON file so I can analyze it.";
 
   const truncateText = (text: string) => {
     return text.length > 18 ? text.substring(0, 18) + "..." : text;
@@ -43,6 +44,7 @@ const Home = () => {
       const profile = auth.getProfile();
 
       if (profile) {
+        setUsername(profile.username);
         userId = profile.id;
       } else {
         console.error("User is not logged in.");
@@ -82,12 +84,13 @@ const Home = () => {
   };
 
   const handleTypingAnimation = (message: string) => {
-    setDisplayedText(message[0]);
     let i = 0;
+    let currentText = "";
 
     const typeInterval = setInterval(() => {
-      if (i < message.length - 1) {
-        setDisplayedText((prev) => prev + message[i]);
+      if (i < message.length) {
+        currentText += message[i];
+        setDisplayedText(currentText);
         i++;
       } else {
         clearInterval(typeInterval);
@@ -133,7 +136,7 @@ const Home = () => {
         width={300}
         className="absolute top-5 right-10"
       />
-      <h1 className="text-4xl text-slate-700 mb-12">Welcome, TestUser.</h1>
+      <h1 className="text-4xl text-slate-700 mb-12">Welcome, {username}.</h1>
       {/* 3D Model */}
       <div className="w-full h-[400px] mb-20">
         <GeoComp />
