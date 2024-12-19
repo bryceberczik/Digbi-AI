@@ -3,7 +3,7 @@ import { faX, faCheck } from "@fortawesome/free-solid-svg-icons";
 
 import auth from "@/utils/auth";
 import { useState, useEffect } from "react";
-import { fetchFiles, uploadFile } from "@/services/fetchFiles";
+import { fetchFiles, uploadFile, removeFile } from "@/services/fetchFiles";
 
 interface DisplayFile {
   id: string;
@@ -66,6 +66,15 @@ const JsonFiles = () => {
     }
   };
 
+  const handleRemoveFile = async (fileId: string) => {
+    try {
+      await removeFile(fileId);
+      handleFetchFiles();
+    } catch (error) {
+      console.error("Error uploading files:", error);
+    }
+  };
+
   useEffect(() => {
     handleFetchFiles();
   }, []);
@@ -115,6 +124,7 @@ const JsonFiles = () => {
               <FontAwesomeIcon
                 icon={faX}
                 className="hover:text-[grey] cursor-pointer mr-2"
+                onClick={() => handleRemoveFile(file.id)}
               />
             </div>
           </div>
