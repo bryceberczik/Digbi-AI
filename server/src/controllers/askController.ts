@@ -112,7 +112,10 @@ export const askQuestion = async (
 
     const polly = new AWS.Polly();
     const speechParams = {
-      Text: result.explanation || "Unable to generate a response.",
+      Text:
+        result.explanation ||
+        rawResponse ||
+        "Sorry, I can not generate speech at this time. Please reach out to our development team.",
       OutputFormat: "mp3",
       VoiceId: "Joanna",
     };
