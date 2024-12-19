@@ -1,5 +1,9 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPaperPlane, faVolumeXmark, faVolumeHigh } from "@fortawesome/free-solid-svg-icons";
+import {
+  faPaperPlane,
+  faVolumeXmark,
+  faVolumeHigh,
+} from "@fortawesome/free-solid-svg-icons";
 import {
   Tooltip,
   TooltipContent,
@@ -30,6 +34,7 @@ const Home = () => {
   const [selectedFile, setSelectedFile] = useState<string>("");
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
+
   const defaultMessage =
     "Hello, I am Digbi AI. Ask me a question and select a JSON file so I can analyze it.";
 
@@ -67,7 +72,11 @@ const Home = () => {
   };
 
   const toggleDropdown = () => {
-    setDropdownOpen((prev) => !prev);
+    setDropdownOpen(!dropdownOpen);
+  };
+
+  const toggleTTS = () => {
+    setIsMuted(!isMuted);
   };
 
   const handleSubmit = async () => {
@@ -100,11 +109,6 @@ const Home = () => {
     return typeInterval;
   };
 
-  const handleMute = () => {
-
-    setIsMuted(!isMuted)
-  }
-
   useEffect(() => {
     let intervalID: NodeJS.Timeout | undefined;
 
@@ -122,12 +126,25 @@ const Home = () => {
   }, []);
 
   useEffect(() => {
-    console.log("Audio is here.");
+    let audio: any;
+
     if (audioUrl) {
-      const audio = new Audio(audioUrl);
-      audio.play();
+      audio = new Audio(audioUrl);
+
+      if (isMuted === true) {
+        audio.pause();
+      } else {
+        audio.play();
+      }
     }
-  }, [audioUrl]);
+
+    return () => {
+      if (audio) {
+        audio.pause();
+        audio.currentTime = 0;
+      }
+    };
+  }, [audioUrl, isMuted]);
 
   useEffect(() => {
     handleFetchFiles();
@@ -219,12 +236,25 @@ const Home = () => {
             <FontAwesomeIcon icon={faPaperPlane} />
           </button>
         </div>
-        
+
         <div>
-          <button className="custom-mute-btn" onClick={() => {
-            handleMute()
-          }}>
-            {isMuted ? <FontAwesomeIcon icon={faVolumeXmark} className="text-[#6B7280] hover:text-[#374151]" /> : <FontAwesomeIcon icon={faVolumeHigh} className="text-[#6B7280] hover:text-[#374151]" />}
+          <button
+            className="custom-mute-btn"
+            onClick={() => {
+              toggleTTS();
+            }}
+          >
+            {isMuted ? (
+              <FontAwesomeIcon
+                icon={faVolumeXmark}
+                className="text-[#6B7280] hover:text-[#374151]"
+              />
+            ) : (
+              <FontAwesomeIcon
+                icon={faVolumeHigh}
+                className="text-[#6B7280] hover:text-[#374151]"
+              />
+            )}
           </button>
         </div>
       </div>
