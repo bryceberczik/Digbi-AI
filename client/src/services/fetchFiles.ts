@@ -10,9 +10,24 @@ export const fetchFiles = async (userId: string) => {
   }
 };
 
-export const uploadFile = async (file: any, userId: string) => {
+export const uploadFile = async (file: File, userId: string) => {
   try {
-    const response = await axios.get(`http://localhost:3001/file/upload`);
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("userId", userId);
+
+    const response = await axios.post(
+      `http://localhost:3001/file/upload`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+
+    console.log(response.data);
+    return response.data;
   } catch (error) {
     console.error("Error uploading JSON file:", error);
   }
