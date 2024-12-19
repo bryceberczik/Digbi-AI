@@ -93,7 +93,7 @@ const JsonFiles = () => {
       </div>
 
       {files.length === 0 ? (
-        <div className="bg-[#FAFAF8] w-1/4 p-5 rounded shadow-md my-3">
+        <div className="bg-[#FAFAF8] w-1/5 p-5 rounded shadow-md my-3 flex justify-center">
           No files uploaded.
         </div>
       ) : (
