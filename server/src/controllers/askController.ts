@@ -143,7 +143,7 @@ export const askQuestion = async (
 
     setTimeout(() => {
       fs.unlinkSync(audioFilePath);
-    }, 45000);
+    }, 1000);
   } catch (error: unknown) {
     if (error instanceof Error) {
       console.error("Error:", error.message);

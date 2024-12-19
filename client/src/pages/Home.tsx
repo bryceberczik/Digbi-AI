@@ -92,7 +92,7 @@ const Home = () => {
       } else {
         clearInterval(typeInterval);
       }
-    }, 10); // In milliseconds.
+    }, 20); // In milliseconds.
 
     return typeInterval;
   };
