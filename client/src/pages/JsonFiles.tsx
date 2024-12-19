@@ -3,7 +3,9 @@ import { faX, faCheck } from "@fortawesome/free-solid-svg-icons";
 
 import auth from "@/utils/auth";
 import { useState, useEffect } from "react";
-import { fetchFiles, uploadFile, removeFile } from "@/services/fetchFiles";
+import { fetchFiles } from "@/services/file/fetchFiles";
+import { uploadFile } from "@/services/file/uploadFile";
+import { removeFile } from "@/services/file/removeFile";
 
 interface DisplayFile {
   id: string;
