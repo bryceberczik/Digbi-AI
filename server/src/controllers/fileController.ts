@@ -6,7 +6,7 @@ import fs from "fs";
 export const getFiles = async (_req: Request, res: Response) => {
   try {
     const files = await File.findAll({
-      attributes: ["id", "fileName"],
+      attributes: ["id", "fileName", "fileSize"],
     });
     res.json(files);
   } catch (error) {
@@ -22,7 +22,7 @@ export const getUserFiles = async (req: Request, res: Response) => {
   try {
     const userFiles = await File.findAll({
       where: { userId: id },
-      attributes: ["id", "fileName"],
+      attributes: ["id", "fileName", "fileSize"],
     });
     res.json(userFiles);
   } catch (error) {
