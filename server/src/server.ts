@@ -4,6 +4,7 @@ import sequelize from "./config/connection";
 import routes from "./routes/index";
 import dotenv from "dotenv";
 import path from "path";
+import "./config/fileWatcher";
 
 dotenv.config();
 
