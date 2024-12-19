@@ -32,3 +32,13 @@ export const uploadFile = async (file: File, userId: string) => {
     console.error("Error uploading JSON file:", error);
   }
 };
+
+export const removeFile = async (fileId: string) => {
+  try {
+    const response = await axios.delete(
+      `https://localhost:3001/file/remove/${fileId}`
+    );
+  } catch (error) {
+    console.error("Error removing JSON file:", error);
+  }
+};
