@@ -117,7 +117,8 @@ export const askQuestion = async (
         rawResponse ||
         "Sorry, I can not generate speech at this time. Please reach out to our development team.",
       OutputFormat: "mp3",
-      VoiceId: "Joanna",
+      VoiceId: "Joanna", // or Salli
+      Engine: "neural",
     };
 
     const speechData = await polly.synthesizeSpeech(speechParams).promise();
@@ -142,7 +143,7 @@ export const askQuestion = async (
 
     setTimeout(() => {
       fs.unlinkSync(audioFilePath);
-    }, 120000);
+    }, 45000);
   } catch (error: unknown) {
     if (error instanceof Error) {
       console.error("Error:", error.message);
