@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faX, faCheck } from "@fortawesome/free-solid-svg-icons";
 
 import auth from "@/utils/auth";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { fetchFiles } from "@/services/fetchFiles";
 
 interface File {
@@ -31,10 +31,14 @@ const JsonFiles = () => {
     }
   };
 
+  useEffect(() => {
+    handleFetchFiles();
+  }, []);
+
   return (
     <div className="flex flex-col items-center">
       <div>
-        <h1 className="text-center mt-[100px] text-[40px] text-[#334155]">
+        <h1 className="font-bold text-gray-800 text-center mt-[100px] text-[40px]">
           Your files
         </h1>
         <h3 className="text-center text-[25px] text-[#334155]">
@@ -50,60 +54,35 @@ const JsonFiles = () => {
         />
         <FontAwesomeIcon
           icon={faCheck}
-          className="hover:text[grey] cursor-pointer"
+          className="hover:text[grey] cursor-pointer ml-6"
         />
       </div>
 
-      <div className="bg-[#FAFAF8] w-1/4 p-5 rounded shadow-md my-3">
-        <div className="flex flex-row justify-between items-center">
-          <h1>alien_planets.json</h1>
-          <h1>Size: 10kb</h1>
-          <FontAwesomeIcon
-            icon={faX}
-            className="hover:text-[grey] cursor-pointer"
-          />
+      {files.length === 0 ? (
+        <div className="bg-[#FAFAF8] w-1/4 p-5 rounded shadow-md my-3">
+          im sorry
         </div>
-      </div>
-      <div className="bg-[#FAFAF8] w-1/4 p-5 rounded shadow-md my-3">
-        <div className="flex flex-row justify-between items-center">
-          <h1>alien_planets.json</h1>
-          <h1>Size: 10kb</h1>
-          <FontAwesomeIcon
-            icon={faX}
-            className="hover:text-[grey] cursor-pointer"
-          />
-        </div>
-      </div>
-      <div className="bg-[#FAFAF8] w-1/4 p-5 rounded shadow-md my-3">
-        <div className="flex flex-row justify-between items-center">
-          <h1>alien_planets.json</h1>
-          <h1>Size: 10kb</h1>
-          <FontAwesomeIcon
-            icon={faX}
-            className="hover:text-[grey] cursor-pointer"
-          />
-        </div>
-      </div>
-      <div className="bg-[#FAFAF8] w-1/4 p-5 rounded shadow-md my-3">
-        <div className="flex flex-row justify-between items-center">
-          <h1>alien_planets.json</h1>
-          <h1>Size: 10kb</h1>
-          <FontAwesomeIcon
-            icon={faX}
-            className="hover:text-[grey] cursor-pointer"
-          />
-        </div>
-      </div>
-      <div className="bg-[#FAFAF8] w-1/4 p-5 rounded shadow-md my-3">
-        <div className="flex flex-row justify-between items-center">
-          <h1>alien_planets.json</h1>
-          <h1>Size: 10kb</h1>
-          <FontAwesomeIcon
-            icon={faX}
-            className="hover:text-[grey] cursor-pointer"
-          />
-        </div>
-      </div>
+      ) : (
+        files.map((file) => (
+          <div
+            key={file.id}
+            className="bg-[#FAFAF8] w-1/4 p-5 rounded shadow-md my-3"
+          >
+            <div className="flex flex-row justify-between items-center">
+              <h1>
+                <span className="font-bold">File:</span> {file.fileName}
+              </h1>
+              <h1>
+                <span className="font-bold">Size:</span> {file.fileSize}B
+              </h1>
+              <FontAwesomeIcon
+                icon={faX}
+                className="hover:text-[grey] cursor-pointer"
+              />
+            </div>
+          </div>
+        ))
+      )}
     </div>
   );
 };
