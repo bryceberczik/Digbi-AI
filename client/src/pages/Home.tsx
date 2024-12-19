@@ -21,6 +21,7 @@ interface File {
 }
 
 const Home = () => {
+  const [username, setUsername] = useState<string>("");
   const [audioUrl, setAudioUrl] = useState<string | null>(null);
   const [AIResponse, setAIResponse] = useState<string>("");
   const [displayedText, setDisplayedText] = useState<string>("");
@@ -43,6 +44,7 @@ const Home = () => {
       const profile = auth.getProfile();
 
       if (profile) {
+        setUsername(profile.username);
         userId = profile.id;
       } else {
         console.error("User is not logged in.");
@@ -133,7 +135,7 @@ const Home = () => {
         width={300}
         className="absolute top-5 right-10"
       />
-      <h1 className="text-4xl text-slate-700 mb-12">Welcome, TestUser.</h1>
+      <h1 className="text-4xl text-slate-700 mb-12">Welcome, {username}.</h1>
       {/* 3D Model */}
       <div className="w-full h-[400px] mb-20">
         <GeoComp />
