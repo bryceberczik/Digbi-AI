@@ -119,11 +119,7 @@ export const askQuestion = async (
 
     const speechData = await polly.synthesizeSpeech(speechParams).promise();
     const audioFileName = `response_${Date.now()}.mp3`;
-    const audioFilePath = path.join(
-      __dirname,
-      "../../db/audio",
-      audioFileName
-    );
+    const audioFilePath = path.join(__dirname, "../../db/audio", audioFileName);
 
     fs.writeFileSync(audioFilePath, speechData.AudioStream as Buffer);
 
@@ -140,6 +136,10 @@ export const askQuestion = async (
       formattedResponse: result,
       audioUrl: audioUrl,
     });
+
+    setTimeout(() => {
+      fs.unlinkSync(audioFilePath);
+    }, 120000);
   } catch (error: unknown) {
     if (error instanceof Error) {
       console.error("Error:", error.message);
