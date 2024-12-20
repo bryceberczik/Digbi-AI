@@ -1,3 +1,4 @@
+import "../styles/authpages.css";
 import { useState, FormEvent, ChangeEvent } from "react";
 import { Link } from "react-router-dom";
 import Auth from '../utils/auth';  // Import the Auth utility for managing authentication state
@@ -52,7 +53,7 @@ const Login = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 py-16 px-6 sm:px-8 lg:px-12">
       <div className="max-w-lg w-full space-y-12">
-      <img src={BrandLogo} alt="brand logo" width={300} className="mx-auto pb-10"/>
+      <img src={BrandLogo} alt="brand logo" width={300} className="hide-on-mobile mx-auto pb-10"/>
         <div>
           <h2 className="mt-6 text-center text-4xl font-bold text-gray-800">
             Welcome Back
