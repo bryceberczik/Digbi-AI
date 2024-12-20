@@ -1,3 +1,4 @@
+import "../styles/feedback.css";
 import { useState } from "react";
 import Swal from "sweetalert2";
 
@@ -34,7 +35,7 @@ const Feedback = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#F3F4F6] py-16 px-6 sm:px-8 lg:px-12">
+    <div className="mq-feedback-heading min-h-screen flex items-center justify-center bg-[#F3F4F6] py-16 px-6 sm:px-8 lg:px-12">
       <div className="max-w-lg w-full space-y-12">
         <h2 className="mt-6 text-center text-4xl font-bold text-gray-800">
           Submit Your Feedback

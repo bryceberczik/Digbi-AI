@@ -1,5 +1,5 @@
+import "../styles/settings.css";
 import { useState } from "react";
-
 import { deleteUser } from "@/services/deleteUser";
 import auth from "@/utils/auth";
 const Settings = () => {
@@ -25,7 +25,7 @@ const Settings = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#F3F4F6] py-16 px-6 sm:px-8 lg:px-12">
+    <div className="mq-settings min-h-screen flex items-center justify-center bg-[#F3F4F6] py-16 px-6 sm:px-8 lg:px-12">
       <div className="max-w-lg w-full space-y-12">
         <h2 className="text-center text-4xl font-bold text-gray-800">
           Account Settings
