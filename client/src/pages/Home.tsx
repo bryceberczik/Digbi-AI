@@ -13,9 +13,8 @@ import {
 
 import auth from "@/utils/auth";
 import { useState, useEffect } from "react";
-import { fetchFiles } from "@/services/fetchFiles";
+import { fetchFiles } from "@/services/file/fetchFiles";
 import { promptAI } from "@/services/promptAI";
-import BrandLogo from "../images/Digbi-AI.png";
 
 import GeoComp from "@/components/GeoSphere";
 
