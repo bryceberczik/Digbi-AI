@@ -1,6 +1,11 @@
 import express from "express";
 import upload from "../../config/upload";
-import { getFiles, getUserFiles, uploadFile, removeFile } from "../../controllers/fileController";
+import {
+  getFiles,
+  getUserFiles,
+  uploadFile,
+  removeFile,
+} from "../../controllers/fileController";
 
 const router = express.Router();
 

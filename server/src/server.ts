@@ -15,12 +15,12 @@ const PORT = process.env.PORT || 3001;
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static('../client/dist'));
+app.use(express.static("../client/dist"));
 app.use("/audio", express.static(path.join(__dirname, "../db/audio")));
 
 app.use(routes);
 
-app.use(express.static('../client/dist'));
+app.use(express.static("../client/dist"));
 
 sequelize.sync({ force: forceDBRefresh }).then(() => {
   app.listen(PORT, () => {
