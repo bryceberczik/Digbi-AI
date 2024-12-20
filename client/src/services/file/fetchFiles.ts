@@ -1,5 +1,7 @@
 import axios from "axios";
 
+// Get rid of 'http://localhost:3001' part. Leave the first slash like in routes.
+
 export const fetchFiles = async (userId: string) => {
   try {
     const response = await axios.get(`http://localhost:3001/file/${userId}`);

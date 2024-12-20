@@ -6,17 +6,19 @@ import auth from "./utils/auth";
 
 const App = () => {
   const isLoggedIn = auth.loggedIn();
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 769);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth < 769);
+      setIsMobile(window.innerWidth <= 768);
     };
 
+    handleResize();
     window.addEventListener("resize", handleResize);
+
     return () => window.removeEventListener("resize", handleResize);
   }, []);
-
+  
   return (
     <div>
       {isLoggedIn && (isMobile ? <MobileHeader /> : <Sidebar />)}

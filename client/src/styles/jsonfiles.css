@@ -1,0 +1,26 @@
+@media screen and (max-width: 768px) {
+  .hide-on-mobile {
+    display: none;
+  }
+
+  .mq-heading {
+    margin-top: 50px;
+  }
+
+  .mq-input {
+    margin-bottom: 30px;
+  }
+
+  .mq-upload {
+    margin-left: 10px;
+  }
+
+  .mq-files {
+    padding-right: 20px;
+    width: auto;
+  }
+
+  .mq-remove {
+    padding-left: 80px;
+  }
+}

@@ -1,7 +1,7 @@
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import './styles/index.css'
-import App from './App.tsx'
+import "./styles/index.css";
+import App from "./App.tsx";
 
 import { AuthGuard, LoggedInAuth } from "./components/AuthGuard.tsx";
 
@@ -15,7 +15,7 @@ import ErrorPage from "./pages/ErrorPage.tsx";
 
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: "/",
     element: <App />,
     errorElement: <ErrorPage />,
     children: [
@@ -25,7 +25,7 @@ const router = createBrowserRouter([
           <AuthGuard>
             <Home />
           </AuthGuard>
-        )
+        ),
       },
       {
         path: "/json-files",
@@ -33,7 +33,7 @@ const router = createBrowserRouter([
           <AuthGuard>
             <JsonFiles />
           </AuthGuard>
-        )
+        ),
       },
       {
         path: "/feedback",
@@ -41,7 +41,7 @@ const router = createBrowserRouter([
           <AuthGuard>
             <Feedback />
           </AuthGuard>
-        )
+        ),
       },
       {
         path: "/settings",
@@ -49,7 +49,7 @@ const router = createBrowserRouter([
           <AuthGuard>
             <Settings />
           </AuthGuard>
-        )
+        ),
       },
       {
         path: "/login",
@@ -57,7 +57,7 @@ const router = createBrowserRouter([
           <LoggedInAuth>
             <Login />
           </LoggedInAuth>
-        )
+        ),
       },
       {
         path: "/signup",
@@ -65,15 +65,13 @@ const router = createBrowserRouter([
           <LoggedInAuth>
             <Signup />
           </LoggedInAuth>
-        )
-      }
-    ]
-  }
+        ),
+      },
+    ],
+  },
 ]);
 
-const rootElement = document.getElementById('root');
+const rootElement = document.getElementById("root");
 if (rootElement) {
-  ReactDOM.createRoot(rootElement).render(
-      <RouterProvider router={router} />
-  );
+  ReactDOM.createRoot(rootElement).render(<RouterProvider router={router} />);
 }

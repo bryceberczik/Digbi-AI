@@ -37,7 +37,7 @@ export const createUser = async (req: Request, res: Response) => {
     if (error.name === "SequelizeUniqueConstraintError") {
       console.log("Duplicate entry for username or email");
     }
-  
+
     res.status(500).json({ message: error.message });
   }
 };
@@ -54,7 +54,7 @@ export const updateUser = async (req: Request, res: Response) => {
       await user.save();
       res.json(user);
     } else {
-      res.status(404).json({ message: 'User not found' });
+      res.status(404).json({ message: "User not found" });
     }
   } catch (error: any) {
     res.status(400).json({ message: error.message });

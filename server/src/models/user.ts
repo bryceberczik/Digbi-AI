@@ -66,7 +66,7 @@ export function UserFactory(sequelize: Sequelize): typeof User {
           },
         },
       },
-    },    
+    },
     {
       tableName: "users",
       sequelize,

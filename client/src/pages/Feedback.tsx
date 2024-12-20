@@ -1,41 +1,41 @@
+import "../styles/feedback.css";
 import { useState } from "react";
 import Swal from "sweetalert2";
 
 const Feedback = () => {
-    const [result, setResult] = useState("");
+  const [result, setResult] = useState("");
 
-    const onSubmit = async (event: any) => {
-      event.preventDefault();
-      setResult("Sending....");
-      const formData = new FormData(event.target);
-  
-      formData.append("access_key", "73a6d637-0dd7-4625-ba1a-3c217cac240a");
-  
-      const response = await fetch("https://api.web3forms.com/submit", {
-        method: "POST",
-        body: formData
+  const onSubmit = async (event: any) => {
+    event.preventDefault();
+    setResult("Sending....");
+    const formData = new FormData(event.target);
+
+    formData.append("access_key", "73a6d637-0dd7-4625-ba1a-3c217cac240a");
+
+    const response = await fetch("https://api.web3forms.com/submit", {
+      method: "POST",
+      body: formData,
+    });
+
+    const data = await response.json();
+
+    if (data.success) {
+      setResult("Form Submitted Successfully");
+      event.target.reset();
+
+      Swal.fire({
+        title: "Success!",
+        text: "Your feedback has been submitted!",
+        icon: "success",
       });
-  
-      const data = await response.json();
-  
-      if (data.success) {
-        setResult("Form Submitted Successfully");
-        event.target.reset();
-
-        Swal.fire({
-            title: "Success!",
-            text: "Your feedback has been submitted!",
-            icon: "success"
-          });
-      } else {
-        console.log("Error", data);
-        setResult(data.message);
-      }
-    };
-  
+    } else {
+      console.log("Error", data);
+      setResult(data.message);
+    }
+  };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#F3F4F6] py-16 px-6 sm:px-8 lg:px-12">
+    <div className="mq-feedback-heading min-h-screen flex items-center justify-center bg-[#F3F4F6] py-16 px-6 sm:px-8 lg:px-12">
       <div className="max-w-lg w-full space-y-12">
         <h2 className="mt-6 text-center text-4xl font-bold text-gray-800">
           Submit Your Feedback
@@ -78,7 +78,6 @@ const Feedback = () => {
                 placeholder="Enter last name"
                 required
               />
-
             </div>
             <div>
               <label
@@ -95,7 +94,6 @@ const Feedback = () => {
                 placeholder="Enter email"
                 required
               />
-
             </div>
             <div>
               <label
@@ -112,7 +110,6 @@ const Feedback = () => {
                 rows={4}
                 required
               />
-
             </div>
           </div>
 

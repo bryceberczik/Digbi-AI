@@ -1,3 +1,4 @@
+import "../styles/jsonfiles.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faX, faCheck } from "@fortawesome/free-solid-svg-icons";
 
@@ -92,7 +93,7 @@ const JsonFiles = () => {
   return (
     <div className="flex flex-col items-center">
       <div>
-        <h1 className="font-bold text-gray-800 text-center mt-[100px] text-[40px]">
+        <h1 className="mq-heading font-bold text-gray-800 text-center mt-[100px] text-[40px]">
           Your files
         </h1>
         <h3 className="text-center text-[25px] text-[#334155]">
@@ -100,7 +101,7 @@ const JsonFiles = () => {
         </h3>
       </div>
 
-      <div className="flex flex-row items-center justify-center my-10 bg-gray-100 gap-2">
+      <div className="mq-input flex flex-row items-center justify-center my-10 bg-gray-100 gap-2">
         <input
           type="file"
           accept="application/json"
@@ -109,7 +110,7 @@ const JsonFiles = () => {
         />
         <FontAwesomeIcon
           icon={faCheck}
-          className="hover:text[grey] cursor-pointer ml-6"
+          className="mq-upload hover:text[grey] cursor-pointer ml-6"
           onClick={handleUploadFile}
         />
       </div>
@@ -122,18 +123,18 @@ const JsonFiles = () => {
         files.map((file) => (
           <div
             key={file.id}
-            className="bg-[#FAFAF8] w-1/4 p-5 rounded shadow-md my-3"
+            className="mq-files bg-[#FAFAF8] w-1/4 p-5 rounded shadow-md my-3"
           >
             <div className="flex flex-row justify-between items-center">
               <h1>
                 <span className="font-bold">File:</span> {file.fileName}
               </h1>
-              <h1>
+              <h1 className="hide-on-mobile">
                 <span className="font-bold">Size:</span> {file.fileSize} Bytes
               </h1>
               <FontAwesomeIcon
                 icon={faX}
-                className="hover:text-[grey] cursor-pointer mr-2"
+                className=" mq-remove hover:text-[grey] cursor-pointer mr-2"
                 onClick={() => handleRemoveFile(file.id)}
               />
             </div>

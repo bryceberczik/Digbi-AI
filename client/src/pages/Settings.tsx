@@ -1,23 +1,22 @@
+import "../styles/settings.css";
 import { useState } from "react";
-
-import { deleteUser } from "@/services/DeleteUser";
+import { deleteUser } from "@/services/deleteUser";
 import auth from "@/utils/auth";
 const Settings = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleDeleteAccount = async () => {
-    
     if (auth.loggedIn()) {
-        const profile = auth.getProfile()
+      const profile = auth.getProfile();
 
-        if (profile) {
-            const userId = profile.id;
-            await deleteUser(userId);
-            localStorage.removeItem("id_token")
-            window.location.reload();
-        }
+      if (profile) {
+        const userId = profile.id;
+        await deleteUser(userId);
+        localStorage.removeItem("id_token");
+        window.location.reload();
+      }
     } else {
-        console.error("User is not logged in")
+      console.error("User is not logged in");
     }
   };
 
@@ -26,7 +25,7 @@ const Settings = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#F3F4F6] py-16 px-6 sm:px-8 lg:px-12">
+    <div className="mq-settings min-h-screen flex items-center justify-center bg-[#F3F4F6] py-16 px-6 sm:px-8 lg:px-12">
       <div className="max-w-lg w-full space-y-12">
         <h2 className="text-center text-4xl font-bold text-gray-800">
           Account Settings

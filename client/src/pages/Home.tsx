@@ -1,3 +1,4 @@
+import "../styles/home.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faPaperPlane,
@@ -26,7 +27,6 @@ interface File {
 }
 
 const Home = () => {
-
   // * UseStates * //
 
   const [username, setUsername] = useState<string>("");
@@ -161,27 +161,96 @@ const Home = () => {
   // * Return Statement * //
 
   return (
-    <div className="flex flex-col items-center justify-center px-4">
-      <h1 className="med-wel text-4xl text-slate-700 mt-[25px] mb-12">Welcome, {username}.</h1>
+    <div className="flex flex-col items-center justify-center h-screen px-4">
+      <h1 className="hide-on-mobile text-4xl text-slate-700 mb-12">
+        Welcome, {username}.
+      </h1>
       {/* 3D Model */}
-      <div className="med-geo w-full h-[400px] mb-20">
+      <div className="mq-geosphere med-geo w-full h-[400px] mb-20">
         <GeoComp loading={AIResponse === "Loading..."} />
       </div>
 
       {/* AI Response Bubble */}
-      <div className="w-full md:w-1/2 mb-16">
+      <div className="mq-response-bubble w-full md:w-1/2 mb-16">
         <div className="relative bg-[#ffffff] text-gray-700 p-4 rounded-2xl shadow-md text-center">
-          <p>{displayedText}</p>
+          <p className="mq-response-text">{displayedText}</p>
         </div>
       </div>
 
       {/* Chat Input Bar */}
-      <div className="w-full fixed bottom-8 flex flex-col gap-3 md:flex-row items-center justify-center md:w-[1280px] px-4 md:px-8">
-        <div className="flex flex-col items-center gap-3 w-full md:w-[600px] lg:w-[700px]">
-          {/* Mute Button on top */}
+      <div className="mq-input-bar w-full md:w-2/3 fixed bottom-8 flex flex-row gap-3">
+        <div className="flex items-center border border-gray-300 rounded bg-white w-[1280px] px-4 py-2 shadow-md">
+          <input
+            type="text"
+            placeholder="Ask Digbi AI a question."
+            className="flex-1 focus:outline-none"
+            maxLength={500}
+            value={userInput}
+            onChange={(e) => setUserInput(e.target.value)}
+          />
+
+          <div className="relative">
+            <button
+              className="mq-input-bar-button ml-8 bg-gray-200 px-4 py-1 rounded text-gray-700 hover:bg-gray-300"
+              onClick={toggleDropdown}
+              onBlur={handleBlur}
+            >
+              Select JSON
+            </button>
+
+            {/* Dropdown Menu */}
+            {dropdownOpen && (
+              <div
+                id="dropdown-group"
+                className="mq-dropdown-group absolute bottom-full mt-2 bg-white shadow-lg rounded w-48 mb-2"
+              >
+                {files.length === 0 ? (
+                  <div className="p-2 text-gray-500">No files found.</div>
+                ) : (
+                  files.map((file) => (
+                    <TooltipProvider key={file.id}>
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <button
+                            key={file.id}
+                            className="w-full text-left px-4 py-2 hover:bg-gray-100"
+                            onClick={() => handleFileSelect(file.id)}
+                          >
+                            {truncateText(file.fileName)}
+                          </button>
+                        </TooltipTrigger>
+                        <TooltipContent
+                          side="right"
+                          sideOffset={10}
+                          className="border-2"
+                        >
+                          <p>{file.fileName}</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
+                  ))
+                )}
+              </div>
+            )}
+          </div>
+
+          <span className="hide-on-mobile ml-4 text-gray-400">
+            {userInput.length}/500
+          </span>
           <button
-            className="custom-mute-btn w-full bg-gray-200 p-2 rounded text-gray-700 hover:bg-gray-300 mb-2"
-            onClick={() => toggleTTS()}
+            className="mq-submit-button ml-4 text-gray-500 hover:text-gray-700"
+            onClick={handleSubmit}
+          >
+            <FontAwesomeIcon icon={faPaperPlane} />
+          </button>
+        </div>
+
+        <div>
+          <button
+            className="custom-mute-btn"
+            onClick={() => {
+              toggleTTS();
+            }}
           >
             {isMuted ? (
               <FontAwesomeIcon
@@ -195,72 +264,6 @@ const Home = () => {
               />
             )}
           </button>
-
-          {/* Input and dropdown */}
-          <div className="flex items-center border border-gray-300 rounded bg-white w-full px-4 py-2 shadow-md">
-            <input
-              type="text"
-              placeholder="Ask AI..."
-              className="flex-1 focus:outline-none max-w-[400px] md:max-w-[500px] w-full overflow-hidden overflow-ellipsis whitespace-nowrap"
-              maxLength={500}
-              value={userInput}
-              onChange={(e) => setUserInput(e.target.value)}
-              style={{ resize: "none" }}  // Disable resizing
-            />
-
-            <div className="relative">
-              <button
-                className="ml-8 bg-gray-200 px-3 py-1 text-sm rounded text-gray-700 hover:bg-gray-300"
-                onClick={toggleDropdown}
-                onBlur={handleBlur}
-              >
-                Select JSON
-              </button>
-
-              {/* Dropdown Menu */}
-              {dropdownOpen && (
-                <div
-                  id="dropdown-group"
-                  className="absolute bottom-full mt-2 bg-white shadow-lg rounded w-48 mb-2"
-                >
-                  {files.length === 0 ? (
-                    <div className="p-2 text-gray-500">No files found.</div>
-                  ) : (
-                    files.map((file) => (
-                      <TooltipProvider key={file.id}>
-                        <Tooltip>
-                          <TooltipTrigger asChild>
-                            <button
-                              key={file.id}
-                              className="w-full text-left px-4 py-2 hover:bg-gray-100"
-                              onClick={() => handleFileSelect(file.id)}
-                            >
-                              {truncateText(file.fileName)}
-                            </button>
-                          </TooltipTrigger>
-                          <TooltipContent
-                            side="right"
-                            sideOffset={10}
-                            className="border-2"
-                          >
-                            <p>{file.fileName}</p>
-                          </TooltipContent>
-                        </Tooltip>
-                      </TooltipProvider>
-                    ))
-                  )}
-                </div>
-              )}
-            </div>
-
-            <span className="ml-4 text-gray-400">{userInput.length}/500</span>
-            <button
-              className="ml-4 text-gray-500 hover:text-gray-700"
-              onClick={handleSubmit}
-            >
-              <FontAwesomeIcon icon={faPaperPlane} />
-            </button>
-          </div>
         </div>
       </div>
     </div>
