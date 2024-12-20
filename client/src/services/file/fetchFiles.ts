@@ -12,6 +12,7 @@ export const fetchFiles = async (userId: string) => {
 export const fetchAllFiles = async () => {
   try {
     const response = await axios.get(`https://localhost:3001/file`);
+    console.log(response.data);
     return response.data;
   } catch (error) {
     console.error("Error fetching all JSON files:", error);
