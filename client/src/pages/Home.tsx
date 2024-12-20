@@ -24,6 +24,9 @@ interface File {
 }
 
 const Home = () => {
+
+  // * UseStates * //
+
   const [username, setUsername] = useState<string>("");
   const [audioUrl, setAudioUrl] = useState<string | null>(null);
   const [AIResponse, setAIResponse] = useState<string>("");
@@ -36,6 +39,8 @@ const Home = () => {
 
   const defaultMessage =
     "Hello, I am Digbi AI. Ask me a question and select a JSON file so I can analyze it.";
+
+  // * Functions * //
 
   const truncateText = (text: string) => {
     return text.length > 18 ? text.substring(0, 18) + "..." : text;
@@ -108,6 +113,8 @@ const Home = () => {
     return typeInterval;
   };
 
+  // * UseEffects * //
+
   useEffect(() => {
     let intervalID: NodeJS.Timeout | undefined;
 
@@ -148,6 +155,8 @@ const Home = () => {
   useEffect(() => {
     handleFetchFiles();
   }, []);
+
+  // * Return Statement * //
 
   return (
     <div className="flex flex-col items-center justify-center h-screen px-4">
