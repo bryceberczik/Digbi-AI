@@ -3,16 +3,18 @@ import { OrbitControls, useGLTF } from "@react-three/drei";
 import { useRef } from "react";
 import * as THREE from "three";
 
-const GeoSphere = () => {
+const GeoSphere = ({ loading }: { loading: boolean }) => {
   const { scene } = useGLTF("/models/geo-sphere.glb");
   const sphereRef = useRef<THREE.Object3D>();
 
-  const amplitude = 0.2;
-  const speed = 0.5;
+  const amplitude = 0.3;
+  const baseSpeed = 0.002; // Normal speed
+  const fastSpeed = 0.05;  // Speed during loading
+
   useFrame(({ clock }) => {
     if (sphereRef.current) {
-      sphereRef.current.position.y = amplitude * Math.sin(clock.elapsedTime * speed);
-      sphereRef.current.rotation.y += 0.002;
+      sphereRef.current.position.y = amplitude * Math.sin(clock.elapsedTime * 0.5);
+      sphereRef.current.rotation.y += loading ? fastSpeed : baseSpeed;
     }
   });
 
@@ -37,28 +39,22 @@ const CameraLight = () => {
   );
 };
 
-const GeoComp = () => {
+const GeoComp = ({ loading }: { loading: boolean }) => {
   return (
     <Canvas>
-      {/* Ambient Light for even illumination */}
-      <ambientLight intensity={1}/>
-
-      {/* PointLight that follows the user's camera */}
+      <ambientLight intensity={1} />
       <CameraLight />
-      
-      {/* The GeoSphere component, which contains the moving sphere */}
-      <GeoSphere />
-      
+      <GeoSphere loading={loading} />
       <OrbitControls
-        enableZoom={false} // Disable zoom
-        enablePan={false} // Disable panning
-        enableRotate={true} // Enable rotation
-        minPolarAngle={Math.PI / 2} // Restrict vertical movement to a single plane
-        maxPolarAngle={Math.PI / 2} // Restrict vertical movement to a single plane
+        enableZoom={false}
+        enablePan={false}
+        enableRotate={true}
+        minPolarAngle={Math.PI / 2}
+        maxPolarAngle={Math.PI / 2}
         mouseButtons={{
-          LEFT: THREE.MOUSE.ROTATE, // Enable left-click for rotation
-          RIGHT: undefined, // Disable right-click
-          MIDDLE: undefined, // Disable middle-click
+          LEFT: THREE.MOUSE.ROTATE,
+          RIGHT: undefined,
+          MIDDLE: undefined,
         }}
       />
     </Canvas>
