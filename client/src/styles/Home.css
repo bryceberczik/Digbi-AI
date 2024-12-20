@@ -1,0 +1,14 @@
+@media screen and (max-width: 768px) {
+
+    .med-wel {
+
+        text-align: center;
+        font-size: 30px;
+    }
+
+    .med-geo {
+
+        height: 250px;
+    }
+
+}
