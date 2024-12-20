@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { Outlet } from "react-router-dom";
 import Sidebar from "./components/Sidebar";
+import MobileHeader from "./components/MobileHeader";
 import auth from "./utils/auth";
-import BrandLogo from "./images/Digbi-AI.png";
 
 const App = () => {
   const isLoggedIn = auth.loggedIn();
@@ -21,14 +21,8 @@ const App = () => {
 
   return (
     <div>
-      {isLoggedIn && !isMobile && <Sidebar />}
+      {isLoggedIn && (isMobile ? <MobileHeader /> : <Sidebar />)}
       <main>
-        <img
-          src={BrandLogo}
-          alt="brand logo"
-          width={300}
-          className="absolute top-5 right-10"
-        />
         <Outlet />
       </main>
     </div>
