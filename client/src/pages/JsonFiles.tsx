@@ -41,8 +41,18 @@ const JsonFiles = () => {
 
   const handleUploadFile = async () => {
     if (!selectedFile) {
-      console.error("No file selected.");
+      alert("No file selected.");
       return;
+    }
+
+    const uploadedFiles = await fetchFiles(userId);
+
+    for (let i = 0; i < uploadedFiles.length; i++) {
+      if (selectedFile.name === uploadedFiles[i].fileName) {
+        alert("Each file must have a unique name.");
+        setSelectedFile(null);
+        return;
+      }
     }
 
     try {
