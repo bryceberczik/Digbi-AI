@@ -3,13 +3,15 @@
     display: none;
   }
 
-  .mq-geosphere {
-    height: 250px;
+  .mq-home-div {
+    height: auto;
+    margin-top: 0px;
     margin-bottom: 0px;
   }
 
-  .mq-response-bubble {
-    margin-bottom: 250px;
+  .mq-geosphere {
+    height: 250px;
+    margin-bottom: 0px;
   }
 
   .mq-response-text {
