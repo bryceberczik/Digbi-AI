@@ -17,6 +17,8 @@ const JsonFiles = () => {
   const [files, setFiles] = useState<DisplayFile[]>([]);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
+  const fileLimit = 5;
+
   // userId for fetching & uploading files.
   let userId = "";
 
@@ -40,13 +42,14 @@ const JsonFiles = () => {
   };
 
   const handleUploadFile = async () => {
+    // Return if a file is not selected.
     if (!selectedFile) {
       alert("No file selected.");
       return;
     }
 
+    // Return if file does not have a unique name.
     const uploadedFiles = await fetchFiles(userId);
-
     for (let i = 0; i < uploadedFiles.length; i++) {
       if (selectedFile.name === uploadedFiles[i].fileName) {
         alert("Each file must have a unique name.");
