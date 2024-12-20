@@ -1,4 +1,4 @@
-import "../styles/home.css"
+import "../styles/home.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faPaperPlane,
@@ -25,7 +25,6 @@ interface File {
 }
 
 const Home = () => {
-
   // * UseStates * //
 
   const [username, setUsername] = useState<string>("");
@@ -161,16 +160,18 @@ const Home = () => {
 
   return (
     <div className="flex flex-col items-center justify-center h-screen px-4">
-      <h1 className="hide-on-mobile text-4xl text-slate-700 mb-12">Welcome, {username}.</h1>
+      <h1 className="hide-on-mobile text-4xl text-slate-700 mb-12">
+        Welcome, {username}.
+      </h1>
       {/* 3D Model */}
       <div className="mq-geosphere w-full h-[400px] mb-20">
         <GeoComp />
       </div>
 
       {/* AI Response Bubble */}
-      <div className="w-full md:w-1/2 mb-16">
+      <div className="mq-response-bubble w-full md:w-1/2 mb-16">
         <div className="relative bg-[#ffffff] text-gray-700 p-4 rounded-2xl shadow-md text-center">
-          <p>{displayedText}</p>
+          <p className="mq-response-text">{displayedText}</p>
         </div>
       </div>
 
@@ -231,7 +232,9 @@ const Home = () => {
             )}
           </div>
 
-          <span className="hide-on-mobile ml-4 text-gray-400">{userInput.length}/500</span>
+          <span className="hide-on-mobile ml-4 text-gray-400">
+            {userInput.length}/500
+          </span>
           <button
             className="mq-submit-button ml-4 text-gray-500 hover:text-gray-700"
             onClick={handleSubmit}

@@ -5,6 +5,11 @@
 
   .mq-geosphere {
     height: 250px;
+    margin-bottom: 0px;
+  }
+
+  .mq-response-text {
+    font-size: 15px;
   }
 
   .mq-input-bar {
