@@ -12,6 +12,8 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 
+import "../styles/Home.css";
+
 import auth from "@/utils/auth";
 import { useState, useEffect } from "react";
 import { fetchFiles } from "@/services/file/fetchFiles";
@@ -164,8 +166,8 @@ const Home = () => {
         Welcome, {username}.
       </h1>
       {/* 3D Model */}
-      <div className="mq-geosphere w-full h-[400px] mb-20">
-        <GeoComp />
+      <div className="mq-geosphere med-geo w-full h-[400px] mb-20">
+        <GeoComp loading={AIResponse === "Loading..."} />
       </div>
 
       {/* AI Response Bubble */}

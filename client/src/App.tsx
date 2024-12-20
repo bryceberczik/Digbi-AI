@@ -18,7 +18,7 @@ const App = () => {
 
     return () => window.removeEventListener("resize", handleResize);
   }, []);
-
+  
   return (
     <div>
       {isLoggedIn && (isMobile ? <MobileHeader /> : <Sidebar />)}
