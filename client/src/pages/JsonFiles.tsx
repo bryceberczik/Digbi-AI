@@ -44,12 +44,21 @@ const JsonFiles = () => {
   const handleUploadFile = async () => {
     // Return if a file is not selected.
     if (!selectedFile) {
-      alert("No file selected.");
+      alert("Please select a JSON file to upload.");
+      return;
+    }
+
+    const uploadedFiles = await fetchFiles(userId);
+
+    // Return if file limit has been reached.
+    if (uploadedFiles.length >= fileLimit) {
+      alert(
+        `You have reached the max file limit of ${fileLimit}. Remove other files to upload ${selectedFile.name}.`
+      );
       return;
     }
 
     // Return if file does not have a unique name.
-    const uploadedFiles = await fetchFiles(userId);
     for (let i = 0; i < uploadedFiles.length; i++) {
       if (selectedFile.name === uploadedFiles[i].fileName) {
         alert("Each file must have a unique name.");
