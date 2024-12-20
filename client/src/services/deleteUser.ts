@@ -5,9 +5,8 @@ export const deleteUser = async (id: string) => {
     const response = await axios.delete(
       `http://localhost:3001/api/users/${id}`
     );
-    console.log("yay it worked:", response.data);
     return response.data;
-  } catch (err: any) {
-    console.error("Error deleting user", err);
+  } catch (error) {
+    console.error("Error deleting user:", error);
   }
 };

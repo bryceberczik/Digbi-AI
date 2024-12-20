@@ -161,7 +161,7 @@ const Home = () => {
   // * Return Statement * //
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen px-4">
+    <div className="mq-home-div flex flex-col items-center justify-center h-screen px-4">
       <h1 className="hide-on-mobile text-4xl text-slate-700 mb-12">
         Welcome, {username}.
       </h1>
@@ -171,7 +171,7 @@ const Home = () => {
       </div>
 
       {/* AI Response Bubble */}
-      <div className="mq-response-bubble w-full md:w-1/2 mb-16">
+      <div className="w-full md:w-1/2 mb-16">
         <div className="relative bg-[#ffffff] text-gray-700 p-4 rounded-2xl shadow-md text-center">
           <p className="mq-response-text">{displayedText}</p>
         </div>
