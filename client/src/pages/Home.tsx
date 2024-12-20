@@ -1,3 +1,4 @@
+import "../styles/home.css"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faPaperPlane,
@@ -160,9 +161,9 @@ const Home = () => {
 
   return (
     <div className="flex flex-col items-center justify-center h-screen px-4">
-      <h1 className="text-4xl text-slate-700 mb-12">Welcome, {username}.</h1>
+      <h1 className="hide-on-mobile text-4xl text-slate-700 mb-12">Welcome, {username}.</h1>
       {/* 3D Model */}
-      <div className="w-full h-[400px] mb-20">
+      <div className="mq-geosphere w-full h-[400px] mb-20">
         <GeoComp />
       </div>
 
@@ -174,11 +175,11 @@ const Home = () => {
       </div>
 
       {/* Chat Input Bar */}
-      <div className="w-full md:w-2/3 fixed bottom-8 flex flex-row gap-3">
+      <div className="mq-input-bar w-full md:w-2/3 fixed bottom-8 flex flex-row gap-3">
         <div className="flex items-center border border-gray-300 rounded bg-white w-[1280px] px-4 py-2 shadow-md">
           <input
             type="text"
-            placeholder="Ask AI a question or make a request..."
+            placeholder="Ask Digbi AI a question."
             className="flex-1 focus:outline-none"
             maxLength={500}
             value={userInput}
@@ -187,7 +188,7 @@ const Home = () => {
 
           <div className="relative">
             <button
-              className="ml-8 bg-gray-200 px-4 py-1 rounded text-gray-700 hover:bg-gray-300"
+              className="mq-input-bar-button ml-8 bg-gray-200 px-4 py-1 rounded text-gray-700 hover:bg-gray-300"
               onClick={toggleDropdown}
               onBlur={handleBlur}
             >
@@ -230,9 +231,9 @@ const Home = () => {
             )}
           </div>
 
-          <span className="ml-4 text-gray-400">{userInput.length}/500</span>
+          <span className="hide-on-mobile ml-4 text-gray-400">{userInput.length}/500</span>
           <button
-            className="ml-4 text-gray-500 hover:text-gray-700"
+            className="mq-submit-button ml-4 text-gray-500 hover:text-gray-700"
             onClick={handleSubmit}
           >
             <FontAwesomeIcon icon={faPaperPlane} />
