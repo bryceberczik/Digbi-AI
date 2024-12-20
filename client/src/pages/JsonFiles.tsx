@@ -3,7 +3,7 @@ import { faX, faCheck } from "@fortawesome/free-solid-svg-icons";
 
 import auth from "@/utils/auth";
 import { useState, useEffect } from "react";
-import { fetchFiles } from "@/services/file/fetchFiles";
+import { fetchFiles, fetchAllFiles } from "@/services/file/fetchFiles";
 import { uploadFile } from "@/services/file/uploadFile";
 import { removeFile } from "@/services/file/removeFile";
 
@@ -16,6 +16,8 @@ interface DisplayFile {
 const JsonFiles = () => {
   const [files, setFiles] = useState<DisplayFile[]>([]);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+
+  const fileLimit = 5;
 
   // userId for fetching & uploading files.
   let userId = "";
@@ -40,9 +42,29 @@ const JsonFiles = () => {
   };
 
   const handleUploadFile = async () => {
+    // Return if a file is not selected.
     if (!selectedFile) {
-      console.error("No file selected.");
+      alert("Please select a JSON file to upload.");
       return;
+    }
+
+    // Return if file limit has been reached.
+    const uploadedFiles = await fetchFiles(userId);
+    if (uploadedFiles.length >= fileLimit) {
+      alert(
+        `You have reached the max file limit of ${fileLimit}. Remove other files to upload ${selectedFile.name}.`
+      );
+      return;
+    }
+
+    // Return if file does not have a unique name.
+    const allFiles = await fetchAllFiles();
+    for (let i = 0; i < allFiles.length; i++) {
+      if (selectedFile.name === allFiles[i].fileName) {
+        alert("Each file must have a unique name.");
+        setSelectedFile(null);
+        return;
+      }
     }
 
     try {
