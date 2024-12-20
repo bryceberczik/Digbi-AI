@@ -1,30 +1,26 @@
 import { useState, FormEvent, ChangeEvent } from "react";
-import Auth from "../utils/auth"; // Import the Auth utility for managing authentication state
-import { signUp } from "../api/authAPI"; // Import the sign up function from the API
-import { UserLogin } from "../interfaces/UserLogin"; // Import the interface for UserLogin
+import Auth from "../utils/auth";
+import { signUp } from "../api/authAPI";
+import { UserLogin } from "../interfaces/UserLogin";
 import { Link } from "react-router-dom";
 
 import BrandLogo from "../images/Digbi-AI.png";
 
 const Signup = () => {
-  // State to manage sign up form data
   const [signUpData, setSignUpData] = useState<UserLogin>({
     email: "",
     username: "",
     password: "",
   });
 
-  // State to manage validation errors
   const [errors, setErrors] = useState({
     email: "",
     username: "",
     password: "",
   });
 
-  // State for handling general errors (e.g., email or username already taken)
   const [generalError, setGeneralError] = useState<string>("");
 
-  // Handle changes in the input fields
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
@@ -34,15 +30,13 @@ const Signup = () => {
       [name]: value,
     });
 
-    // Clear error message as user types
     setErrors((prev) => ({
       ...prev,
       [name]: "",
     }));
-    setGeneralError(""); // Clear general error when typing
+    setGeneralError("");
   };
 
-  // Validate the form inputs
   const validateForm = () => {
     const newErrors = {
       email: "",
@@ -58,7 +52,10 @@ const Signup = () => {
 
     if (!signUpData.username) {
       newErrors.username = "Username is required.";
-    } else if (signUpData.username.length < 6 || signUpData.username.length > 20) {
+    } else if (
+      signUpData.username.length < 6 ||
+      signUpData.username.length > 20
+    ) {
       newErrors.username = "Username must be between 6 and 15 characters.";
     }
 
@@ -70,26 +67,21 @@ const Signup = () => {
 
     setErrors(newErrors);
 
-    // Return true if no errors
     return !Object.values(newErrors).some((error) => error !== "");
   };
 
-  // Handle form submission for sign up
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
     if (validateForm()) {
       try {
-        // Call the sign up API endpoint with signUpData
         const data = await signUp(signUpData);
-        // If sign up is successful, call Auth.login to store the token in localStorage
         Auth.login(data.token);
       } catch (err: any) {
         console.error("Failed to sign up", err);
-        
-        // Handle specific error like username/email taken
+
         if (err.response?.data?.message) {
-          setGeneralError(err.response.data.message); // Set general error message (e.g., email or username taken)
+          setGeneralError(err.response.data.message);
         }
       }
     }
@@ -98,8 +90,12 @@ const Signup = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#F3F4F6] py-16 px-6 sm:px-8 lg:px-12">
       <div className="max-w-lg w-full space-y-12">
-
-        <img src={BrandLogo} alt="brand logo" width={300} className="mx-auto pb-10"/>
+        <img
+          src={BrandLogo}
+          alt="brand logo"
+          width={300}
+          className="mx-auto pb-10"
+        />
         <div>
           <h2 className="mt-6 text-center text-4xl font-bold text-gray-800">
             Create Your Account
@@ -181,7 +177,7 @@ const Signup = () => {
             </div>
           </div>
           {generalError && (
-            <p className="text-red-500 text-sm mt-1">{generalError}</p> // Display general error below the password field
+            <p className="text-red-500 text-sm mt-1">{generalError}</p>
           )}
           <div>
             <button

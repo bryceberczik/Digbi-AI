@@ -11,7 +11,8 @@ const GeoSphere = () => {
   const speed = 0.5;
   useFrame(({ clock }) => {
     if (sphereRef.current) {
-      sphereRef.current.position.y = amplitude * Math.sin(clock.elapsedTime * speed);
+      sphereRef.current.position.y =
+        amplitude * Math.sin(clock.elapsedTime * speed);
       sphereRef.current.rotation.y += 0.002;
     }
   });
@@ -41,14 +42,14 @@ const GeoComp = () => {
   return (
     <Canvas>
       {/* Ambient Light for even illumination */}
-      <ambientLight intensity={1}/>
+      <ambientLight intensity={1} />
 
       {/* PointLight that follows the user's camera */}
       <CameraLight />
-      
+
       {/* The GeoSphere component, which contains the moving sphere */}
       <GeoSphere />
-      
+
       <OrbitControls
         enableZoom={false} // Disable zoom
         enablePan={false} // Disable panning
