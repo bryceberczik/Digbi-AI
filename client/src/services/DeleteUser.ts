@@ -1,15 +1,12 @@
-import axios from "axios"
+import axios from "axios";
 
 export const deleteUser = async (id: string) => {
-    
-    try {
-        
-        const response = await axios.delete(
-            `http://localhost:3001/api/users/${id}`
-        )
-        console.log("yay it worked:", response.data)
-        return response.data;
-    } catch (err: any) {
-        console.error("Error deleting user", err)
-    }
-}
+  try {
+    const response = await axios.delete(
+      `http://localhost:3001/api/users/${id}`
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error deleting user:", error);
+  }
+};
