@@ -1,0 +1,11 @@
+@media screen and (max-width: 768px) {
+  .hide-on-mobile {
+    display: none;
+  }
+
+  .mq-feedback-heading {
+    min-height: auto;
+    padding-top: 0px;
+    padding-bottom: 0px;
+  }
+}

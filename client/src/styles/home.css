@@ -1,0 +1,59 @@
+.desk-custom {
+  max-height: 175px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+@media screen and (max-width: 768px) {
+  .hide-on-mobile {
+    display: none;
+  }
+
+  .mq-home-div {
+
+    margin-top: 100px;
+    margin-bottom: 0px;
+  }
+
+  .mq-geosphere {
+    height: 250px;
+    margin-bottom: 60px;
+  }
+
+  .mq-response-text {
+    font-size: 15px;
+  }
+
+  .mw-custom {
+    max-height: 200px;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  .mq-input-bar {
+    height: 50px;
+    width: 80%;
+    margin-right: 50px;
+  }
+
+  .mq-input-bar div {
+    width: 100%;
+  }
+
+  .mq-input-bar-button {
+    height: 40px;
+    width: 100%;
+    font-size: 12px;
+    padding: 0px 4px;
+    margin: 0px 20px 0px 5px;
+  }
+
+  .mq-dropdown-group {
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .mq-submit-button {
+    margin-left: 16px !important;
+  }
+}
