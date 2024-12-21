@@ -4,24 +4,30 @@
   }
 
   .mq-home-div {
-    height: auto;
-    margin-top: 0px;
+
+    margin-top: 100px;
     margin-bottom: 0px;
   }
 
   .mq-geosphere {
     height: 250px;
-    margin-bottom: 0px;
+    margin-bottom: 60px;
   }
 
   .mq-response-text {
     font-size: 15px;
   }
 
+  .mw-custom {
+    max-height: 200px;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
   .mq-input-bar {
     height: 50px;
     width: 80%;
-    margin-right: 65px;
+    margin-right: 50px;
   }
 
   .mq-input-bar div {
