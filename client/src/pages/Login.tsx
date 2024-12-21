@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import Auth from "../utils/auth";
 import { login } from "../api/authAPI";
 import { UserLogin } from "../interfaces/UserLogin";
-import BrandLogo from "../images/Digbi-AI.png";
 
 const Login = () => {
   const [loginData, setLoginData] = useState<UserLogin>({
@@ -45,8 +44,8 @@ const Login = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 py-16 px-6 sm:px-8 lg:px-12">
       <div className="max-w-lg w-full space-y-12">
-        <div>
-          <h2 className="mt-6 text-center text-4xl font-bold text-gray-800">
+        <div className="mb-[0px]">
+          <h2 className="mt-6 text-center text-4xl text-gray-800">
             Welcome Back
           </h2>
           <p className="mt-4 text-center text-base text-gray-600">

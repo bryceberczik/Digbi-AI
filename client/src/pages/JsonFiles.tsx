@@ -17,15 +17,13 @@ interface DisplayFile {
 const JsonFiles = () => {
   const [files, setFiles] = useState<DisplayFile[]>([]);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [fileText, setFileText] = useState("No file chosen");
 
   const fileLimit = 5;
-
-  // userId for fetching & uploading files.
   let userId = "";
 
   if (auth.loggedIn()) {
     const profile = auth.getProfile();
-
     if (profile) {
       userId = profile.id;
     }
@@ -38,27 +36,24 @@ const JsonFiles = () => {
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
-      setSelectedFile(event.target.files[0]);
+      const file = event.target.files[0];
+      setSelectedFile(file);
+      setFileText(file.name);  // Update text with file name
     }
   };
 
   const handleUploadFile = async () => {
-    // Return if a file is not selected.
     if (!selectedFile) {
       alert("Please select a JSON file to upload.");
       return;
     }
 
-    // Return if file limit has been reached.
     const uploadedFiles = await fetchFiles(userId);
     if (uploadedFiles.length >= fileLimit) {
-      alert(
-        `You have reached the max file limit of ${fileLimit}. Remove other files to upload ${selectedFile.name}.`
-      );
+      alert(`You have reached the max file limit of ${fileLimit}. Remove other files to upload ${selectedFile.name}.`);
       return;
     }
 
-    // Return if file does not have a unique name.
     const allFiles = await fetchAllFiles();
     for (let i = 0; i < allFiles.length; i++) {
       if (selectedFile.name === allFiles[i].fileName) {
@@ -72,6 +67,7 @@ const JsonFiles = () => {
       await uploadFile(selectedFile, userId);
       handleFetchFiles();
       setSelectedFile(null);
+      setFileText("No file chosen");  // Reset text after upload
     } catch (error) {
       console.error("Error uploading files:", error);
     }
@@ -93,7 +89,7 @@ const JsonFiles = () => {
   return (
     <div className="flex flex-col items-center mt-[100px]">
       <div>
-        <h1 className="mq-heading font-bold text-gray-800 text-center mt-[100px] text-[40px]">
+        <h1 className="mq-heading text-gray-800 text-center mt-[100px] text-[40px]">
           Your files
         </h1>
         <h3 className="text-center text-[25px] text-[#334155]">
@@ -101,11 +97,20 @@ const JsonFiles = () => {
         </h3>
       </div>
 
-      <div className="mq-input flex flex-row items-center justify-center my-10 bg-gray-100 gap-2">
+      {/* File Input Section */}
+      <div className="flex flex-row items-center justify-center my-10 bg-gray-100 gap-2">
+        <label
+          htmlFor="fileInput"
+          className="p-2 bg-slate-500 text-white rounded cursor-pointer hover:bg-slate-600"
+        >
+          Choose File
+        </label>
+        <span className="text-gray-500">{fileText}</span>
         <input
+          id="fileInput"
           type="file"
           accept="application/json"
-          className="p-2 border border-gray-300 rounded"
+          className="hidden"
           onChange={handleFileChange}
         />
         <FontAwesomeIcon
@@ -115,16 +120,14 @@ const JsonFiles = () => {
         />
       </div>
 
+      {/* Display Files */}
       {files.length === 0 ? (
         <div className="bg-[#FAFAF8] w-1/5 p-5 rounded shadow-md my-3 flex justify-center mq-nofiles">
           No files uploaded.
         </div>
       ) : (
         files.map((file) => (
-          <div
-            key={file.id}
-            className="mq-files bg-[#FAFAF8] w-1/4 p-5 rounded shadow-md my-3"
-          >
+          <div key={file.id} className="mq-files bg-[#FAFAF8] w-1/4 p-5 rounded shadow-md my-3">
             <div className="flex flex-row justify-between items-center">
               <h1>
                 <span className="font-bold">File:</span> {file.fileName}
@@ -134,7 +137,7 @@ const JsonFiles = () => {
               </h1>
               <FontAwesomeIcon
                 icon={faX}
-                className=" mq-remove hover:text-[grey] cursor-pointer mr-2"
+                className="mq-remove hover:text-[grey] cursor-pointer mr-2"
                 onClick={() => handleRemoveFile(file.id)}
               />
             </div>
