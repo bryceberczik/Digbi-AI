@@ -14,7 +14,7 @@
     "client:dev": "cd client && npm run dev",
     "build": "cd server && npm run build",
     "seed": "cd server && npm run seed",
-    "render-build": "npm install && node --max-old-space-size=12288 && npm run build"
+   "render-build": "npm install && node --max-old-space-size=4096 npm run build"
   },
   "keywords": [],
   "author": "",
