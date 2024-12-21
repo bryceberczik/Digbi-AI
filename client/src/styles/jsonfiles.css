@@ -17,10 +17,15 @@
 
   .mq-files {
     padding-right: 20px;
-    width: auto;
+    width: 350px;
   }
 
   .mq-remove {
     padding-left: 80px;
   }
+
+  .mq-nofiles {
+    width: 50%;
+  }
 }
+

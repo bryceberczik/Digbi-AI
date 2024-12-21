@@ -160,18 +160,18 @@ const Home = () => {
   // * Return Statement * //
 
   return (
-    <div className="mq-home-div flex flex-col items-center justify-center h-screen px-4">
-      <h1 className="hide-on-mobile text-4xl text-slate-700 mb-12">
+    <div className="mq-home-div flex flex-col items-center justify-center px-4">
+      <h1 className="hide-on-mobile text-4xl text-slate-700 mb-12 mt-[100px]">
         Welcome, {username}.
       </h1>
       {/* 3D Model */}
-      <div className="mq-geosphere med-geo w-full h-[400px] mb-20">
+      <div className="mq-geosphere med-geo w-full h-[400px] mb-10">
         <GeoComp loading={AIResponse === "Loading..."} />
       </div>
 
       {/* AI Response Bubble */}
       <div className="w-full md:w-1/2 mb-16">
-        <div className="relative bg-[#ffffff] text-gray-700 p-4 rounded-2xl shadow-md text-center">
+        <div className="relative bg-[#ffffff] text-gray-700 p-4 rounded-2xl shadow-md text-center desk-custom mw-custom">
           <p className="mq-response-text">{displayedText}</p>
         </div>
       </div>
@@ -265,6 +265,7 @@ const Home = () => {
           </button>
         </div>
       </div>
+
     </div>
   );
 };
