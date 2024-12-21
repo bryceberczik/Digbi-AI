@@ -91,7 +91,7 @@ const JsonFiles = () => {
   }, []);
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center mt-[100px]">
       <div>
         <h1 className="mq-heading font-bold text-gray-800 text-center mt-[100px] text-[40px]">
           Your files
