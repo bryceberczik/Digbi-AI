@@ -23,4 +23,9 @@
   .mq-remove {
     padding-left: 80px;
   }
+
+  .mq-nofiles {
+    width: 50%;
+  }
 }
+
