@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "npm run client:build && npm run server",
+    "start": "node --max-old-space-size=4096 -r esm ./node_modules/.bin/npm run client:build && npm run server",
     "start:dev": "concurrently \"npm run server:dev\" \"wait-on tcp:3001 && npm run client:dev\"",
     "server": "cd server && npm start && cd ..",
     "server:dev": "cd server && npm run dev",
@@ -14,7 +14,7 @@
     "client:dev": "cd client && npm run dev",
     "build": "cd server && npm run build",
     "seed": "cd server && npm run seed",
-    "render-build": "npm install && node --max-old-space-size=4096 ./node_modules/.bin/npm run build"
+    "render-build": "npm install && npm run build"
   },
   "keywords": [],
   "author": "",
