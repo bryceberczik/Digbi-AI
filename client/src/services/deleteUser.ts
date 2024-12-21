@@ -3,7 +3,7 @@ import axios from "axios";
 export const deleteUser = async (id: string) => {
   try {
     const response = await axios.delete(
-      `http://localhost:3001/api/users/${id}`
+      `/api/users/${id}`
     );
     return response.data;
   } catch (error) {
