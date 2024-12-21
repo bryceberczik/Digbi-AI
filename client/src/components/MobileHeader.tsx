@@ -2,7 +2,6 @@ import { useState } from "react";
 import BrandLogo from "../images/Digbi-AI.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
 import auth from "@/utils/auth";
 
 const MobileHeader = () => {
