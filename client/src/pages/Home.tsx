@@ -18,7 +18,7 @@ import { useState, useEffect } from "react";
 import { fetchFiles } from "@/services/file/fetchFiles";
 import { promptAI } from "@/services/promptAI";
 
-import GeoComp from "@/components/GeoSphere";
+// import GeoComp from "@/components/GeoSphere";
 
 interface File {
   id: string;
@@ -166,7 +166,7 @@ const Home = () => {
       </h1>
       {/* 3D Model */}
       <div className="mq-geosphere med-geo w-full h-[400px] mb-10">
-        <GeoComp loading={AIResponse === "Loading..."} />
+        {/* <GeoComp loading={AIResponse === "Loading..."} /> */}
       </div>
 
       {/* AI Response Bubble */}
