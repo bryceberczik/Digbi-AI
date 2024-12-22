@@ -12,8 +12,8 @@ const Settings = () => {
       if (profile) {
         const userId = profile.id;
         await deleteUser(userId);
-        localStorage.removeItem("id_token");
-        window.location.reload();
+        // localStorage.removeItem("id_token");
+        // window.location.reload();
       }
     } else {
       console.error("User is not logged in");
