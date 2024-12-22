@@ -166,7 +166,7 @@ const Home = () => {
       </h1>
       {/* 3D Model */}
       <div className="mq-geosphere med-geo w-full h-[400px] mb-10">
-        {/* <GeoComp loading={AIResponse === "Loading..."} /> */}
+        <GeoComp loading={AIResponse === "Loading..."} />
       </div>
 
       {/* AI Response Bubble */}
