@@ -18,7 +18,7 @@ import { useState, useEffect } from "react";
 import { fetchFiles } from "@/services/file/fetchFiles";
 import { promptAI } from "@/services/promptAI";
 
-// import GeoComp from "@/components/GeoSphere"
+import GeoComp from "@/components/GeoSphere";
 
 interface File {
   id: string;
