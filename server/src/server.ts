@@ -3,7 +3,6 @@ import express from "express";
 import sequelize from "./config/connection";
 import routes from "./routes/index";
 import dotenv from "dotenv";
-import "./config/fileWatcher";
 
 dotenv.config();
 
