@@ -11,7 +11,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 
-import "../styles/Home.css";
+import "../styles/home.css";
 
 import auth from "@/utils/auth";
 import { useState, useEffect } from "react";
