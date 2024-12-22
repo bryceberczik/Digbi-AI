@@ -3,7 +3,6 @@ import express from "express";
 import sequelize from "./config/connection";
 import routes from "./routes/index";
 import dotenv from "dotenv";
-import path from "path";
 import "./config/fileWatcher";
 
 dotenv.config();
@@ -16,7 +15,6 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("../client/dist"));
-app.use("/audio", express.static(path.join(__dirname, "../db/audio")));
 
 app.use(routes);
 
