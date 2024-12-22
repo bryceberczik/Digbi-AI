@@ -59,7 +59,7 @@ export const uploadFile = async (req: Request, res: any) => {
 
     res
       .status(200)
-      .json({ message: "File Uploaded Successfully", file: newFile });
+      .json({ message: "File Uploaded Successfully.", file: newFile });
   } catch (error) {
     console.error("Error uploading file to S3:", error);
     res.status(500).send("Server Error");
