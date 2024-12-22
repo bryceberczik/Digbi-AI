@@ -6,7 +6,7 @@ export const uploadFile = async (file: File, userId: string) => {
     formData.append("file", file);
     formData.append("userId", userId);
 
-    await axios.post(`http://localhost:3001/file/upload`, formData, {
+    await axios.post(`https://digbiai.com/file/upload`, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
