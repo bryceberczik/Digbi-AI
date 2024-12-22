@@ -133,13 +133,15 @@ export const askQuestion = async (
 
     const speechData = await polly.synthesizeSpeech(speechParams).promise();
     const audioFileName = `response_${Date.now()}.mp3`;
-    const audioFilePath = path.join(__dirname, "../../db/audio", audioFileName);
+    const s3UploadParams = {
+      Bucket: process.env.BUCKET_NAME!,
+      Key: `audio/${audioFileName}`,
+      Body: speechData.AudioStream as Buffer,
+      ContentType: "audio/mp3",
+    };
 
-    fs.writeFileSync(audioFilePath, speechData.AudioStream as Buffer);
-
-    const audioUrl = `${req.protocol}://${req.get(
-      "host"
-    )}/audio/${audioFileName}`;
+    const uploadedResult = await s3.upload(s3UploadParams).promise();
+    const audioUrl = uploadedResult.Location;
 
     res.json({
       question: userQuestion,
@@ -151,9 +153,19 @@ export const askQuestion = async (
       audioUrl: audioUrl,
     });
 
-    setTimeout(() => {
-      fs.unlinkSync(audioFilePath);
-    }, 1000);
+    setTimeout(async () => {
+      try {
+        const deleteParams = {
+          Bucket: process.env.BUCKET_NAME!,
+          Key: `audio/${audioFileName}`,
+        };
+
+        await s3.deleteObject(deleteParams).promise();
+        console.log(`Audio file ${audioFileName} deleted from S3.`);
+      } catch (error) {
+        console.error("Error deleting file from S3:", error);
+      }
+    }, 60 * 60 * 1000);
   } catch (error: unknown) {
     if (error instanceof Error) {
       console.error("Error:", error.message);
