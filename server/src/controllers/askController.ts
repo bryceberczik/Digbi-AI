@@ -4,11 +4,9 @@ import { OpenAI } from "@langchain/openai";
 import { PromptTemplate } from "@langchain/core/prompts";
 import { StructuredOutputParser } from "langchain/output_parsers";
 import AWS from "../config/awsConfig";
-import { Readable } from "stream";
 import fs from "fs";
 import path from "path";
 import dotenv from "dotenv";
-import { DstAlphaFactor } from "three";
 
 dotenv.config();
 
@@ -100,8 +98,20 @@ export const askQuestion = async (
       return;
     }
 
-    const filePath = path.join(__dirname, "../../db/json", file.fileName);
-    const jsonData = JSON.parse(fs.readFileSync(filePath, "utf-8"));
+    const s3 = new AWS.S3();
+    const params = {
+      Bucket: process.env.BUCKET_NAME!,
+      Key: file.s3Url.split("/").pop()!,
+    };
+
+    const s3Response = await s3.getObject(params).promise();
+
+    if (!s3Response.Body) {
+      throw new Error("No body found in S3 response.");
+    }
+
+    const jsonData = JSON.parse(s3Response.Body.toString("utf-8"));
+
     const formattedPrompt: string = await formatPrompt(
       userQuestion,
       JSON.stringify(jsonData)
