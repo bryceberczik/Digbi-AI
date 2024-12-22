@@ -1,3 +1,0 @@
-{
-  "ignore": ["db/audio/*", "db/json/*"]
-}

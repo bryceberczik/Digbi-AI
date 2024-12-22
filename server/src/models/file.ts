@@ -5,7 +5,7 @@ interface IFile {
   userId?: string;
   fileName: string;
   fileSize: number;
-  content: object;
+  s3Url: string;
   uploadedAt: Date;
 }
 
@@ -16,7 +16,7 @@ export class File extends Model<IFile, ICreateFile> implements IFile {
   public userId?: string;
   public fileName!: string;
   public fileSize!: number;
-  public content!: object;
+  public s3Url!: string;
   public readonly uploadedAt!: Date;
 }
 
@@ -40,8 +40,8 @@ export function FileFactory(sequelize: Sequelize): typeof File {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
-      content: {
-        type: DataTypes.JSONB,
+      s3Url: {
+        type: DataTypes.STRING,
         allowNull: false,
       },
       uploadedAt: {
