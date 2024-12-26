@@ -13,7 +13,7 @@ const PORT = process.env.PORT || 3001;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use("routes", routes);
+app.use(routes);
 
 app.use(express.static(path.join(process.cwd(), "../client/dist")));
 
