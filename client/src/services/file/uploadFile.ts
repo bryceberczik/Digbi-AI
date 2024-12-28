@@ -22,11 +22,15 @@ import axios from "axios";
 
 export const uploadFile = async (file: File, userId: string) => {
   try {
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("userId", userId);
+    const data = new FormData();
+    data.append("file", file);
+    data.append("userId", userId);
 
-    const response = await axios.post(`/file/upload`, formData, {
+    console.log("This is the file:", file);
+    console.log("This is the userID:", userId);
+    console.log("This is the formdata:", data);
+      
+    const response = await axios.post(`/file/upload`, data, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
