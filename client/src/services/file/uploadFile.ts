@@ -26,9 +26,8 @@ export const uploadFile = async (file: File, userId: string) => {
     data.append("file", file);
     data.append("userId", userId);
 
-    console.log("This is the file:", file);
-    console.log("This is the userID:", userId);
-    console.log("This is the formdata:", data);
+    console.log(data.get("file"));
+    console.log(data.get("userId"));
       
     const response = await axios.post(`/file/upload`, data, {
       headers: {
