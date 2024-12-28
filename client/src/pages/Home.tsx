@@ -3,6 +3,7 @@ import {
   faPaperPlane,
   faVolumeXmark,
   faVolumeHigh,
+  faFile,
 } from "@fortawesome/free-solid-svg-icons";
 import {
   Tooltip,
@@ -161,11 +162,11 @@ const Home = () => {
 
   return (
     <div className="mq-home-div flex flex-col items-center justify-center px-4">
-      <h1 className="hide-on-mobile text-4xl text-slate-700 mb-12 mt-[100px]">
+      <h1 className="hide-on-mobile text-4xl text-slate-700 mb-12 mt-[50px]">
         Welcome, {username}.
       </h1>
       {/* 3D Model */}
-      <div className="mq-geosphere med-geo w-full h-[400px] mb-10">
+      <div className="mq-geosphere med-geo w-full h-[300px] mb-10">
         <GeoComp loading={AIResponse === "Loading..."} />
       </div>
 
@@ -189,13 +190,12 @@ const Home = () => {
           />
 
           <div className="relative">
-            <button
-              className="mq-input-bar-button ml-8 bg-gray-200 px-4 py-1 rounded text-gray-700 hover:bg-gray-300"
+            <FontAwesomeIcon
+              icon={faFile}
               onClick={toggleDropdown}
               onBlur={handleBlur}
-            >
-              Select JSON
-            </button>
+              className="text-[#6A7280] cursor-pointer hover:text-gray-700"
+            />
 
             {/* Dropdown Menu */}
             {dropdownOpen && (
@@ -265,7 +265,6 @@ const Home = () => {
           </button>
         </div>
       </div>
-
     </div>
   );
 };
