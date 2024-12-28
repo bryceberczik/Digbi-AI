@@ -45,7 +45,7 @@ const Home = () => {
   // * Functions * //
 
   const truncateText = (text: string) => {
-    return text.length > 18 ? text.substring(0, 18) + "..." : text;
+    return text.length > 12 ? text.substring(0, 12) + "..." : text;
   };
 
   const handleFetchFiles = async () => {

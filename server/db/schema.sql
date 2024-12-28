@@ -1,3 +1,2 @@
 DROP DATABASE IF EXISTS digbi_db;
-
 CREATE DATABASE digbi_db;

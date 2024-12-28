@@ -38,7 +38,7 @@ const JsonFiles = () => {
     if (event.target.files && event.target.files[0]) {
       const file = event.target.files[0];
       setSelectedFile(file);
-      setFileText(file.name);  // Update text with file name
+      setFileText(file.name); // Update text with file name
     }
   };
 
@@ -50,7 +50,9 @@ const JsonFiles = () => {
 
     const uploadedFiles = await fetchFiles(userId);
     if (uploadedFiles.length >= fileLimit) {
-      alert(`You have reached the max file limit of ${fileLimit}. Remove other files to upload ${selectedFile.name}.`);
+      alert(
+        `You have reached the max file limit of ${fileLimit}. Remove other files to upload ${selectedFile.name}.`
+      );
       return;
     }
 
@@ -67,7 +69,7 @@ const JsonFiles = () => {
       await uploadFile(selectedFile, userId);
       handleFetchFiles();
       setSelectedFile(null);
-      setFileText("No file chosen");  // Reset text after upload
+      setFileText("No file chosen");
     } catch (error) {
       console.error("Error uploading files:", error);
     }
@@ -127,7 +129,10 @@ const JsonFiles = () => {
         </div>
       ) : (
         files.map((file) => (
-          <div key={file.id} className="mq-files bg-[#FAFAF8] w-1/4 p-5 rounded shadow-md my-3">
+          <div
+            key={file.id}
+            className="mq-files bg-[#FAFAF8] w-1/4 p-5 rounded shadow-md my-3"
+          >
             <div className="flex flex-row justify-between items-center">
               <h1>
                 <span className="font-bold">File:</span> {file.fileName}
