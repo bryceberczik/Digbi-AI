@@ -22,13 +22,13 @@ const MobileHeader = () => {
         />
       </header>
 
-      {/* Offcanvas */}
+      {/* Offcanvas Menu */}
       <div
         className={`fixed top-0 right-0 h-full w-[300px] bg-white shadow-lg z-[999] transform ${
           show ? "translate-x-0" : "translate-x-full"
         } transition-transform duration-300`}
       >
-        {/* Header */}
+        {/* Menu Header */}
         <div className="flex items-center justify-between px-4 py-2 border-b bg-[#f3f4f6]">
           <h2 className="text-3xl text-slate-600">Menu</h2>
           <button
@@ -39,13 +39,42 @@ const MobileHeader = () => {
           </button>
         </div>
 
-        {/* Body */}
+        {/* Menu Body */}
         <div className="p-4 bg-[#f3f4f6] flex flex-col">
-          <p className="text-2xl mb-8 text-slate-600" onClick={() => (window.location.href = "/")}>Home</p>
-          <p className="text-2xl mb-8 text-slate-600" onClick={() => (window.location.href = "/json-files")}>Json Files</p>
-          <p className="text-2xl mb-[500px] text-slate-600" onClick={() => (window.location.href = "/feedback")}>Feedback</p>
-          <p className="text-2xl mb-8 text-slate-600" onClick={() => (window.location.href = "/settings")}>Settings</p>
-          <p  className="text-2xl mb-5 text-slate-600" onClick={() => auth.logout()}>Logout</p>
+          <div>
+            <p
+              className="text-2xl mb-8 text-slate-600 cursor-pointer"
+              onClick={() => (window.location.href = "/")}
+            >
+              Home
+            </p>
+            <p
+              className="text-2xl mb-8 text-slate-600 cursor-pointer"
+              onClick={() => (window.location.href = "/json-files")}
+            >
+              Json Files
+            </p>
+            <p
+              className="text-2xl mb-8 text-slate-600 cursor-pointer"
+              onClick={() => (window.location.href = "/feedback")}
+            >
+              Feedback
+            </p>
+          </div>
+          <div>
+            <p
+              className="text-2xl mb-8 text-slate-600 cursor-pointer"
+              onClick={() => (window.location.href = "/settings")}
+            >
+              Settings
+            </p>
+            <p
+              className="text-2xl mb-[350px] text-slate-600 cursor-pointer"
+              onClick={() => auth.logout()}
+            >
+              Logout
+            </p>
+          </div>
         </div>
       </div>
 
