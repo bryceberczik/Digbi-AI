@@ -39,9 +39,6 @@ export const uploadFile = async (req: Request, res: any) => {
     return res.status(400).send("No file uploaded.");
   }
 
-  // console.log("This is the req log:", req);
-  console.log("This is req.file:", req.file);
-  
   try {
     const params = {
       Bucket: process.env.BUCKET_NAME!,
