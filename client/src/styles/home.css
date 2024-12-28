@@ -32,14 +32,9 @@
 
   .mq-input-bar {
     height: 50px;
-    width: 80%;
-    margin-right: 50px;
+    width: 90%;
   }
-
-  .mq-input-bar div {
-    width: 100%;
-  }
-
+  
   .mq-input-bar-button {
     height: 40px;
     width: 100%;
