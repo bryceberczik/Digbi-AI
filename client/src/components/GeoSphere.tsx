@@ -9,11 +9,12 @@ const GeoSphere = ({ loading }: { loading: boolean }) => {
 
   const amplitude = 0.3;
   const baseSpeed = 0.002; // Normal speed
-  const fastSpeed = 0.05;  // Speed during loading
+  const fastSpeed = 0.05; // Speed during loading
 
   useFrame(({ clock }) => {
     if (sphereRef.current) {
-      sphereRef.current.position.y = amplitude * Math.sin(clock.elapsedTime * 0.5);
+      sphereRef.current.position.y =
+        amplitude * Math.sin(clock.elapsedTime * 0.5);
       sphereRef.current.rotation.y += loading ? fastSpeed : baseSpeed;
     }
   });

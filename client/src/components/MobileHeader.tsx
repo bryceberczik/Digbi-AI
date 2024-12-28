@@ -52,7 +52,7 @@ const MobileHeader = () => {
               className="text-2xl mb-8 text-slate-600 cursor-pointer"
               onClick={() => (window.location.href = "/json-files")}
             >
-              Json Files
+              JSON Files
             </p>
             <p
               className="text-2xl mb-8 text-slate-600 cursor-pointer"
