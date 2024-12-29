@@ -69,7 +69,7 @@ const MobileHeader = () => {
               Settings
             </p>
             <p
-              className="text-2xl mb-[350px] text-slate-600 cursor-pointer"
+              className="text-2xl mb-[600px] text-slate-600 cursor-pointer"
               onClick={() => auth.logout()}
             >
               Logout
