@@ -201,7 +201,7 @@ const Home = () => {
             {dropdownOpen && (
               <div
                 id="dropdown-group"
-                className="mq-dropdown-group absolute bottom-full mt-2 bg-white shadow-lg rounded w-48 mb-2"
+                className="mq-dropdown-group absolute bottom-full mt-2 bg-white shadow-lg rounded w-[120px] mb-2"
               >
                 {files.length === 0 ? (
                   <div className="p-2 text-gray-500">No files found.</div>
