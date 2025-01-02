@@ -9,6 +9,10 @@ const App = () => {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
+    auth.handleTokenExpiration();
+  }, []);
+  
+  useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 768);
     };
