@@ -24,7 +24,7 @@ export const login = async (req: Request, res: any) => {
   const token = jwt.sign(
     { id: user.id, username: user.username, email },
     secretKey,
-    { expiresIn: "1h" }
+    { expiresIn: "24h" }
   );
   return res.json({ token });
 };
@@ -41,7 +41,7 @@ export const signUp = async (req: Request, res: Response) => {
     const token = jwt.sign(
       { id: newUser.id, username: newUser.username },
       secretKey,
-      { expiresIn: "1h" }
+      { expiresIn: "24h" }
     );
     res.json({ token });
   } catch (error: any) {
