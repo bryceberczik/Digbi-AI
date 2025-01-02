@@ -29,10 +29,6 @@ Digbi AI is a text-to-speech (TTS) chatbot powered by OpenAI & Amazon Polly that
 - Users must create an account or log in to use the chatbot.
 - Accounts can be deleted on the settings page.
 
-## Content
-
-- INSERT PHOTOS HERE!!!!! AT LEAST 3.
-
 ## Developers
 
 For any feedback or concerns, feel free to contact us:
