@@ -4,7 +4,7 @@ import { faX, faCheck } from "@fortawesome/free-solid-svg-icons";
 
 import auth from "@/utils/auth";
 import { useState, useEffect } from "react";
-import { fetchFiles, fetchAllFiles } from "@/services/file/fetchFiles";
+import { fetchFiles } from "@/services/file/fetchFiles";
 import { uploadFile } from "@/services/file/uploadFile";
 import { removeFile } from "@/services/file/removeFile";
 
@@ -55,15 +55,6 @@ const JsonFiles = () => {
       );
       return;
     }
-
-    // const allFiles = await fetchAllFiles();
-    // for (let i = 0; i < allFiles.length; i++) {
-    //   if (selectedFile.name === allFiles[i].fileName) {
-    //     alert("Each file must have a unique name.");
-    //     setSelectedFile(null);
-    //     return;
-    //   }
-    // }
 
     try {
       await uploadFile(selectedFile, userId);
