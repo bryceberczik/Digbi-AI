@@ -56,14 +56,14 @@ const JsonFiles = () => {
       return;
     }
 
-    const allFiles = await fetchAllFiles();
-    for (let i = 0; i < allFiles.length; i++) {
-      if (selectedFile.name === allFiles[i].fileName) {
-        alert("Each file must have a unique name.");
-        setSelectedFile(null);
-        return;
-      }
-    }
+    // const allFiles = await fetchAllFiles();
+    // for (let i = 0; i < allFiles.length; i++) {
+    //   if (selectedFile.name === allFiles[i].fileName) {
+    //     alert("Each file must have a unique name.");
+    //     setSelectedFile(null);
+    //     return;
+    //   }
+    // }
 
     try {
       await uploadFile(selectedFile, userId);
