@@ -183,7 +183,7 @@ const Home = () => {
           <input
             type="text"
             placeholder="Ask Digbi AI a question."
-            className="flex-1 focus:outline-none"
+            className="flex-1 mr-5 focus:outline-none"
             maxLength={500}
             value={userInput}
             onChange={(e) => setUserInput(e.target.value)}
