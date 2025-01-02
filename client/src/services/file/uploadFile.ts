@@ -9,7 +9,7 @@ export const uploadFile = async (file: File, userId: string) => {
     console.log(data.get("file"));
     console.log(data.get("userId"));
 
-    const response = await axios.post(`/file/upload`, data, {
+    const response = await axios.post(`http://localhost:3001/file/upload`, data, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
