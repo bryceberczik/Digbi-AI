@@ -70,7 +70,7 @@ const JsonFiles = () => {
 
   const handleRemoveFile = async (fileId: string) => {
     try {
-      await removeFile(fileId);
+      await removeFile(fileId, userEmail);
       handleFetchFiles();
     } catch (error) {
       console.error("Error uploading files:", error);

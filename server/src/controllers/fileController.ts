@@ -74,9 +74,13 @@ export const removeFile = async (req: Request, res: any) => {
   try {
     const file = await File.findByPk(id);
     if (file) {
+      const email = req.body.email;
+
+      console.log(`${email}/${file.fileName}`);
+
       const params = {
         Bucket: process.env.BUCKET_NAME!,
-        Key: file.fileName,
+        Key: `${email}/${file.fileName}`,
       };
 
       await s3.deleteObject(params).promise();
