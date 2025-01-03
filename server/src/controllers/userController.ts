@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { User } from "../models/index";
+import { deleteUserFoler } from "../utils/userFolder";
 
 export const getAllUsers = async (_req: Request, res: Response) => {
   try {
@@ -64,11 +65,18 @@ export const updateUser = async (req: Request, res: Response) => {
 
 export const deleteUser = async (req: Request, res: Response) => {
   const { id } = req.params;
+  const { email } = req.body;
   try {
     const user = await User.findByPk(id);
     if (user) {
+      if (!email) {
+        return res.status(400).json({ message: "Missing user email." });
+      }
+
+      deleteUserFoler(email);
       await user.destroy();
-      res.json({ message: "User deleted" });
+
+      res.json({ message: "User deleted." });
     } else {
       res.status(404).json({ message: "User not found." });
     }
