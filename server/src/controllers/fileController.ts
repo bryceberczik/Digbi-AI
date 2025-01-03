@@ -79,8 +79,6 @@ export const removeFile = async (req: Request, res: any) => {
         return res.status(400).json({ message: "Missing user email." });
       }
 
-      console.log(`${email}/${file.fileName}`);
-
       const params = {
         Bucket: process.env.BUCKET_NAME!,
         Key: `${email}/${file.fileName}`,

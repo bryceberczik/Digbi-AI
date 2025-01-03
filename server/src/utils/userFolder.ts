@@ -20,3 +20,19 @@ export const createUserFolder = async (email: string) => {
     throw new Error("Failed to create user S3 folder.");
   }
 };
+
+export const deleteUserFoler = async (email: string) => {
+  try {
+    const params = {
+      Bucket: process.env.BUCKET_NAME!,
+      Key: `${email}/`,
+    };
+
+    await s3.deleteObject(params).promise();
+
+    console.log(`User S3 folder deleted successfully.`);
+  } catch (error) {
+    console.error("Error deleting user S3 folder:", error);
+    throw new Error("Failed to delete user S3 folder.");
+  }
+};
