@@ -51,11 +51,19 @@ const JsonFiles = () => {
     }
 
     const uploadedFiles = await fetchFiles(userId);
+
     if (uploadedFiles.length >= fileLimit) {
       alert(
         `You have reached the max file limit of ${fileLimit}. Remove other files to upload ${selectedFile.name}.`
       );
       return;
+    }
+
+    for (let i = 0; i < uploadedFiles.length; i++) {
+      if (uploadedFiles[i].fileName == selectedFile.name.trim()) {
+        alert("Each JSON file must have a unique name.");
+        return;
+      }
     }
 
     try {
