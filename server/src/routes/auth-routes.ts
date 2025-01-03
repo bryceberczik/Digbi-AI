@@ -41,7 +41,7 @@ export const signUp = async (req: Request, res: Response) => {
     const secretKey = process.env.JWT_SECRET_KEY || "";
 
     const token = jwt.sign(
-      { id: newUser.id, username: newUser.username },
+      { id: newUser.id, username: newUser.username, email: newUser.email },
       secretKey,
       { expiresIn: "24h" }
     );
