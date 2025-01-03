@@ -40,9 +40,11 @@ export const uploadFile = async (req: Request, res: any) => {
   }
 
   try {
+    const email = req.body.email;
+
     const params = {
       Bucket: process.env.BUCKET_NAME!,
-      Key: req.file.originalname,
+      Key: `${email}/${req.file.originalname}`,
       Body: req.file.buffer,
       ContentType: req.file.mimetype,
     };

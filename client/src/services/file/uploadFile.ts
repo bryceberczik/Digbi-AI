@@ -5,18 +5,17 @@ export const uploadFile = async (file: File, userId: string, email: string) => {
     const data = new FormData();
     data.append("file", file);
     data.append("userId", userId);
+    data.append("email", email);
 
-    console.log(data.get("file"));
-    console.log(data.get("userId"));
+    // console.log(data.get("file"));
+    // console.log(data.get("userId"));
+    // console.log(data.get("email"));
 
-    const response = await axios.post(`http://localhost:3001/file/upload`, data, {
-      params: { email },
+    await axios.post(`http://localhost:3001/file/upload`, data, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
     });
-
-    console.log("File uploaded successfully:", response.data);
   } catch (error) {
     console.error("Error uploading JSON file:", error);
 
