@@ -9,11 +9,7 @@ const router = express.Router();
 
 router.use("/auth", authRoutes);
 
-router.use(
-  "/api",
-  authenticateToken,
-  apiRoutes
-);
+router.use("/api", authenticateToken, apiRoutes);
 router.use("/file", fileRoutes);
 
 export default router;

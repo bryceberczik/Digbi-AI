@@ -1,4 +1,3 @@
-import cors from "cors";
 import express from "express";
 import sequelize from "./config/connection";
 import routes from "./routes/index";
@@ -11,7 +10,6 @@ const app = express();
 const forceDBRefresh = false;
 const PORT = process.env.PORT || 3001;
 
-app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
