@@ -8,7 +8,7 @@ export const deleteUser = async (id: string, email: string) => {
     }
 
     const response = await axios.delete(
-      `http://localhost:3001/api/users/${id}`,
+      `/api/users/${id}`,
       {
         data: { email },
         headers: {
