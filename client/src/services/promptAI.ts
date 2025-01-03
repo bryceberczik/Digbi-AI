@@ -1,9 +1,12 @@
-export const promptAI = async (fileId: string, question: string) => {
+export const promptAI = async (
+  fileId: string,
+  question: string,
+  email: string
+) => {
   try {
-
     const token = localStorage.getItem("id_token");
     if (!token) {
-      throw new Error("Authorization token is missing.")
+      throw new Error("Authorization token is missing.");
     }
     const response = await fetch(`/api/ask/${fileId}`, {
       method: "POST",
@@ -13,6 +16,7 @@ export const promptAI = async (fileId: string, question: string) => {
       },
       body: JSON.stringify({
         question: question,
+        email: email,
       }),
     });
 

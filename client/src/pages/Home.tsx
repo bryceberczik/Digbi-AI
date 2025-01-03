@@ -30,6 +30,7 @@ const Home = () => {
   // * UseStates * //
 
   const [username, setUsername] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
   const [audioUrl, setAudioUrl] = useState<string | null>(null);
   const [AIResponse, setAIResponse] = useState<string>("");
   const [displayedText, setDisplayedText] = useState<string>("");
@@ -57,6 +58,7 @@ const Home = () => {
       if (profile) {
         setUsername(profile.username);
         userId = profile.id;
+        setEmail(profile.email);
       } else {
         console.error("User is not logged in.");
       }
@@ -87,11 +89,12 @@ const Home = () => {
 
   const handleSubmit = async () => {
     if (!userInput || !selectedFile) {
+      alert("Please provide a prompt and JSON file.");
       return;
     }
 
     setAIResponse("Loading...");
-    const analysis = await promptAI(selectedFile, userInput);
+    const analysis = await promptAI(selectedFile, userInput, email);
     setAIResponse(
       analysis?.text || "An error has occured. Please try again later."
     );

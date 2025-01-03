@@ -11,7 +11,9 @@ const Settings = () => {
 
       if (profile) {
         const userId = profile.id;
-        await deleteUser(userId);
+        const userEmail = profile.email;
+
+        await deleteUser(userId, userEmail);
         localStorage.removeItem("id_token");
         window.location.reload();
       }

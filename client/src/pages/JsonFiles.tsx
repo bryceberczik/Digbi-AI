@@ -21,11 +21,13 @@ const JsonFiles = () => {
 
   const fileLimit = 5;
   let userId = "";
+  let userEmail = "";
 
   if (auth.loggedIn()) {
     const profile = auth.getProfile();
     if (profile) {
       userId = profile.id;
+      userEmail = profile.email;
     }
   }
 
@@ -49,6 +51,7 @@ const JsonFiles = () => {
     }
 
     const uploadedFiles = await fetchFiles(userId);
+
     if (uploadedFiles.length >= fileLimit) {
       alert(
         `You have reached the max file limit of ${fileLimit}. Remove other files to upload ${selectedFile.name}.`
@@ -56,8 +59,15 @@ const JsonFiles = () => {
       return;
     }
 
+    for (let i = 0; i < uploadedFiles.length; i++) {
+      if (uploadedFiles[i].fileName == selectedFile.name.trim()) {
+        alert("Each JSON file must have a unique name.");
+        return;
+      }
+    }
+
     try {
-      await uploadFile(selectedFile, userId);
+      await uploadFile(selectedFile, userId, userEmail);
       handleFetchFiles();
       setSelectedFile(null);
       setFileText("No file chosen");
@@ -68,7 +78,7 @@ const JsonFiles = () => {
 
   const handleRemoveFile = async (fileId: string) => {
     try {
-      await removeFile(fileId);
+      await removeFile(fileId, userEmail);
       handleFetchFiles();
     } catch (error) {
       console.error("Error uploading files:", error);

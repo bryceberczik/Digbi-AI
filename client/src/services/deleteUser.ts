@@ -1,14 +1,14 @@
 import axios from "axios";
 
-export const deleteUser = async (id: string) => {
+export const deleteUser = async (id: string, email: string) => {
   try {
-
     const token = localStorage.getItem("id_token");
     if (!token) {
       throw new Error("Authorization token is missing");
     }
 
     const response = await axios.delete(`/api/users/${id}`, {
+      data: { email },
       headers: {
         Authorization: `Bearer ${token}`,
       },
