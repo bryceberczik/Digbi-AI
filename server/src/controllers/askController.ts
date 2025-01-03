@@ -73,6 +73,7 @@ export const askQuestion = async (
 ): Promise<void> => {
   const { id } = req.params;
   const userQuestion: string = req.body.question;
+  const userEmail: string = req.body.email;
 
   try {
     if (!userQuestion) {
@@ -99,7 +100,7 @@ export const askQuestion = async (
     const s3 = new AWS.S3();
     const params = {
       Bucket: process.env.BUCKET_NAME!,
-      Key: file.s3Url.split("/").pop()!,
+      Key: `${userEmail}/${file.s3Url.split("/").pop()!}`,
     };
 
     const s3Response = await s3.getObject(params).promise();
