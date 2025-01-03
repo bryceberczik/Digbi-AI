@@ -2,6 +2,7 @@ import { Router, Request, Response } from "express";
 import { User } from "../models/user";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
+import { createUserFolder } from "../utils/createUserFolder";
 
 export const login = async (req: Request, res: any) => {
   const { email, password } = req.body;
@@ -33,6 +34,7 @@ export const signUp = async (req: Request, res: Response) => {
   try {
     const { username, email, password } = req.body;
     const newUser = await User.create({ username, email, password });
+    await createUserFolder(email);
 
     console.log(newUser);
 

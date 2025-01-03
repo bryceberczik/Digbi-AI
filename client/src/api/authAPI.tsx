@@ -26,7 +26,7 @@ const login = async (userInfo: UserLogin) => {
 
 const signUp = async (userInfo: UserLogin) => {
   try {
-    const response = await fetch("/auth/signup", {
+    const response = await fetch("http://localhost:3001/auth/signup", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
