@@ -21,11 +21,13 @@ const JsonFiles = () => {
 
   const fileLimit = 5;
   let userId = "";
+  let userEmail = "";
 
   if (auth.loggedIn()) {
     const profile = auth.getProfile();
     if (profile) {
       userId = profile.id;
+      userEmail = profile.email;
     }
   }
 
@@ -57,7 +59,7 @@ const JsonFiles = () => {
     }
 
     try {
-      await uploadFile(selectedFile, userId);
+      await uploadFile(selectedFile, userId, userEmail);
       handleFetchFiles();
       setSelectedFile(null);
       setFileText("No file chosen");

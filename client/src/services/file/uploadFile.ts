@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const uploadFile = async (file: File, userId: string) => {
+export const uploadFile = async (file: File, userId: string, email: string) => {
   try {
     const data = new FormData();
     data.append("file", file);
@@ -10,6 +10,7 @@ export const uploadFile = async (file: File, userId: string) => {
     console.log(data.get("userId"));
 
     const response = await axios.post(`http://localhost:3001/file/upload`, data, {
+      params: { email },
       headers: {
         "Content-Type": "multipart/form-data",
       },
