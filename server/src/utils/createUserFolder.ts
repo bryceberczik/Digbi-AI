@@ -1,4 +1,4 @@
-import AWS from "aws-sdk";
+import AWS from "../config/awsConfig";
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -9,7 +9,7 @@ export const createUserFolder = async (email: string) => {
   try {
     const params = {
       Bucket: process.env.BUCKET_NAME!,
-      Key: `${email}`,
+      Key: `${email}/`,
     };
 
     await s3.putObject(params).promise();
