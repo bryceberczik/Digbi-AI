@@ -8,7 +8,7 @@ export const promptAI = async (
     if (!token) {
       throw new Error("Authorization token is missing.");
     }
-    const response = await fetch(`/api/ask/${fileId}`, {
+    const response = await fetch(`http://localhost:3001/api/ask/${fileId}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
