@@ -18,7 +18,11 @@ export const createTalk = async (req: Request, res: any) => {
 
     const response = await axios.post(
       "https://api.d-id.com/talks",
-      { source_url, script },
+      {
+        source_url,
+        script,
+        webhook_url: "http://localhost:3001/api/talks/webhook",
+      },
       {
         headers: {
           accept: "application/json",
@@ -66,5 +70,18 @@ export const getTalk = async (req: Request, res: Response) => {
         error.response?.data ||
         "An unknown error occurred. Please try again later.",
     });
+  }
+};
+
+export const talkWebhook = async (req: Request, res: any) => {
+  try {
+    const { video_url, status } = req.body;
+
+    if (status === "completed") {
+      return res.status(200).json({ video_url });
+    }
+  } catch (error) {
+    console.error("Webhook Error:", error);
+    res.status(500).send("Error processing the webhook.");
   }
 };
