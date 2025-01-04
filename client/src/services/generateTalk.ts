@@ -1,8 +1,13 @@
 import axios from "axios";
 
-export const generateTalk = async (source_url: string, script: string) => {
+export const generateTalk = async (source_url: string, input: string) => {
   try {
-    const response = await axios.post(
+    const script = {
+      type: "text",
+      input: input,
+    };
+
+    const postResponse = await axios.post(
       `http://localhost:3001/api/talks/create`,
       {
         source_url,
@@ -10,9 +15,8 @@ export const generateTalk = async (source_url: string, script: string) => {
       }
     );
 
-    const result = response.data;
-    console.log(result);
-  } catch (error) {
-    console.error("Error generating talk:", error);
+    const videoId = postResponse.data.id;
+  } catch (error: any) {
+    console.error("Error generating talk:", error.response?.data);
   }
 };

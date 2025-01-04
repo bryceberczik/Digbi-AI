@@ -11,6 +11,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { generateTalk } from "@/services/generateTalk";
 
 import "../styles/home.css";
 
@@ -161,6 +162,17 @@ const Home = () => {
     handleFetchFiles();
   }, []);
 
+  // ! TESTING ! //
+
+  const test = async () => {
+    const result = await generateTalk(
+      "https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+      "This is a test."
+    );
+
+    console.log(result);
+  };
+
   // * Return Statement * //
 
   return (
@@ -178,6 +190,12 @@ const Home = () => {
         <div className="relative bg-[#ffffff] text-gray-700 p-4 rounded-2xl shadow-md text-center desk-custom mw-custom">
           <p className="mq-response-text">{displayedText}</p>
         </div>
+      </div>
+
+      <div>
+        <button onClick={test}>
+          BUTTON
+        </button>
       </div>
 
       {/* Chat Input Bar */}
