@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-const videoWebSocket = (url: string) => {
+export const videoWebSocket = (url: string) => {
   const [videoUrl, setVideoUrl] = useState(null);
 
   useEffect(() => {
@@ -22,5 +22,3 @@ const videoWebSocket = (url: string) => {
 
   return videoUrl;
 };
-
-export default videoWebSocket;

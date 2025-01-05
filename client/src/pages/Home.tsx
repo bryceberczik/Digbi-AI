@@ -11,7 +11,6 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { generateTalk } from "@/services/generateTalk";
 
 import "../styles/home.css";
 
@@ -19,6 +18,7 @@ import auth from "@/utils/auth";
 import { useState, useEffect } from "react";
 import { fetchFiles } from "@/services/file/fetchFiles";
 import { promptAI } from "@/services/promptAI";
+import { generateTalk } from "@/services/talk/generateTalk";
 
 import GeoComp from "@/components/GeoSphere";
 
@@ -193,9 +193,7 @@ const Home = () => {
       </div>
 
       <div>
-        <button onClick={test}>
-          BUTTON
-        </button>
+        <button onClick={test}>BUTTON</button>
       </div>
 
       {/* Chat Input Bar */}
