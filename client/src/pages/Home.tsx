@@ -18,8 +18,10 @@ import auth from "@/utils/auth";
 import { useState, useEffect } from "react";
 import { fetchFiles } from "@/services/file/fetchFiles";
 import { promptAI } from "@/services/promptAI";
+import { generateTalk } from "@/services/talk/generateTalk";
 
 import GeoComp from "@/components/GeoSphere";
+import VideoComponent from "@/components/VideoComponent";
 
 interface File {
   id: string;
@@ -30,6 +32,7 @@ const Home = () => {
   // * UseStates * //
 
   const [username, setUsername] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
   const [audioUrl, setAudioUrl] = useState<string | null>(null);
   const [AIResponse, setAIResponse] = useState<string>("");
   const [displayedText, setDisplayedText] = useState<string>("");
@@ -57,6 +60,7 @@ const Home = () => {
       if (profile) {
         setUsername(profile.username);
         userId = profile.id;
+        setEmail(profile.email);
       } else {
         console.error("User is not logged in.");
       }
@@ -87,11 +91,12 @@ const Home = () => {
 
   const handleSubmit = async () => {
     if (!userInput || !selectedFile) {
+      alert("Please provide a prompt and JSON file.");
       return;
     }
 
     setAIResponse("Loading...");
-    const analysis = await promptAI(selectedFile, userInput);
+    const analysis = await promptAI(selectedFile, userInput, email);
     setAIResponse(
       analysis?.text || "An error has occured. Please try again later."
     );
@@ -158,6 +163,15 @@ const Home = () => {
     handleFetchFiles();
   }, []);
 
+  // ! TESTING ! //
+
+  const test = () => {
+    generateTalk(
+      "https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+      "You did it."
+    );
+  };
+
   // * Return Statement * //
 
   return (
@@ -167,7 +181,8 @@ const Home = () => {
       </h1>
       {/* 3D Model */}
       <div className="mq-geosphere med-geo w-full h-[300px] mb-10">
-        <GeoComp loading={AIResponse === "Loading..."} />
+        <VideoComponent />
+        {/* <GeoComp loading={AIResponse === "Loading..."} /> */}
       </div>
 
       {/* AI Response Bubble */}
@@ -175,6 +190,10 @@ const Home = () => {
         <div className="relative bg-[#ffffff] text-gray-700 p-4 rounded-2xl shadow-md text-center desk-custom mw-custom">
           <p className="mq-response-text">{displayedText}</p>
         </div>
+      </div>
+
+      <div>
+        <button onClick={test}>BUTTON</button>
       </div>
 
       {/* Chat Input Bar */}

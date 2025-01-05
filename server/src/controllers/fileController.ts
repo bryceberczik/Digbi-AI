@@ -40,9 +40,11 @@ export const uploadFile = async (req: Request, res: any) => {
   }
 
   try {
+    const email = req.body.email;
+
     const params = {
       Bucket: process.env.BUCKET_NAME!,
-      Key: req.file.originalname,
+      Key: `${email}/${req.file.originalname}`,
       Body: req.file.buffer,
       ContentType: req.file.mimetype,
     };
@@ -68,13 +70,18 @@ export const uploadFile = async (req: Request, res: any) => {
 
 export const removeFile = async (req: Request, res: any) => {
   const { id } = req.params;
+  const { email } = req.body;
 
   try {
     const file = await File.findByPk(id);
     if (file) {
+      if (!email) {
+        return res.status(400).json({ message: "Missing user email." });
+      }
+
       const params = {
         Bucket: process.env.BUCKET_NAME!,
-        Key: file.fileName,
+        Key: `${email}/${file.fileName}`,
       };
 
       await s3.deleteObject(params).promise();
