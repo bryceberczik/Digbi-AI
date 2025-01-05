@@ -24,7 +24,7 @@ export const createTalk = async (req: Request, res: any) => {
       {
         source_url,
         script,
-        webhook_url: "http://localhost:3001/api/talks/webhook",
+        webhook: "http://localhost:3001/api/talks/webhook",
       },
       {
         headers: {

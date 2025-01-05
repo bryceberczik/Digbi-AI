@@ -1,4 +1,4 @@
-import { videoWebSocket } from "@/services/talk/VideoWS";
+import { videoWebSocket } from "@/services/talk/videoWS";
 
 const VideoComponent = () => {
   const videoUrl = videoWebSocket("ws://localhost:8000");
