@@ -7,14 +7,10 @@ export const generateTalk = async (source_url: string, input: string) => {
       input: input,
     };
 
-    const response = await axios.post(
-      `http://localhost:3001/api/talks/create`,
-      {
-        source_url,
-        script,
-      }
-    );
-
+    await axios.post(`http://localhost:3001/api/talks/create`, {
+      source_url,
+      script,
+    });
   } catch (error: any) {
     console.error("Error generating talk:", error.response?.data);
   }
