@@ -1,5 +1,6 @@
 import axios from "axios";
 import { Request, Response } from "express";
+import { activeClient } from "../config/webSocket";
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -77,8 +78,12 @@ export const talkWebhook = async (req: Request, res: any) => {
   try {
     const { video_url, status } = req.body;
 
-    if (status === "completed") {
-      return res.status(200).json({ video_url });
+    if (status === "completed" && activeClient) {
+      activeClient.send(JSON.stringify({ video_url }));
+
+      return res.status(200).send("Video URL broadcasted to client.");
+    } else {
+      return res.status(400).send("No active client connected.");
     }
   } catch (error) {
     console.error("Webhook Error:", error);
