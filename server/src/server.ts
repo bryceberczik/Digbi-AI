@@ -5,6 +5,8 @@ import path from "node:path";
 import dotenv from "dotenv";
 import cors from "cors";
 
+import "./config/webSocket";
+
 dotenv.config();
 
 const app = express();

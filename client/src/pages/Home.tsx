@@ -21,6 +21,7 @@ import { promptAI } from "@/services/promptAI";
 import { generateTalk } from "@/services/talk/generateTalk";
 
 import GeoComp from "@/components/GeoSphere";
+import VideoComponent from "@/components/VideoComponent";
 
 interface File {
   id: string;
@@ -164,13 +165,11 @@ const Home = () => {
 
   // ! TESTING ! //
 
-  const test = async () => {
-    const result = await generateTalk(
+  const test = () => {
+    generateTalk(
       "https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-      "This is a test."
+      "You did it."
     );
-
-    console.log(result);
   };
 
   // * Return Statement * //
@@ -182,7 +181,8 @@ const Home = () => {
       </h1>
       {/* 3D Model */}
       <div className="mq-geosphere med-geo w-full h-[300px] mb-10">
-        <GeoComp loading={AIResponse === "Loading..."} />
+        <VideoComponent />
+        {/* <GeoComp loading={AIResponse === "Loading..."} /> */}
       </div>
 
       {/* AI Response Bubble */}

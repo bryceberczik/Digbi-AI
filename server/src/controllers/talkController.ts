@@ -17,6 +17,8 @@ export const createTalk = async (req: Request, res: any) => {
         .json({ message: "Missing required fields: source_url or script" });
     }
 
+    console.log("Console from createTalk");
+
     const response = await axios.post(
       "https://api.d-id.com/talks",
       {
@@ -33,7 +35,7 @@ export const createTalk = async (req: Request, res: any) => {
       }
     );
 
-    res.status(response.status).json(response.data);
+  console.log("Response from external API:", response.data);
   } catch (error: any) {
     console.error("An error occurred while processing the request.");
     console.error("Error details:", error.message);
@@ -76,9 +78,15 @@ export const getTalk = async (req: Request, res: Response) => {
 
 export const talkWebhook = async (req: Request, res: any) => {
   try {
+    console.log("TESTING");
+    console.log("Webhook request received:", req.body);
+
     const { video_url, status } = req.body;
 
-    if (status === "completed" && activeClient) {
+    console.log(video_url);
+    console.log(status);
+
+    if (status === "done" && activeClient) {
       activeClient.send(JSON.stringify({ video_url }));
 
       return res.status(200).send("Video URL broadcasted to client.");
