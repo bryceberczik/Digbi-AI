@@ -33,7 +33,7 @@ export const createTalk = async (req: Request, res: any) => {
       }
     );
 
-    console.log("Response from external API:", response.data);
+    res.status(response.status).json(response.data);
   } catch (error: any) {
     console.error("An error occurred while processing the request.");
     console.error("Error details:", error.message);

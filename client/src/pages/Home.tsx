@@ -41,6 +41,7 @@ const Home = () => {
   const [selectedFile, setSelectedFile] = useState<string>("");
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [isMuted, setIsMuted] = useState(false);
+  const [isFinished, setIsFinished] = useState(false);
 
   const defaultMessage =
     "Hello, I am Digbi AI. Ask me a question and select a JSON file so I can analyze it.";
@@ -163,15 +164,6 @@ const Home = () => {
     handleFetchFiles();
   }, []);
 
-  // ! TESTING ! //
-
-  const test = () => {
-    generateTalk(
-      "https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-      "You did it."
-    );
-  };
-
   // * Return Statement * //
 
   return (
@@ -181,8 +173,11 @@ const Home = () => {
       </h1>
       {/* 3D Model */}
       <div className="mq-geosphere med-geo w-full h-[300px] mb-10">
-        <VideoComponent />
-        {/* <GeoComp loading={AIResponse === "Loading..."} /> */}
+        {isFinished ? (
+          <GeoComp loading={AIResponse === "Loading..."} />
+        ) : (
+          <VideoComponent source_url={""} input={""} />
+        )}
       </div>
 
       {/* AI Response Bubble */}
@@ -192,9 +187,9 @@ const Home = () => {
         </div>
       </div>
 
-      <div>
+      {/* <div>
         <button onClick={test}>BUTTON</button>
-      </div>
+      </div> */}
 
       {/* Chat Input Bar */}
       <div className="mq-input-bar w-full md:w-2/3 fixed bottom-8 flex flex-row gap-3">
