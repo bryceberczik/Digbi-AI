@@ -41,7 +41,7 @@ export const generateTalk = async (source_url: string, input: string) => {
       if (status === "done") {
         console.log("Talk is ready!");
         console.log(getResponse.data);
-        return getResponse.data;
+        return getResponse.data.result_url;
       }
 
       if (status === "error") {
