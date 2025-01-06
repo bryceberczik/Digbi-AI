@@ -1,7 +1,5 @@
-import { videoWebSocket } from "@/services/talk/videoWS";
-
 const VideoComponent = () => {
-  const videoUrl = videoWebSocket("ws://localhost:8000");
+  const videoUrl = "idk bruh"
 
   return (
     <div>
