@@ -20,7 +20,6 @@ import { fetchFiles } from "@/services/file/fetchFiles";
 import { promptAI } from "@/services/promptAI";
 import { generateTalk } from "@/services/generateTalk";
 
-import GeoComp from "@/components/GeoSphere";
 import VideoComponent from "@/components/VideoComponent";
 
 interface File {
