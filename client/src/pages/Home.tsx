@@ -31,22 +31,32 @@ interface File {
 const Home = () => {
   // * UseStates * //
 
-  const [username, setUsername] = useState<string>("");
-  const [email, setEmail] = useState<string>("");
-  const [audioUrl, setAudioUrl] = useState<string | null>(null);
   const [AIResponse, setAIResponse] = useState<string>("");
+  const [audioUrl, setAudioUrl] = useState<string | null>(null);
   const [displayedText, setDisplayedText] = useState<string>("");
-  const [userInput, setUserInput] = useState<string>("");
-  const [files, setFiles] = useState<File[]>([]);
-  const [selectedFile, setSelectedFile] = useState<string>("");
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [isMuted, setIsMuted] = useState(false);
+  const [email, setEmail] = useState<string>("");
+  const [files, setFiles] = useState<File[]>([]);
   const [isFinished, setIsFinished] = useState(false);
+  const [isMuted, setIsMuted] = useState(false);
+  const [selectedFile, setSelectedFile] = useState<string>("");
+  const [sourceUrl, setSourceUrl] = useState<string>("");
+  const [userInput, setUserInput] = useState<string>("");
+  const [username, setUsername] = useState<string>("");
+  const [videoUrl, setVideoUrl] = useState<string>("");
 
   const defaultMessage =
     "Hello, I am Digbi AI. Ask me a question and select a JSON file so I can analyze it.";
 
   // * Functions * //
+
+  const handleImageSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const fileUrl = URL.createObjectURL(file);
+      setSourceUrl(fileUrl);
+    }
+  };
 
   const truncateText = (text: string) => {
     return text.length > 12 ? text.substring(0, 12) + "..." : text;
@@ -96,12 +106,22 @@ const Home = () => {
       return;
     }
 
-    setAIResponse("Loading...");
-    const analysis = await promptAI(selectedFile, userInput, email);
-    setAIResponse(
-      analysis?.text || "An error has occured. Please try again later."
-    );
-    setAudioUrl(analysis?.audio || null);
+    try {
+      setIsFinished(false);
+
+      setAIResponse("Generating Response...");
+      const AIResult = await promptAI(selectedFile, userInput, email);
+      setAIResponse("Creating Video...");
+      const videoResult = await generateTalk(sourceUrl, AIResult?.text);
+
+      setAIResponse(
+        AIResult?.text || "An error has occured. Please try again later."
+      );
+      setVideoUrl(videoResult);
+      setIsFinished(true);
+    } catch (error) {
+      console.error("handleSubmit Error:", error);
+    }
   };
 
   const handleTypingAnimation = (message: string) => {
@@ -174,9 +194,14 @@ const Home = () => {
       {/* 3D Model */}
       <div className="mq-geosphere med-geo w-full h-[300px] mb-10">
         {isFinished ? (
-          <GeoComp loading={AIResponse === "Loading..."} />
+          <GeoComp
+            loading={
+              AIResponse === "Generating Response..." ||
+              AIResponse === "Creating Video..."
+            }
+          />
         ) : (
-          <VideoComponent source_url={""} input={""} />
+          <VideoComponent videoUrl={videoUrl} />
         )}
       </div>
 
@@ -187,9 +212,10 @@ const Home = () => {
         </div>
       </div>
 
-      {/* <div>
-        <button onClick={test}>BUTTON</button>
-      </div> */}
+      <div>
+        <label>Image Select</label>
+        <input type="file" accept="image/jpeg" onChange={handleImageSelect} />
+      </div>
 
       {/* Chat Input Bar */}
       <div className="mq-input-bar w-full md:w-2/3 fixed bottom-8 flex flex-row gap-3">
