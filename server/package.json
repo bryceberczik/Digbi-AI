@@ -23,8 +23,7 @@
     "multer": "^1.4.5-lts.1",
     "openai": "^4.76.3",
     "pg": "^8.13.1",
-    "sequelize": "^6.37.5",
-    "ws": "^8.18.0"
+    "sequelize": "^6.37.5"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
@@ -32,7 +31,6 @@
     "@types/express": "^5.0.0",
     "@types/jsonwebtoken": "^9.0.7",
     "@types/multer": "^1.4.12",
-    "@types/ws": "^8.5.13",
     "dotenv": "^16.4.7",
     "nodemon": "^3.1.9",
     "ts-node": "^10.9.2",
