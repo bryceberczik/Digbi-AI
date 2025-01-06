@@ -32,7 +32,6 @@ const Home = () => {
   // * UseStates * //
 
   const [AIResponse, setAIResponse] = useState<string>("");
-  const [audioUrl, setAudioUrl] = useState<string | null>(null);
   const [displayedText, setDisplayedText] = useState<string>("");
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [email, setEmail] = useState<string>("");
@@ -51,11 +50,8 @@ const Home = () => {
   // * Functions * //
 
   const handleImageSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      const fileUrl = URL.createObjectURL(file);
-      setSourceUrl(fileUrl);
-    }
+    const text = event.target.value;
+    setSourceUrl(text);
   };
 
   const truncateText = (text: string) => {
@@ -160,27 +156,6 @@ const Home = () => {
   }, []);
 
   useEffect(() => {
-    let audio: any;
-
-    if (audioUrl) {
-      audio = new Audio(audioUrl);
-
-      if (isMuted === true) {
-        audio.pause();
-      } else {
-        audio.play();
-      }
-    }
-
-    return () => {
-      if (audio) {
-        audio.pause();
-        audio.currentTime = 0;
-      }
-    };
-  }, [audioUrl, isMuted]);
-
-  useEffect(() => {
     handleFetchFiles();
   }, []);
 
@@ -193,7 +168,7 @@ const Home = () => {
       </h1>
       {/* 3D Model */}
       <div className="mq-geosphere med-geo w-full h-[300px] mb-10">
-        {isFinished ? (
+        {!isFinished ? (
           <GeoComp
             loading={
               AIResponse === "Generating Response..." ||
@@ -214,7 +189,11 @@ const Home = () => {
 
       <div>
         <label>Image Select</label>
-        <input type="file" accept="image/jpeg" onChange={handleImageSelect} />
+        <input
+          type="text"
+          placeholder="Insert link"
+          onChange={handleImageSelect}
+        />
       </div>
 
       {/* Chat Input Bar */}
