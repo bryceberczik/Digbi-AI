@@ -16,13 +16,14 @@ import "../styles/home.css";
 import auth from "@/utils/auth";
 import { useState, useEffect } from "react";
 import { fetchFiles } from "@/services/file/fetchFiles";
+// import { imageUrlFunction } from "@/services/images/imageUrl";
 import { promptAI } from "@/services/promptAI";
 import { generateTalk } from "@/services/generateTalk";
 
 import GeoComp from "@/components/GeoSphere";
 import VideoComponent from "@/components/VideoComponent";
 
-interface File {
+interface JSONFile {
   id: string;
   fileName: string;
 }
@@ -34,15 +35,16 @@ const Home = () => {
   const [displayedText, setDisplayedText] = useState<string>("");
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [email, setEmail] = useState<string>("");
-  const [files, setFiles] = useState<File[]>([]);
+  const [files, setFiles] = useState<JSONFile[]>([]);
   const [isOpened, setIsOpened] = useState(false);
   const [isFinished, setIsFinished] = useState(false);
   const [selectedFile, setSelectedFile] = useState<string>("");
+  const [selectedImage, setSelectedImage] = useState<string | File>("");
   const [sourceUrl, setSourceUrl] = useState<string>("");
   const [userInput, setUserInput] = useState<string>("");
   const [username, setUsername] = useState<string>("");
   const [videoUrl, setVideoUrl] = useState<string>("");
-  const [videoVoice, setVideoVoice] = useState<"man" | "woman">("man");
+  // const [videoVoice, setVideoVoice] = useState<"man" | "woman">("man");
 
   const defaultMessage =
     "Hello, I am Digbi AI. Ask me a question and select a JSON file so I can analyze it.";
@@ -87,22 +89,16 @@ const Home = () => {
   };
 
   const handleImageSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.type === "text") {
-      const text = event.target.value;
-      console.log("URL Input:", text);
-      setSourceUrl(text);
-    } else if (event.target.type === "file") {
+    if (event.target.type === "file") {
       const file = event.target.files?.[0];
-
       if (file) {
-        const reader = new FileReader();
-        reader.onload = () => {
-          const base64string = reader.result as string;
-          console.log("File Input (Base64):", base64string);
-          setSourceUrl(base64string);
-        };
-        reader.readAsDataURL(file);
+        console.log("Selected File:", file);
+        setSelectedImage(file);
       }
+    } else if (event.target.type === "text") {
+      const url = event.target.value;
+      console.log("Pasted URL:", url);
+      setSelectedImage(url);
     }
   };
 

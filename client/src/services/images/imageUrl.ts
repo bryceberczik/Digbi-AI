@@ -1,19 +1,21 @@
 import axios from "axios";
 
-export const uploadImage = async (image: File, email: string) => {
+export const imageUrlFunction = async (image: File, email: string) => {
   try {
     const data = new FormData();
     data.append("image", image);
     data.append("email", email);
 
     console.log(data.get("image"));
-    console.log(data.get(email));
+    console.log(data.get("email"));
 
-    await axios.post(`http://localhost:3001/image/upload`, data, {
+    const response = await axios.post(`http://localhost:3001/image/upload`, data, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
     });
+
+    console.log(response);
   } catch (error) {
     console.error("Error uploading image:", error);
 
