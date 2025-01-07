@@ -6,16 +6,20 @@ export const imageUrlFunction = async (image: File, email: string) => {
     data.append("image", image);
     data.append("email", email);
 
-    console.log(data.get("image"));
-    console.log(data.get("email"));
+    // console.log(data.get("image"));
+    // console.log(data.get("email"));
 
-    const response = await axios.post(`http://localhost:3001/image/upload`, data, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
+    const response = await axios.post(
+      `http://localhost:3001/image/upload`,
+      data,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
 
-    console.log(response);
+    return response.data.imageUrl;
   } catch (error) {
     console.error("Error uploading image:", error);
 

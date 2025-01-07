@@ -16,7 +16,7 @@ import "../styles/home.css";
 import auth from "@/utils/auth";
 import { useState, useEffect } from "react";
 import { fetchFiles } from "@/services/file/fetchFiles";
-// import { imageUrlFunction } from "@/services/images/imageUrl";
+import { imageUrlFunction } from "@/services/images/imageUrl";
 import { promptAI } from "@/services/promptAI";
 import { generateTalk } from "@/services/generateTalk";
 
@@ -134,8 +134,24 @@ const Home = () => {
     }
   };
 
-  const handleModalSubmit = () => {
+
+  const handleModalSubmit = async () => {
     toggleModal();
+  
+    if (selectedImage instanceof File) {
+      if (selectedImage) {
+        try {
+          console.log("Uploading file...");
+          const imageUrl = await imageUrlFunction(selectedImage, email);
+
+          setSourceUrl(imageUrl);
+        } catch (error) {
+          console.error("Error uploading image:", error);
+        }
+      }
+    } else if (typeof selectedImage === "string") {
+      console.log("Using URL:", selectedImage);
+    }
   };
 
   const handleTypingAnimation = (message: string) => {
