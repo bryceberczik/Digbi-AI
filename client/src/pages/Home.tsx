@@ -134,15 +134,15 @@ const Home = () => {
     }
   };
 
-
   const handleModalSubmit = async () => {
     toggleModal();
-  
+
     if (selectedImage instanceof File) {
       if (selectedImage) {
         try {
           console.log("Uploading file...");
           const imageUrl = await imageUrlFunction(selectedImage, email);
+          console.log("Done!");
 
           setSourceUrl(imageUrl);
         } catch (error) {

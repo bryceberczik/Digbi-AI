@@ -16,8 +16,6 @@ export const createTalk = async (req: Request, res: any) => {
         .json({ message: "Missing required fields: source_url or script" });
     }
 
-    console.log("Console from createTalk");
-
     const response = await axios.post(
       "https://api.d-id.com/talks",
       {
