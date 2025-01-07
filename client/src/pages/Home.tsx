@@ -42,7 +42,7 @@ const Home = () => {
   const [userInput, setUserInput] = useState<string>("");
   const [username, setUsername] = useState<string>("");
   const [videoUrl, setVideoUrl] = useState<string>("");
-  // const [videoVoice, setVideoVoice] = useState<"man" | "woman">("man");
+  const [videoVoice, setVideoVoice] = useState<"man" | "woman">("man");
 
   const defaultMessage =
     "Hello, I am Digbi AI. Ask me a question and select a JSON file so I can analyze it.";
@@ -51,11 +51,6 @@ const Home = () => {
     "https://d-id-public-bucket.s3.us-west-2.amazonaws.com/alice.jpg";
 
   // * Functions * //
-
-  const handleImageSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const text = event.target.value;
-    setSourceUrl(text);
-  };
 
   const truncateText = (text: string) => {
     return text.length > 12 ? text.substring(0, 12) + "..." : text;
@@ -89,6 +84,26 @@ const Home = () => {
     setTimeout(() => {
       setDropdownOpen(false);
     }, 150);
+  };
+
+  const handleImageSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.type === "text") {
+      const text = event.target.value;
+      console.log("URL Input:", text);
+      setSourceUrl(text);
+    } else if (event.target.type === "file") {
+      const file = event.target.files?.[0];
+
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = () => {
+          const base64string = reader.result as string;
+          console.log("File Input (Base64):", base64string);
+          setSourceUrl(base64string);
+        };
+        reader.readAsDataURL(file);
+      }
+    }
   };
 
   const toggleDropdown = () => {
