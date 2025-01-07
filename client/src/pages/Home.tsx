@@ -42,7 +42,7 @@ const Home = () => {
   const [userInput, setUserInput] = useState<string>("");
   const [username, setUsername] = useState<string>("");
   const [videoUrl, setVideoUrl] = useState<string>("");
-  const [videoVoice, setVideoVoice] = useState<"man" | "woman">("man");
+  // const [videoVoice, setVideoVoice] = useState<"man" | "woman">("man");
 
   const defaultMessage =
     "Hello, I am Digbi AI. Ask me a question and select a JSON file so I can analyze it.";
@@ -95,7 +95,7 @@ const Home = () => {
     setDropdownOpen(!dropdownOpen);
   };
 
-  const handleImageModal = () => {
+  const toggleModal = () => {
     setIsOpened(!isOpened);
   };
 
@@ -121,6 +121,10 @@ const Home = () => {
     } catch (error) {
       console.error("handleSubmit Error:", error);
     }
+  };
+
+  const handleModalSubmit = () => {
+    toggleModal();
   };
 
   const handleTypingAnimation = (message: string) => {
@@ -262,7 +266,7 @@ const Home = () => {
         </div>
 
         <div>
-          <button className="custom-mute-btn" onClick={handleImageModal}>
+          <button className="custom-mute-btn" onClick={toggleModal}>
             <FontAwesomeIcon
               className="text-gray-500 hover:text-gray-700"
               icon={faCamera}
@@ -276,14 +280,14 @@ const Home = () => {
           className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70"
           onClick={(e) => {
             if (e.target === e.currentTarget) {
-              handleImageModal();
+              toggleModal();
             }
           }}
         >
           <div className="bg-white w-[90%] md:w-[600px] p-8 rounded-[10px] shadow-xl relative">
             <button
               className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 text-2xl font-semibold"
-              onClick={handleImageModal}
+              onClick={toggleModal}
             >
               &times;
             </button>
@@ -356,7 +360,7 @@ const Home = () => {
               {/* Submit Button */}
               <button
                 className="bg-slate-600 text-white py-3 px-8 rounded-[5px] hover:bg-slate-700 transition-all"
-                onClick={handleImageModal}
+                onClick={handleModalSubmit}
               >
                 Submit
               </button>
