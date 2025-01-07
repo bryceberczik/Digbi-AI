@@ -16,13 +16,14 @@ import "../styles/home.css";
 import auth from "@/utils/auth";
 import { useState, useEffect } from "react";
 import { fetchFiles } from "@/services/file/fetchFiles";
+import { imageUrlFunction } from "@/services/images/imageUrl";
 import { promptAI } from "@/services/promptAI";
 import { generateTalk } from "@/services/generateTalk";
 
 import GeoComp from "@/components/GeoSphere";
 import VideoComponent from "@/components/VideoComponent";
 
-interface File {
+interface JSONFile {
   id: string;
   fileName: string;
 }
@@ -34,24 +35,24 @@ const Home = () => {
   const [displayedText, setDisplayedText] = useState<string>("");
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [email, setEmail] = useState<string>("");
-  const [files, setFiles] = useState<File[]>([]);
+  const [files, setFiles] = useState<JSONFile[]>([]);
   const [isOpened, setIsOpened] = useState(false);
   const [isFinished, setIsFinished] = useState(false);
   const [selectedFile, setSelectedFile] = useState<string>("");
+  const [selectedImage, setSelectedImage] = useState<string | File>("");
   const [sourceUrl, setSourceUrl] = useState<string>("");
   const [userInput, setUserInput] = useState<string>("");
   const [username, setUsername] = useState<string>("");
   const [videoUrl, setVideoUrl] = useState<string>("");
+  // const [videoVoice, setVideoVoice] = useState<"man" | "woman">("man");
 
   const defaultMessage =
     "Hello, I am Digbi AI. Ask me a question and select a JSON file so I can analyze it.";
 
-  // * Functions * //
+  const defaultVideoFace =
+    "https://d-id-public-bucket.s3.us-west-2.amazonaws.com/alice.jpg";
 
-  const handleImageSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const text = event.target.value;
-    setSourceUrl(text);
-  };
+  // * Functions * //
 
   const truncateText = (text: string) => {
     return text.length > 12 ? text.substring(0, 12) + "..." : text;
@@ -87,11 +88,25 @@ const Home = () => {
     }, 150);
   };
 
+  const handleImageSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.type === "file") {
+      const file = event.target.files?.[0];
+      if (file) {
+        console.log("Selected File:", file);
+        setSelectedImage(file);
+      }
+    } else if (event.target.type === "text") {
+      const url = event.target.value;
+      console.log("Pasted URL:", url);
+      setSelectedImage(url);
+    }
+  };
+
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
   };
 
-  const handleImageModal = () => {
+  const toggleModal = () => {
     setIsOpened(!isOpened);
   };
 
@@ -116,6 +131,26 @@ const Home = () => {
       setIsFinished(true);
     } catch (error) {
       console.error("handleSubmit Error:", error);
+    }
+  };
+
+  const handleModalSubmit = async () => {
+    toggleModal();
+
+    if (selectedImage instanceof File) {
+      if (selectedImage) {
+        try {
+          console.log("Uploading file...");
+          const imageUrl = await imageUrlFunction(selectedImage, email);
+          console.log("Done!");
+
+          setSourceUrl(imageUrl);
+        } catch (error) {
+          console.error("Error uploading image:", error);
+        }
+      }
+    } else if (typeof selectedImage === "string") {
+      console.log("Using URL:", selectedImage);
     }
   };
 
@@ -152,6 +187,10 @@ const Home = () => {
 
   useEffect(() => {
     setAIResponse(defaultMessage);
+  }, []);
+
+  useEffect(() => {
+    setSourceUrl(defaultVideoFace);
   }, []);
 
   useEffect(() => {
@@ -254,7 +293,7 @@ const Home = () => {
         </div>
 
         <div>
-          <button className="custom-mute-btn" onClick={handleImageModal}>
+          <button className="custom-mute-btn" onClick={toggleModal}>
             <FontAwesomeIcon
               className="text-gray-500 hover:text-gray-700"
               icon={faCamera}
@@ -264,90 +303,98 @@ const Home = () => {
       </div>
 
       {isOpened && (
-  <div
-    className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70"
-    onClick={(e) => {
-      if (e.target === e.currentTarget) {
-        handleImageModal();
-      }
-    }}
-  >
-    <div className="bg-white w-[90%] md:w-[600px] p-8 rounded-[10px] shadow-xl relative">
-      <button
-        className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 text-2xl font-semibold"
-        onClick={handleImageModal}
-      >
-        &times;
-      </button>
-      <h2 className="text-2xl font-semibold text-gray-800 mb-6">Select an Avatar</h2>
-      
-      <div className="space-y-6">
-        {/* Paste image URL */}
-        <div>
-          <label className="text-gray-700 font-medium block mb-2">Paste image URL</label>
-          <input
-            type="text"
-            placeholder="Insert link"
-            onChange={handleImageSelect}
-            className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-slate-600"
-          />
-        </div>
-        
-        {/* Or */}
-        <div className="text-center">
-          <p className="text-gray-500">or</p>
-        </div>
-        
-        {/* Choose JPEG */}
-        <div>
-          <label className="text-gray-700 font-medium block mb-2">Choose a JPEG</label>
-          <input
-            type="file"
-            accept="image/jpeg"
-            onChange={handleImageSelect}
-            className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-slate-600"
-          />
-        </div>
-      </div>
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) {
+              toggleModal();
+            }
+          }}
+        >
+          <div className="bg-white w-[90%] md:w-[600px] p-8 rounded-[10px] shadow-xl relative">
+            <button
+              className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 text-2xl font-semibold"
+              onClick={toggleModal}
+            >
+              &times;
+            </button>
+            <h2 className="text-2xl font-semibold text-gray-800 mb-6">
+              Select an Avatar
+            </h2>
 
-      <div className="flex flex-col items-center mt-8">
-        {/* Voice Selection */}
-        <div className="flex flex-col items-start mb-6">
-          <label className="text-lg font-medium text-gray-800 mb-2">Choose a Voice:</label>
-          <div className="flex gap-6">
-            <label className="flex items-center gap-2">
-              <input
-                type="radio"
-                name="voice"
-                value="man"
-                className="accent-slate-500"
-              />
-              <span>Man</span>
-            </label>
-            <label className="flex items-center gap-2">
-              <input
-                type="radio"
-                name="voice"
-                value="woman"
-                className="accent-slate-500"
-              />
-              <span>Woman</span>
-            </label>
+            <div className="space-y-6">
+              {/* Paste image URL */}
+              <div>
+                <label className="text-gray-700 font-medium block mb-2">
+                  Paste image URL
+                </label>
+                <input
+                  type="text"
+                  placeholder="Insert link"
+                  onChange={handleImageSelect}
+                  className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-slate-600"
+                />
+              </div>
+
+              {/* Or */}
+              <div className="text-center">
+                <p className="text-gray-500">or</p>
+              </div>
+
+              {/* Choose JPEG */}
+              <div>
+                <label className="text-gray-700 font-medium block mb-2">
+                  Choose a JPEG
+                </label>
+                <input
+                  type="file"
+                  accept="image/jpeg"
+                  onChange={handleImageSelect}
+                  className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-slate-600"
+                />
+              </div>
+            </div>
+
+            <div className="flex flex-col items-center mt-8">
+              {/* Voice Selection */}
+              <div className="flex flex-col items-start mb-6">
+                <label className="text-lg font-medium text-gray-800 mb-2">
+                  Choose a Voice:
+                </label>
+                <div className="flex gap-6">
+                  <label className="flex items-center gap-2">
+                    <input
+                      type="radio"
+                      name="voice"
+                      value="man"
+                      className="accent-slate-500"
+                    />
+                    <span>Man</span>
+                  </label>
+                  <label className="flex items-center gap-2">
+                    <input
+                      type="radio"
+                      name="voice"
+                      value="woman"
+                      className="accent-slate-500"
+                      // checked
+                    />
+                    <span>Woman</span>
+                  </label>
+                </div>
+              </div>
+
+              {/* Submit Button */}
+              <button
+                className="bg-slate-600 text-white py-3 px-8 rounded-[5px] hover:bg-slate-700 transition-all"
+                onClick={handleModalSubmit}
+              >
+                Submit
+              </button>
+            </div>
           </div>
         </div>
-
-        {/* Submit Button */}
-        <button
-          className="bg-slate-600 text-white py-3 px-8 rounded-[5px] hover:bg-slate-700 transition-all"
-          onClick={handleImageModal}
-        >
-          Submit
-        </button>
-      </div>
-    </div>
-  </div>
-)}
-
+      )}
     </div>
   );
 };
