@@ -1,9 +1,8 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faPaperPlane,
-  faVolumeXmark,
-  faVolumeHigh,
   faFile,
+  faCamera,
 } from "@fortawesome/free-solid-svg-icons";
 import {
   Tooltip,
@@ -36,8 +35,8 @@ const Home = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [email, setEmail] = useState<string>("");
   const [files, setFiles] = useState<File[]>([]);
+  const [isOpened, setIsOpened] = useState(false);
   const [isFinished, setIsFinished] = useState(false);
-  const [isMuted, setIsMuted] = useState(false);
   const [selectedFile, setSelectedFile] = useState<string>("");
   const [sourceUrl, setSourceUrl] = useState<string>("");
   const [userInput, setUserInput] = useState<string>("");
@@ -92,8 +91,8 @@ const Home = () => {
     setDropdownOpen(!dropdownOpen);
   };
 
-  const toggleTTS = () => {
-    setIsMuted(!isMuted);
+  const handleImageModal = () => {
+    setIsOpened(!isOpened);
   };
 
   const handleSubmit = async () => {
@@ -187,16 +186,6 @@ const Home = () => {
         </div>
       </div>
 
-      <div>
-        <label className="mr-1">Avatar Image Select: </label>
-        <input
-          type="text"
-          placeholder="Insert link"
-          onChange={handleImageSelect}
-          className="p-1 rounded-[5px] border-[1px] ml-1"
-        />
-      </div>
-
       {/* Chat Input Bar */}
       <div className="mq-input-bar w-full md:w-2/3 fixed bottom-8 flex flex-row gap-3">
         <div className="flex items-center border border-gray-300 rounded bg-white w-[1280px] px-4 py-2 shadow-md">
@@ -265,26 +254,89 @@ const Home = () => {
         </div>
 
         <div>
-          <button
-            className="custom-mute-btn"
-            onClick={() => {
-              toggleTTS();
-            }}
-          >
-            {isMuted ? (
-              <FontAwesomeIcon
-                icon={faVolumeXmark}
-                className="text-[#6B7280] hover:text-[#374151]"
-              />
-            ) : (
-              <FontAwesomeIcon
-                icon={faVolumeHigh}
-                className="text-[#6B7280] hover:text-[#374151]"
-              />
-            )}
+          <button className="custom-mute-btn" onClick={handleImageModal}>
+            <FontAwesomeIcon
+              className="text-gray-500 hover:text-gray-700"
+              icon={faCamera}
+            />
           </button>
         </div>
       </div>
+
+      {isOpened && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) {
+              handleImageModal();
+            }
+          }}
+        >
+          <div className="bg-white w-[90%] md:w-[600px] p-6 rounded-[10px] shadow-lg relative">
+            <button
+              className="absolute top-3 right-3 text-gray-500 hover:text-gray-700"
+              onClick={handleImageModal}
+            >
+              ✕
+            </button>
+            <h2 className="text-xl font-semibold mb-4">Select an Avatar</h2>
+            <div className="flex flex-col items-center">
+              <div>
+                <label className="mr-1">Paste image URL</label>
+                <input
+                  type="text"
+                  placeholder="Insert link"
+                  onChange={handleImageSelect}
+                  className="p-1 rounded-[5px] border-[1px] ml-1"
+                />
+              </div>
+              <div className="my-5">
+                <p className="text-[#888]">or</p>
+              </div>
+              <div>
+                <label className="mr-1">Choose a JPEG</label>
+                <input
+                  type="file"
+                  accept="image/jpeg"
+                  onChange={handleImageSelect}
+                  className="p-1 rounded-[5px] border-[1px] ml-1"
+                />
+              </div>
+            </div>
+            <div className="flex justify-center mt-10 items-center gap-6">
+              <div className="flex items-center gap-4">
+                <label className="text-lg font-medium">Choose a Voice:</label>
+                <div className="flex items-center gap-6">
+                  <label className="flex items-center gap-2">
+                    <input
+                      type="radio"
+                      name="voice"
+                      value="man"
+                      className="accent-slate-500"
+                    />
+                    <span>Man</span>
+                  </label>
+                  <label className="flex items-center gap-2">
+                    <input
+                      type="radio"
+                      name="voice"
+                      value="woman"
+                      className="accent-slate-500"
+                    />
+                    <span>Woman</span>
+                  </label>
+                </div>
+              </div>
+              <button
+                className="bg-slate-600 text-white py-2 px-6 rounded-md hover:bg-slate-700 transition-all"
+                onClick={handleImageModal}
+              >
+                Submit
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
