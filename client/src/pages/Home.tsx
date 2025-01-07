@@ -1,9 +1,8 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faPaperPlane,
-  faVolumeXmark,
-  faVolumeHigh,
   faFile,
+  faCamera,
 } from "@fortawesome/free-solid-svg-icons";
 import {
   Tooltip,
@@ -36,8 +35,8 @@ const Home = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [email, setEmail] = useState<string>("");
   const [files, setFiles] = useState<File[]>([]);
+  const [isOpened, setIsOpened] = useState(false);
   const [isFinished, setIsFinished] = useState(false);
-  const [isMuted, setIsMuted] = useState(false);
   const [selectedFile, setSelectedFile] = useState<string>("");
   const [sourceUrl, setSourceUrl] = useState<string>("");
   const [userInput, setUserInput] = useState<string>("");
@@ -92,8 +91,8 @@ const Home = () => {
     setDropdownOpen(!dropdownOpen);
   };
 
-  const toggleTTS = () => {
-    setIsMuted(!isMuted);
+  const handleImageModal = () => {
+    setIsOpened(!isOpened);
   };
 
   const handleSubmit = async () => {
@@ -167,7 +166,7 @@ const Home = () => {
         Welcome, {username}.
       </h1>
       {/* 3D Model */}
-      <div className="mq-geosphere med-geo w-full h-[300px] mb-10">
+      <div className="mq-geosphere med-geo w-full h-[300px]">
         {!isFinished ? (
           <GeoComp
             loading={
@@ -185,15 +184,6 @@ const Home = () => {
         <div className="relative bg-[#ffffff] text-gray-700 p-4 rounded-2xl shadow-md text-center desk-custom mw-custom">
           <p className="mq-response-text">{displayedText}</p>
         </div>
-      </div>
-
-      <div>
-        <label>Image Select</label>
-        <input
-          type="text"
-          placeholder="Insert link"
-          onChange={handleImageSelect}
-        />
       </div>
 
       {/* Chat Input Bar */}
@@ -264,26 +254,100 @@ const Home = () => {
         </div>
 
         <div>
-          <button
-            className="custom-mute-btn"
-            onClick={() => {
-              toggleTTS();
-            }}
-          >
-            {isMuted ? (
-              <FontAwesomeIcon
-                icon={faVolumeXmark}
-                className="text-[#6B7280] hover:text-[#374151]"
-              />
-            ) : (
-              <FontAwesomeIcon
-                icon={faVolumeHigh}
-                className="text-[#6B7280] hover:text-[#374151]"
-              />
-            )}
+          <button className="custom-mute-btn" onClick={handleImageModal}>
+            <FontAwesomeIcon
+              className="text-gray-500 hover:text-gray-700"
+              icon={faCamera}
+            />
           </button>
         </div>
       </div>
+
+      {isOpened && (
+  <div
+    className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70"
+    onClick={(e) => {
+      if (e.target === e.currentTarget) {
+        handleImageModal();
+      }
+    }}
+  >
+    <div className="bg-white w-[90%] md:w-[600px] p-8 rounded-[10px] shadow-xl relative">
+      <button
+        className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 text-2xl font-semibold"
+        onClick={handleImageModal}
+      >
+        &times;
+      </button>
+      <h2 className="text-2xl font-semibold text-gray-800 mb-6">Select an Avatar</h2>
+      
+      <div className="space-y-6">
+        {/* Paste image URL */}
+        <div>
+          <label className="text-gray-700 font-medium block mb-2">Paste image URL</label>
+          <input
+            type="text"
+            placeholder="Insert link"
+            onChange={handleImageSelect}
+            className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-slate-600"
+          />
+        </div>
+        
+        {/* Or */}
+        <div className="text-center">
+          <p className="text-gray-500">or</p>
+        </div>
+        
+        {/* Choose JPEG */}
+        <div>
+          <label className="text-gray-700 font-medium block mb-2">Choose a JPEG</label>
+          <input
+            type="file"
+            accept="image/jpeg"
+            onChange={handleImageSelect}
+            className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-slate-600"
+          />
+        </div>
+      </div>
+
+      <div className="flex flex-col items-center mt-8">
+        {/* Voice Selection */}
+        <div className="flex flex-col items-start mb-6">
+          <label className="text-lg font-medium text-gray-800 mb-2">Choose a Voice:</label>
+          <div className="flex gap-6">
+            <label className="flex items-center gap-2">
+              <input
+                type="radio"
+                name="voice"
+                value="man"
+                className="accent-slate-500"
+              />
+              <span>Man</span>
+            </label>
+            <label className="flex items-center gap-2">
+              <input
+                type="radio"
+                name="voice"
+                value="woman"
+                className="accent-slate-500"
+              />
+              <span>Woman</span>
+            </label>
+          </div>
+        </div>
+
+        {/* Submit Button */}
+        <button
+          className="bg-slate-600 text-white py-3 px-8 rounded-[5px] hover:bg-slate-700 transition-all"
+          onClick={handleImageModal}
+        >
+          Submit
+        </button>
+      </div>
+    </div>
+  </div>
+)}
+
     </div>
   );
 };
