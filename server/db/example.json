@@ -1,0 +1,48 @@
+[
+    {
+      "id": 1,
+      "name": "Alice Johnson",
+      "age": 28,
+      "position": "Software Engineer",
+      "department": "IT",
+      "salary": 85000,
+      "hire_date": "2020-03-15"
+    },
+    {
+      "id": 2,
+      "name": "Bob Smith",
+      "age": 35,
+      "position": "Project Manager",
+      "department": "Operations",
+      "salary": 95000,
+      "hire_date": "2018-07-10"
+    },
+    {
+      "id": 3,
+      "name": "Carla Diaz",
+      "age": 30,
+      "position": "Data Analyst",
+      "department": "Analytics",
+      "salary": 72000,
+      "hire_date": "2019-11-05"
+    },
+    {
+      "id": 4,
+      "name": "David Lee",
+      "age": 42,
+      "position": "HR Manager",
+      "department": "Human Resources",
+      "salary": 78000,
+      "hire_date": "2016-01-20"
+    },
+    {
+      "id": 5,
+      "name": "Emily Clark",
+      "age": 25,
+      "position": "Marketing Specialist",
+      "department": "Marketing",
+      "salary": 65000,
+      "hire_date": "2021-06-12"
+    }
+  ]
+  

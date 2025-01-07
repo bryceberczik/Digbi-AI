@@ -167,7 +167,7 @@ const Home = () => {
         Welcome, {username}.
       </h1>
       {/* 3D Model */}
-      <div className="mq-geosphere med-geo w-full h-[300px] mb-10">
+      <div className="mq-geosphere med-geo w-full h-[300px]">
         {!isFinished ? (
           <GeoComp
             loading={
@@ -188,11 +188,12 @@ const Home = () => {
       </div>
 
       <div>
-        <label>Image Select</label>
+        <label className="mr-1">Avatar Image Select: </label>
         <input
           type="text"
           placeholder="Insert link"
           onChange={handleImageSelect}
+          className="p-1 rounded-[5px] border-[1px] ml-1"
         />
       </div>
 

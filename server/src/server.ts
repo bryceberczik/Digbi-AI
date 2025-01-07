@@ -8,7 +8,7 @@ import cors from "cors";
 dotenv.config();
 
 const app = express();
-const forceDBRefresh = false;
+const forceDBRefresh = true;
 const PORT = process.env.PORT || 3001;
 
 app.use(cors());

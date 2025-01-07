@@ -1,7 +1,7 @@
 const VideoComponent = ({ videoUrl }: { videoUrl: string }) => {
   return (
-    <div>
-      <video src={videoUrl} controls/>
+    <div className="flex justify-center items-center">
+      <video src={videoUrl} controls className="w-[275px] rounded-[10px] shadow-lg"/>
     </div>
   );
 };
