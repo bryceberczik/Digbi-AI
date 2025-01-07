@@ -264,79 +264,90 @@ const Home = () => {
       </div>
 
       {isOpened && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70"
-          onClick={(e) => {
-            if (e.target === e.currentTarget) {
-              handleImageModal();
-            }
-          }}
-        >
-          <div className="bg-white w-[90%] md:w-[600px] p-6 rounded-[10px] shadow-lg relative">
-            <button
-              className="absolute top-3 right-3 text-gray-500 hover:text-gray-700"
-              onClick={handleImageModal}
-            >
-              ✕
-            </button>
-            <h2 className="text-xl font-semibold mb-4">Select an Avatar</h2>
-            <div className="flex flex-col items-center">
-              <div>
-                <label className="mr-1">Paste image URL</label>
-                <input
-                  type="text"
-                  placeholder="Insert link"
-                  onChange={handleImageSelect}
-                  className="p-1 rounded-[5px] border-[1px] ml-1"
-                />
-              </div>
-              <div className="my-5">
-                <p className="text-[#888]">or</p>
-              </div>
-              <div>
-                <label className="mr-1">Choose a JPEG</label>
-                <input
-                  type="file"
-                  accept="image/jpeg"
-                  onChange={handleImageSelect}
-                  className="p-1 rounded-[5px] border-[1px] ml-1"
-                />
-              </div>
-            </div>
-            <div className="flex justify-center mt-10 items-center gap-6">
-              <div className="flex items-center gap-4">
-                <label className="text-lg font-medium">Choose a Voice:</label>
-                <div className="flex items-center gap-6">
-                  <label className="flex items-center gap-2">
-                    <input
-                      type="radio"
-                      name="voice"
-                      value="man"
-                      className="accent-slate-500"
-                    />
-                    <span>Man</span>
-                  </label>
-                  <label className="flex items-center gap-2">
-                    <input
-                      type="radio"
-                      name="voice"
-                      value="woman"
-                      className="accent-slate-500"
-                    />
-                    <span>Woman</span>
-                  </label>
-                </div>
-              </div>
-              <button
-                className="bg-slate-600 text-white py-2 px-6 rounded-md hover:bg-slate-700 transition-all"
-                onClick={handleImageModal}
-              >
-                Submit
-              </button>
-            </div>
+  <div
+    className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70"
+    onClick={(e) => {
+      if (e.target === e.currentTarget) {
+        handleImageModal();
+      }
+    }}
+  >
+    <div className="bg-white w-[90%] md:w-[600px] p-8 rounded-[10px] shadow-xl relative">
+      <button
+        className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 text-2xl font-semibold"
+        onClick={handleImageModal}
+      >
+        &times;
+      </button>
+      <h2 className="text-2xl font-semibold text-gray-800 mb-6">Select an Avatar</h2>
+      
+      <div className="space-y-6">
+        {/* Paste image URL */}
+        <div>
+          <label className="text-gray-700 font-medium block mb-2">Paste image URL</label>
+          <input
+            type="text"
+            placeholder="Insert link"
+            onChange={handleImageSelect}
+            className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-slate-600"
+          />
+        </div>
+        
+        {/* Or */}
+        <div className="text-center">
+          <p className="text-gray-500">or</p>
+        </div>
+        
+        {/* Choose JPEG */}
+        <div>
+          <label className="text-gray-700 font-medium block mb-2">Choose a JPEG</label>
+          <input
+            type="file"
+            accept="image/jpeg"
+            onChange={handleImageSelect}
+            className="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-slate-600"
+          />
+        </div>
+      </div>
+
+      <div className="flex flex-col items-center mt-8">
+        {/* Voice Selection */}
+        <div className="flex flex-col items-start mb-6">
+          <label className="text-lg font-medium text-gray-800 mb-2">Choose a Voice:</label>
+          <div className="flex gap-6">
+            <label className="flex items-center gap-2">
+              <input
+                type="radio"
+                name="voice"
+                value="man"
+                className="accent-slate-500"
+              />
+              <span>Man</span>
+            </label>
+            <label className="flex items-center gap-2">
+              <input
+                type="radio"
+                name="voice"
+                value="woman"
+                className="accent-slate-500"
+              />
+              <span>Woman</span>
+            </label>
           </div>
         </div>
-      )}
+
+        {/* Submit Button */}
+        <button
+          className="bg-slate-600 text-white py-3 px-8 rounded-[5px] hover:bg-slate-700 transition-all"
+          onClick={handleImageModal}
+        >
+          Submit
+        </button>
+      </div>
+    </div>
+  </div>
+)}
+
     </div>
   );
 };
