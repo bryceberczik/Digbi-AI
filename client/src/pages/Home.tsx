@@ -44,7 +44,7 @@ const Home = () => {
   const [userInput, setUserInput] = useState<string>("");
   const [username, setUsername] = useState<string>("");
   const [videoUrl, setVideoUrl] = useState<string>("");
-  // const [videoVoice, setVideoVoice] = useState<"man" | "woman">("man");
+  const [videoVoice, setVideoVoice] = useState<"man" | "woman">("woman");
 
   const defaultMessage =
     "Hello, I am Digbi AI. Ask me a question and select a JSON file so I can analyze it.";
@@ -367,6 +367,8 @@ const Home = () => {
                       type="radio"
                       name="voice"
                       value="man"
+                      checked={videoVoice === "man"}
+                      onChange={() => setVideoVoice("man")}
                       className="accent-slate-500"
                     />
                     <span>Man</span>
@@ -376,8 +378,9 @@ const Home = () => {
                       type="radio"
                       name="voice"
                       value="woman"
+                      checked={videoVoice === "woman"}
+                      onChange={() => setVideoVoice("woman")}
                       className="accent-slate-500"
-                      // checked
                     />
                     <span>Woman</span>
                   </label>
