@@ -122,7 +122,11 @@ const Home = () => {
       setAIResponse("Generating Response...");
       const AIResult = await promptAI(selectedFile, userInput, email);
       setAIResponse("Creating Video...");
-      const videoResult = await generateTalk(sourceUrl, AIResult?.text);
+      const videoResult = await generateTalk(
+        sourceUrl,
+        AIResult?.text,
+        videoVoice
+      );
 
       setAIResponse(
         AIResult?.text || "An error has occured. Please try again later."

@@ -1,11 +1,30 @@
 import axios from "axios";
 
-export const generateTalk = async (source_url: string, input: string) => {
+export const generateTalk = async (
+  source_url: string,
+  input: string,
+  voice: string
+) => {
+  let script;
+
+  // Voice is "woman" by default.
+
   try {
-    const script = {
-      type: "text",
-      input: input,
-    };
+    if (voice === "man") {
+      script = {
+        type: "text",
+        input: input,
+        provider: {
+          type: "elevenlabs",
+          voice_id: "iP95p4xoKVk53GoZ742B",
+        },
+      };
+    } else {
+      script = {
+        type: "text",
+        input: input,
+      };
+    }
 
     const postResponse = await axios.post(
       `http://localhost:3001/api/talks/create`,
@@ -20,8 +39,6 @@ export const generateTalk = async (source_url: string, input: string) => {
     if (!videoId) {
       throw new Error("Failed to create talk: No ID returned from backend.");
     }
-
-    console.log(`Talk created with ID: ${videoId}`);
 
     const maxAttempts = 10;
     const interval = 2000;
