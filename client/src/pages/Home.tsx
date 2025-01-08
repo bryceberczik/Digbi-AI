@@ -155,6 +155,7 @@ const Home = () => {
       }
     } else if (typeof selectedImage === "string") {
       console.log("Using URL:", selectedImage);
+      setSourceUrl(selectedImage);
     }
   };
 

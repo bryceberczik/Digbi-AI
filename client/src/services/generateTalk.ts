@@ -37,7 +37,11 @@ export const generateTalk = async (
     const videoId = postResponse.data.id;
 
     if (!videoId) {
-      throw new Error("Failed to create talk: No ID returned from backend.");
+      return {
+        success: false,
+        message:
+          "Unable to provide a response at this time. Please reach out to our development team regarding this issue.",
+      };
     }
 
     const maxAttempts = 10;
@@ -58,24 +62,37 @@ export const generateTalk = async (
       if (status === "done") {
         console.log("Talk is ready!");
         console.log(getResponse.data);
-        return getResponse.data.result_url;
+        return {
+          success: true,
+          result_url: getResponse.data.result_url,
+        };
       }
 
       if (status === "error") {
-        throw new Error("Talk processing failed.");
+        return {
+          success: false,
+          message:
+            "Unable to use given image. Please provide an image that has a clear facial structure.",
+        };
       }
 
       await new Promise((resolve) => setTimeout(resolve, interval));
     }
 
-    throw new Error(
-      "Polling timed out: Talk not ready after maximum attempts."
-    );
+    return {
+      success: false,
+      message:
+        "An error has occurred. Please try again, use a different image, or reach out to our development team regarding this issue.",
+    };
   } catch (error: any) {
     console.error(
       "Error generating talk:",
       error.response?.data || error.message
     );
-    throw error;
+
+    return {
+      success: false,
+      message: "An unexpected error occurred. Please try again later.",
+    };
   }
 };
