@@ -6,7 +6,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const s3 = new AWS.S3();
-const bucket = process.env.BUCKTET_NAME!;
+const bucket = process.env.BUCKET_NAME!;
 
 export const getFiles = async (_req: Request, res: Response) => {
   try {
