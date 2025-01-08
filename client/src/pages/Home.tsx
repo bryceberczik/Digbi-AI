@@ -128,11 +128,15 @@ const Home = () => {
         videoVoice
       );
 
-      setAIResponse(
-        AIResult?.text || "An error has occured. Please try again later."
-      );
-      setVideoUrl(videoResult);
-      setIsFinished(true);
+      console.log(videoResult);
+
+      if (videoResult?.success === true) {
+        setAIResponse(AIResult?.text);
+        setVideoUrl(videoResult.result_url);
+        setIsFinished(true);
+      } else if (videoResult?.success === false) {
+        setAIResponse(videoResult.message);
+      }
     } catch (error) {
       console.error("handleSubmit Error:", error);
     }
@@ -211,15 +215,15 @@ const Home = () => {
       </h1>
       {/* 3D Model */}
       <div className="mq-geosphere med-geo w-full h-[300px]">
-        {!isFinished ? (
+        {isFinished ? (
+          <VideoComponent videoUrl={videoUrl} />
+        ) : (
           <GeoComp
             loading={
               AIResponse === "Generating Response..." ||
               AIResponse === "Creating Video..."
             }
           />
-        ) : (
-          <VideoComponent videoUrl={videoUrl} />
         )}
       </div>
 

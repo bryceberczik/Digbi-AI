@@ -61,10 +61,10 @@ export const generateTalk = async (
 
       if (status === "done") {
         console.log("Talk is ready!");
-        console.log(getResponse.data);
         return {
           success: true,
           result_url: getResponse.data.result_url,
+          message: "",
         };
       }
 
@@ -78,21 +78,11 @@ export const generateTalk = async (
 
       await new Promise((resolve) => setTimeout(resolve, interval));
     }
-
+  } catch (error) {
     return {
       success: false,
       message:
         "An error has occurred. Please try again, use a different image, or reach out to our development team regarding this issue.",
-    };
-  } catch (error: any) {
-    console.error(
-      "Error generating talk:",
-      error.response?.data || error.message
-    );
-
-    return {
-      success: false,
-      message: "An unexpected error occurred. Please try again later.",
     };
   }
 };
