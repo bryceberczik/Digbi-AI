@@ -1,11 +1,30 @@
 import axios from "axios";
 
-export const generateTalk = async (source_url: string, input: string) => {
+export const generateTalk = async (
+  source_url: string,
+  input: string,
+  voice: string
+) => {
+  let script;
+
+  // Voice is "woman" by default.
+
   try {
-    const script = {
-      type: "text",
-      input: input,
-    };
+    if (voice === "man") {
+      script = {
+        type: "text",
+        input: input,
+        provider: {
+          type: "elevenlabs",
+          voice_id: "iP95p4xoKVk53GoZ742B",
+        },
+      };
+    } else {
+      script = {
+        type: "text",
+        input: input,
+      };
+    }
 
     const postResponse = await axios.post(
       `http://localhost:3001/api/talks/create`,
@@ -18,10 +37,12 @@ export const generateTalk = async (source_url: string, input: string) => {
     const videoId = postResponse.data.id;
 
     if (!videoId) {
-      throw new Error("Failed to create talk: No ID returned from backend.");
+      return {
+        success: false,
+        message:
+          "Unable to provide a response at this time. Please reach out to our development team regarding this issue.",
+      };
     }
-
-    console.log(`Talk created with ID: ${videoId}`);
 
     const maxAttempts = 10;
     const interval = 2000;
@@ -40,25 +61,28 @@ export const generateTalk = async (source_url: string, input: string) => {
 
       if (status === "done") {
         console.log("Talk is ready!");
-        console.log(getResponse.data);
-        return getResponse.data.result_url;
+        return {
+          success: true,
+          result_url: getResponse.data.result_url,
+          message: "",
+        };
       }
 
       if (status === "error") {
-        throw new Error("Talk processing failed.");
+        return {
+          success: false,
+          message:
+            "Unable to use given image. Please provide an image that has a clear facial structure.",
+        };
       }
 
       await new Promise((resolve) => setTimeout(resolve, interval));
     }
-
-    throw new Error(
-      "Polling timed out: Talk not ready after maximum attempts."
-    );
-  } catch (error: any) {
-    console.error(
-      "Error generating talk:",
-      error.response?.data || error.message
-    );
-    throw error;
+  } catch (error) {
+    return {
+      success: false,
+      message:
+        "An error has occurred. Please try again, use a different image, or reach out to our development team regarding this issue.",
+    };
   }
 };

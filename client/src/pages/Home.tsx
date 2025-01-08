@@ -44,7 +44,7 @@ const Home = () => {
   const [userInput, setUserInput] = useState<string>("");
   const [username, setUsername] = useState<string>("");
   const [videoUrl, setVideoUrl] = useState<string>("");
-  // const [videoVoice, setVideoVoice] = useState<"man" | "woman">("man");
+  const [videoVoice, setVideoVoice] = useState<"man" | "woman">("woman");
 
   const defaultMessage =
     "Hello, I am Digbi AI. Ask me a question and select a JSON file so I can analyze it.";
@@ -122,13 +122,21 @@ const Home = () => {
       setAIResponse("Generating Response...");
       const AIResult = await promptAI(selectedFile, userInput, email);
       setAIResponse("Creating Video...");
-      const videoResult = await generateTalk(sourceUrl, AIResult?.text);
-
-      setAIResponse(
-        AIResult?.text || "An error has occured. Please try again later."
+      const videoResult = await generateTalk(
+        sourceUrl,
+        AIResult?.text,
+        videoVoice
       );
-      setVideoUrl(videoResult);
-      setIsFinished(true);
+
+      console.log(videoResult);
+
+      if (videoResult?.success === true) {
+        setAIResponse(AIResult?.text);
+        setVideoUrl(videoResult.result_url);
+        setIsFinished(true);
+      } else if (videoResult?.success === false) {
+        setAIResponse(videoResult.message);
+      }
     } catch (error) {
       console.error("handleSubmit Error:", error);
     }
@@ -151,6 +159,7 @@ const Home = () => {
       }
     } else if (typeof selectedImage === "string") {
       console.log("Using URL:", selectedImage);
+      setSourceUrl(selectedImage);
     }
   };
 
@@ -206,15 +215,15 @@ const Home = () => {
       </h1>
       {/* 3D Model */}
       <div className="mq-geosphere med-geo w-full h-[300px]">
-        {!isFinished ? (
+        {isFinished ? (
+          <VideoComponent videoUrl={videoUrl} />
+        ) : (
           <GeoComp
             loading={
               AIResponse === "Generating Response..." ||
               AIResponse === "Creating Video..."
             }
           />
-        ) : (
-          <VideoComponent videoUrl={videoUrl} />
         )}
       </div>
 
@@ -367,6 +376,8 @@ const Home = () => {
                       type="radio"
                       name="voice"
                       value="man"
+                      checked={videoVoice === "man"}
+                      onChange={() => setVideoVoice("man")}
                       className="accent-slate-500"
                     />
                     <span>Man</span>
@@ -376,8 +387,9 @@ const Home = () => {
                       type="radio"
                       name="voice"
                       value="woman"
+                      checked={videoVoice === "woman"}
+                      onChange={() => setVideoVoice("woman")}
                       className="accent-slate-500"
-                      // checked
                     />
                     <span>Woman</span>
                   </label>
