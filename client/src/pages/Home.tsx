@@ -239,7 +239,7 @@ const Home = () => {
       </div>
 
       {/* AI Response Bubble */}
-      <div className="w-full md:w-1/2 mt-[130px] mb-16">
+      <div className="w-full md:w-1/2 mq-ai mt-[80px] mb-16">
         <div className="relative bg-[#ffffff] text-gray-700 p-4 rounded-2xl shadow-md text-center desk-custom mw-custom">
           <p className="mq-response-text">{displayedText}</p>
         </div>
@@ -439,7 +439,7 @@ const Home = () => {
             onClick={(e) => e.stopPropagation()}
           >
             <h2 className="text-2xl text-center font-bold text-gray-800">
-              Welcome to Digbi AI!
+              Welcome to Digbi AI
             </h2>
             <p className="mt-4 text-gray-600">
               We're thrilled to have you here. Please see the "JSON File" page
