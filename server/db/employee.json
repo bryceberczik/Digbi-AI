@@ -1,0 +1,68 @@
+{
+    "employees": [
+      {
+        "employeeId": "E001",
+        "firstName": "John",
+        "lastName": "Doe",
+        "email": "johndoe@example.com",
+        "phoneNumber": "+1-555-123-4567",
+        "dateOfBirth": "1985-07-15",
+        "address": {
+          "street": "123 Main Street",
+          "city": "Springfield",
+          "state": "IL",
+          "postalCode": "62701",
+          "country": "USA"
+        },
+        "department": "Engineering",
+        "position": "Software Engineer",
+        "dateOfHire": "2020-03-01",
+        "salary": 85000,
+        "managerId": "E003",
+        "status": "Active"
+      },
+      {
+        "employeeId": "E002",
+        "firstName": "Jane",
+        "lastName": "Smith",
+        "email": "janesmith@example.com",
+        "phoneNumber": "+1-555-987-6543",
+        "dateOfBirth": "1990-11-25",
+        "address": {
+          "street": "456 Elm Street",
+          "city": "Metropolis",
+          "state": "NY",
+          "postalCode": "10001",
+          "country": "USA"
+        },
+        "department": "Marketing",
+        "position": "Marketing Specialist",
+        "dateOfHire": "2018-06-15",
+        "salary": 65000,
+        "managerId": "E004",
+        "status": "Active"
+      },
+      {
+        "employeeId": "E003",
+        "firstName": "Alice",
+        "lastName": "Johnson",
+        "email": "alicejohnson@example.com",
+        "phoneNumber": "+1-555-456-7890",
+        "dateOfBirth": "1978-02-12",
+        "address": {
+          "street": "789 Oak Avenue",
+          "city": "Gotham",
+          "state": "NJ",
+          "postalCode": "07001",
+          "country": "USA"
+        },
+        "department": "Engineering",
+        "position": "Engineering Manager",
+        "dateOfHire": "2010-09-01",
+        "salary": 120000,
+        "managerId": null,
+        "status": "Active"
+      }
+    ]
+  }
+  

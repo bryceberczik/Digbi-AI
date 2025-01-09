@@ -3,6 +3,7 @@ import {
   faPaperPlane,
   faFile,
   faCamera,
+  faCircleInfo,
 } from "@fortawesome/free-solid-svg-icons";
 import {
   Tooltip,
@@ -327,10 +328,18 @@ const Home = () => {
             >
               &times;
             </button>
-            <h2 className="text-2xl font-semibold text-gray-800 mb-6">
+            <h2 className="text-2xl font-semibold text-gray-800 mb-6 flex flex-row items-center justify-center">
               Select an Avatar
+              <div className="relative group">
+                <FontAwesomeIcon
+                  className="ml-3 hover:text-slate-600 cursor-pointer text-[20px]"
+                  icon={faCircleInfo}
+                />
+                <div className="absolute left-1/2 transform -translate-x-1/2 mt-2 px-3 py-2 w-[200px] bg-gray-800 text-white text-sm rounded opacity-0 group-hover:opacity-100 transition-opacity z-10">
+                  Developer Note: Please include a clear picture with a facial features exposed. Contact the developers for any issues or try again with another picture.
+                </div>
+              </div>
             </h2>
-
             <div className="space-y-6">
               {/* Paste image URL */}
               <div>
