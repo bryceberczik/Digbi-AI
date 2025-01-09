@@ -7,7 +7,7 @@ export const deleteUser = async (id: string, email: string) => {
       throw new Error("Authorization token is missing");
     }
 
-    const response = await axios.delete(`http://localhost:3001/api/users/${id}`, {
+    const response = await axios.delete(`/api/users/${id}`, {
       data: { email },
       headers: {
         Authorization: `Bearer ${token}`,

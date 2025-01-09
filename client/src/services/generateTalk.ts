@@ -27,7 +27,7 @@ export const generateTalk = async (
     }
 
     const postResponse = await axios.post(
-      `http://localhost:3001/api/talks/create`,
+      `/api/talks/create`,
       {
         source_url,
         script,
@@ -54,7 +54,7 @@ export const generateTalk = async (
       console.log(`Polling attempt ${attempts}/${maxAttempts}...`);
 
       const getResponse = await axios.get(
-        `http://localhost:3001/api/talks/${videoId}`
+        `/api/talks/${videoId}`
       );
 
       const status = getResponse.data.status;

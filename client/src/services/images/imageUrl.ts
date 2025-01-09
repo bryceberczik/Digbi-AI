@@ -10,7 +10,7 @@ export const imageUrlFunction = async (image: File, email: string) => {
     // console.log(data.get("email"));
 
     const response = await axios.post(
-      `http://localhost:3001/image/upload`,
+      `/image/upload`,
       data,
       {
         headers: {

@@ -7,11 +7,7 @@ export const uploadFile = async (file: File, userId: string, email: string) => {
     data.append("userId", userId);
     data.append("email", email);
 
-    // console.log(data.get("file"));
-    // console.log(data.get("userId"));
-    // console.log(data.get("email"));
-
-    await axios.post(`http://localhost:3001/file/upload`, data, {
+    await axios.post(`/file/upload`, data, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
