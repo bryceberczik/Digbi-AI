@@ -239,7 +239,7 @@ const Home = () => {
       </div>
 
       {/* AI Response Bubble */}
-      <div className="w-full md:w-1/2 mb-16">
+      <div className="w-full md:w-1/2 mt-[130px] mb-16">
         <div className="relative bg-[#ffffff] text-gray-700 p-4 rounded-2xl shadow-md text-center desk-custom mw-custom">
           <p className="mq-response-text">{displayedText}</p>
         </div>
