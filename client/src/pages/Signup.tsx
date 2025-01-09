@@ -74,7 +74,7 @@ const Signup = () => {
     if (validateForm()) {
       try {
         const data = await signUp(signUpData);
-        Auth.login(data.token);
+        Auth.login(data.token, true);
       } catch (err: any) {
         console.error("Failed to sign up", err);
 

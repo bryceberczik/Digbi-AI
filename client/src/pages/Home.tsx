@@ -46,6 +46,7 @@ const Home = () => {
   const [username, setUsername] = useState<string>("");
   const [videoUrl, setVideoUrl] = useState<string>("");
   const [videoVoice, setVideoVoice] = useState<"man" | "woman">("woman");
+  const [isWelcomeUser, setIsWelcomeUser] = useState(false);
 
   const defaultMessage =
     "Hello, I am Digbi AI. Ask me a question and select a JSON file so I can analyze it.";
@@ -207,6 +208,15 @@ const Home = () => {
     handleFetchFiles();
   }, []);
 
+  useEffect(() => {
+    const isFirstSignUp = localStorage.getItem("isFirstSignup");
+
+    if (isFirstSignUp) {
+      setIsWelcomeUser(true);
+      localStorage.removeItem("isFirstSignup");
+    }
+  }, []);
+
   // * Return Statement * //
 
   return (
@@ -336,7 +346,9 @@ const Home = () => {
                   icon={faCircleInfo}
                 />
                 <div className="absolute left-1/2 transform -translate-x-1/2 mt-2 px-3 py-2 w-[200px] bg-gray-800 text-white text-sm rounded opacity-0 group-hover:opacity-100 transition-opacity z-10">
-                  Developer Note: Please include a clear picture with a facial features exposed. Contact the developers for any issues or try again with another picture.
+                  Developer Note: Please include a clear picture with a facial
+                  features exposed. Contact the developers for any issues or try
+                  again with another picture.
                 </div>
               </div>
             </h2>
@@ -413,6 +425,35 @@ const Home = () => {
                 Submit
               </button>
             </div>
+          </div>
+        </div>
+      )}
+
+      {isWelcomeUser && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50"
+          onClick={() => setIsWelcomeUser(false)}
+        >
+          <div
+            className="bg-white p-6 rounded shadow-lg max-w-md w-full relative mx-5"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h2 className="text-2xl text-center font-bold text-gray-800">
+              Welcome to Digbi AI!
+            </h2>
+            <p className="mt-4 text-gray-600">
+              We're thrilled to have you here. Please see the "JSON File" page
+              to add your files. After that, you can use the JSON File button at
+              the bottom to select your file, and then choose an image to use
+              for our deepfake AI system. If no image is selected, a default
+              photo will be provided.
+            </p>
+            <button
+              className="mt-6 w-full py-2 px-4 bg-gray-700 text-white rounded hover:bg-gray-800"
+              onClick={() => setIsWelcomeUser(false)}
+            >
+              Close
+            </button>
           </div>
         </div>
       )}
