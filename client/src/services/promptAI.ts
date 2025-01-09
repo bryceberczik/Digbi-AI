@@ -28,7 +28,6 @@ export const promptAI = async (
     ) {
       return {
         text: data.response,
-        audio: data.audioUrl,
       };
     }
 
@@ -37,7 +36,6 @@ export const promptAI = async (
 
     return {
       text: parsedResult.explanation,
-      audio: data.audioUrl,
     };
   } catch (error) {
     console.error("Request Failed:", error);

@@ -81,7 +81,6 @@ export const askQuestion = async (
         question: null,
         response: "Please provide a question in the request body.",
         formattedResponse: null,
-        audioUrl: null,
       });
       return;
     }
@@ -92,7 +91,6 @@ export const askQuestion = async (
         question: userQuestion,
         response: "File not found.",
         formattedResponse: null,
-        audioUrl: null,
       });
       return;
     }
@@ -119,29 +117,6 @@ export const askQuestion = async (
     const rawResponse: string = await promptFunc(formattedPrompt);
     const result: { [key: string]: string } = await parseResponse(rawResponse);
 
-    const polly = new AWS.Polly();
-    const speechParams = {
-      Text:
-        result.explanation ||
-        rawResponse ||
-        "Sorry, I can not generate speech at this time. Please reach out to our development team.",
-      OutputFormat: "mp3",
-      VoiceId: "Joanna", // or Salli
-      Engine: "neural",
-    };
-
-    const speechData = await polly.synthesizeSpeech(speechParams).promise();
-    const audioFileName = `response_${Date.now()}.mp3`;
-    const s3UploadParams = {
-      Bucket: process.env.BUCKET_NAME!,
-      Key: `audio/${audioFileName}`,
-      Body: speechData.AudioStream as Buffer,
-      ContentType: "audio/mp3",
-    };
-
-    const uploadedResult = await s3.upload(s3UploadParams).promise();
-    const audioUrl = uploadedResult.Location;
-
     res.json({
       question: userQuestion,
       jsonId: id,
@@ -149,22 +124,7 @@ export const askQuestion = async (
       prompt: formattedPrompt,
       response: rawResponse,
       formattedResponse: result,
-      audioUrl: audioUrl,
     });
-
-    setTimeout(async () => {
-      try {
-        const deleteParams = {
-          Bucket: process.env.BUCKET_NAME!,
-          Key: `audio/${audioFileName}`,
-        };
-
-        await s3.deleteObject(deleteParams).promise();
-        console.log(`Audio file ${audioFileName} deleted from S3.`);
-      } catch (error) {
-        console.error("Error deleting file from S3:", error);
-      }
-    }, 60 * 60 * 1000);
   } catch (error: unknown) {
     if (error instanceof Error) {
       console.error("Error:", error.message);
@@ -175,7 +135,6 @@ export const askQuestion = async (
       prompt: null,
       response: "Internal Server Error",
       formattedResponse: null,
-      audioUrl: null,
     });
   }
 };
