@@ -25,7 +25,7 @@ export const createTalk = async (req: Request, res: any) => {
       {
         headers: {
           accept: "application/json",
-          Authorization: `Bearer ${apiKey}`,
+          Authorization: `Basic ${apiKey}`,
           "Content-Type": "application/json",
         },
       }
@@ -53,7 +53,7 @@ export const getTalk = async (req: Request, res: Response) => {
     const response = await axios.get(`https://api.d-id.com/talks/${id}`, {
       headers: {
         accept: "application/json",
-        Authorization: `Bearer ${apiKey}`,
+        Authorization: `Basic ${apiKey}`,
       },
     });
 
