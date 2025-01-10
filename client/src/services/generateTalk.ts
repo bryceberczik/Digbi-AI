@@ -32,7 +32,7 @@ export const generateTalk = async (
     }
 
     const postResponse = await axios.post(
-      `/api/talks/create`,
+      `http://localhost:3001/api/talks/create`,
       {
         source_url,
         script,
@@ -63,7 +63,7 @@ export const generateTalk = async (
 
       console.log(`Polling attempt ${attempts}/${maxAttempts}...`);
 
-      const getResponse = await axios.get(`/api/talks/${videoId}`, {
+      const getResponse = await axios.get(`http://localhost:3001/api/talks/${videoId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
