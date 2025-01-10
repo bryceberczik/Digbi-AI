@@ -35,8 +35,11 @@ class AuthService {
     return null;
   }
 
-  login(idToken: string) {
+  login(idToken: string, isSignup = false) {
     localStorage.setItem("id_token", idToken);
+    if (isSignup) {
+      localStorage.setItem("isFirstSignup", "true");
+    }
     window.location.assign("/");
   }
 
