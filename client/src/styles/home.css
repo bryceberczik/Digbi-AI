@@ -15,7 +15,7 @@
   }
 
   .mq-geosphere {
-    height: 250px;
+    height: 200px;
     margin-bottom: 30px;
   }
 
@@ -25,11 +25,11 @@
 
   .mq-ai {
 
-    margin-top: 110px;
+    margin-top: 30px;
   }
 
   .mw-custom {
-    max-height: 200px;
+    max-height: 180px;
     overflow-y: auto;
     overflow-x: hidden;
   }
