@@ -371,7 +371,7 @@ const Home = () => {
                 <p className="text-gray-500">or</p>
               </div>
 
-              {/* Choose JPEG */}
+              {/* Choose Image */}
               <div>
                 <label className="text-gray-700 font-medium block mb-2">
                   Choose a JPEG
