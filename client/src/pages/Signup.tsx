@@ -74,12 +74,20 @@ const Signup = () => {
     if (validateForm()) {
       try {
         const data = await signUp(signUpData);
-        Auth.login(data.token);
+        Auth.login(data.token, true);
       } catch (err: any) {
         console.error("Failed to sign up", err);
 
         if (err.response?.data?.message) {
-          setGeneralError(err.response.data.message);
+          if (err.response.data.message.includes("email")) {
+            setGeneralError("Username or Email is already taken. Please try another.");
+          } else if (err.response.data.message.includes("username")) {
+            setGeneralError("Username or Email is already taken. Please try another.");
+          } else {
+            setGeneralError(err.response.data.message);
+          }
+        } else {
+          setGeneralError("Username or Email is already taken. Please try another.");
         }
       }
     }

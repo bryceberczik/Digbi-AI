@@ -30,7 +30,7 @@ const formatInstructions = parser.getFormatInstructions();
 
 const promptTemplate = new PromptTemplate({
   template:
-    "Your name is Digbi AI. You are an expert at analyzing JSON data and will not answer to anything that isn't related to JSON data. You will be given a JSON file and a prompt. Your goal is to find patterns in the given JSON data, and answer to the given prompt in a concise, but informative manner. If the question is not related to a JSON file, remind the user in a friendly manner that you only analyze JSON data. If the question seems to be focused on a different JSON file, let the user know that they may not be referencing the given JSON file; unless specified otherwise. If the user asks questions about what you do or any other kinds of clarifying questions, explain to the user what your purpose is in a friendly and informative manner.\n{format_instructions}\nHere is the JSON data: {json_data}\n{question}",
+    "Your name is Digbi AI. You are an expert at analyzing JSON data and will not answer to anything that isn't related to JSON data. You will be given a JSON file and a prompt. Your goal is to find patterns in the given JSON data, and answer to the given prompt in a concise manner. Please do not exceed 4 sentences in your response. Please keep the sentences quick and short while sticking to the point. If the question is not related to a JSON file, remind the user in a friendly manner that you only analyze JSON data. If the question seems to be focused on a different JSON file, let the user know that they may not be referencing the given JSON file; unless specified otherwise. If the user asks questions about what you do or any other kinds of clarifying questions, explain to the user what your purpose is in a friendly and informative manner.\n{format_instructions}\nHere is the JSON data: {json_data}\n{question}",
   inputVariables: ["question", "json_data"],
   partialVariables: { format_instructions: formatInstructions },
 });
@@ -81,7 +81,6 @@ export const askQuestion = async (
         question: null,
         response: "Please provide a question in the request body.",
         formattedResponse: null,
-        audioUrl: null,
       });
       return;
     }
@@ -92,7 +91,6 @@ export const askQuestion = async (
         question: userQuestion,
         response: "File not found.",
         formattedResponse: null,
-        audioUrl: null,
       });
       return;
     }
@@ -119,29 +117,6 @@ export const askQuestion = async (
     const rawResponse: string = await promptFunc(formattedPrompt);
     const result: { [key: string]: string } = await parseResponse(rawResponse);
 
-    const polly = new AWS.Polly();
-    const speechParams = {
-      Text:
-        result.explanation ||
-        rawResponse ||
-        "Sorry, I can not generate speech at this time. Please reach out to our development team.",
-      OutputFormat: "mp3",
-      VoiceId: "Joanna", // or Salli
-      Engine: "neural",
-    };
-
-    const speechData = await polly.synthesizeSpeech(speechParams).promise();
-    const audioFileName = `response_${Date.now()}.mp3`;
-    const s3UploadParams = {
-      Bucket: process.env.BUCKET_NAME!,
-      Key: `audio/${audioFileName}`,
-      Body: speechData.AudioStream as Buffer,
-      ContentType: "audio/mp3",
-    };
-
-    const uploadedResult = await s3.upload(s3UploadParams).promise();
-    const audioUrl = uploadedResult.Location;
-
     res.json({
       question: userQuestion,
       jsonId: id,
@@ -149,22 +124,7 @@ export const askQuestion = async (
       prompt: formattedPrompt,
       response: rawResponse,
       formattedResponse: result,
-      audioUrl: audioUrl,
     });
-
-    setTimeout(async () => {
-      try {
-        const deleteParams = {
-          Bucket: process.env.BUCKET_NAME!,
-          Key: `audio/${audioFileName}`,
-        };
-
-        await s3.deleteObject(deleteParams).promise();
-        console.log(`Audio file ${audioFileName} deleted from S3.`);
-      } catch (error) {
-        console.error("Error deleting file from S3:", error);
-      }
-    }, 60 * 60 * 1000);
   } catch (error: unknown) {
     if (error instanceof Error) {
       console.error("Error:", error.message);
@@ -175,7 +135,6 @@ export const askQuestion = async (
       prompt: null,
       response: "Internal Server Error",
       formattedResponse: null,
-      audioUrl: null,
     });
   }
 };

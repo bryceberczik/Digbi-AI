@@ -15,12 +15,17 @@
   }
 
   .mq-geosphere {
-    height: 200px;
+    height: 250px;
     margin-bottom: 30px;
   }
 
   .mq-response-text {
     font-size: 15px;
+  }
+
+  .mq-ai {
+
+    margin-top: 110px;
   }
 
   .mw-custom {

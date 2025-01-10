@@ -18,11 +18,14 @@ export const createTalk = async (req: Request, res: any) => {
 
     const response = await axios.post(
       "https://api.d-id.com/talks",
-      { source_url, script },
+      {
+        source_url,
+        script,
+      },
       {
         headers: {
           accept: "application/json",
-          Authorization: `Bearer ${apiKey}`,
+          Authorization: `Basic ${apiKey}`,
           "Content-Type": "application/json",
         },
       }
@@ -44,29 +47,27 @@ export const createTalk = async (req: Request, res: any) => {
 };
 
 export const getTalk = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
 
-    try {
-        
-        const { id } = req.params;
+    const response = await axios.get(`https://api.d-id.com/talks/${id}`, {
+      headers: {
+        accept: "application/json",
+        Authorization: `Basic ${apiKey}`,
+      },
+    });
 
-        const response = await axios.get(`https://api.d-id.com/talks/${id}`, {
-            headers: {
-                accept: "application/json",
-                Authorization: `Bearer ${apiKey}`,
-            }
-        });
+    res.status(response.status).json(response.data);
+  } catch (error: any) {
+    console.error("An error occurred while processing the request.");
+    console.error("Error details:", error.message);
+    console.error("Stack trace:", error.stack);
 
-        res.status(response.status).json(response.data)
-    } catch (error: any) {
-        console.error("An error occurred while processing the request.");
-        console.error("Error details:", error.message);
-        console.error("Stack trace:", error.stack);
-    
-        res.status(error.response?.status || 500).json({
-          message: "An error occurred while processing your request.",
-          errorDetails:
-            error.response?.data ||
-            "An unknown error occurred. Please try again later.",
-        });
-      }
-}
+    res.status(error.response?.status || 500).json({
+      message: "An error occurred while processing your request.",
+      errorDetails:
+        error.response?.data ||
+        "An unknown error occurred. Please try again later.",
+    });
+  }
+};

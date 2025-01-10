@@ -6,6 +6,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const s3 = new AWS.S3();
+const bucket = process.env.BUCKET_NAME!;
 
 export const getFiles = async (_req: Request, res: Response) => {
   try {
@@ -43,7 +44,7 @@ export const uploadFile = async (req: Request, res: any) => {
     const email = req.body.email;
 
     const params = {
-      Bucket: process.env.BUCKET_NAME!,
+      Bucket: bucket,
       Key: `${email}/${req.file.originalname}`,
       Body: req.file.buffer,
       ContentType: req.file.mimetype,
@@ -80,7 +81,7 @@ export const removeFile = async (req: Request, res: any) => {
       }
 
       const params = {
-        Bucket: process.env.BUCKET_NAME!,
+        Bucket: bucket,
         Key: `${email}/${file.fileName}`,
       };
 
