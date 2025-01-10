@@ -387,9 +387,9 @@ const Home = () => {
 
             <div className="flex flex-col items-center mt-8">
               {/* Voice Selection */}
-              <div className="flex flex-col items-start mb-6">
+              <div className="flex flex-col items-center mb-6">
                 <label className="text-lg font-medium text-gray-800 mb-2">
-                  Choose a Voice:
+                  Choose a Voice
                 </label>
                 <div className="flex gap-6">
                   <label className="flex items-center gap-2">
@@ -401,7 +401,7 @@ const Home = () => {
                       onChange={() => setVideoVoice("man")}
                       className="accent-slate-500"
                     />
-                    <span>Man</span>
+                    <span>Masculine</span>
                   </label>
                   <label className="flex items-center gap-2">
                     <input
@@ -412,7 +412,7 @@ const Home = () => {
                       onChange={() => setVideoVoice("woman")}
                       className="accent-slate-500"
                     />
-                    <span>Woman</span>
+                    <span>Feminine</span>
                   </label>
                 </div>
               </div>
