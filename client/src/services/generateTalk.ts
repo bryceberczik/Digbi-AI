@@ -10,6 +10,11 @@ export const generateTalk = async (
   // Voice is "woman" by default.
 
   try {
+    const token = localStorage.getItem("id_token");
+    if (!token) {
+      throw new Error("Authorization token is missing");
+    }
+
     if (voice === "man") {
       script = {
         type: "text",
@@ -31,6 +36,11 @@ export const generateTalk = async (
       {
         source_url,
         script,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       }
     );
 
@@ -53,9 +63,11 @@ export const generateTalk = async (
 
       console.log(`Polling attempt ${attempts}/${maxAttempts}...`);
 
-      const getResponse = await axios.get(
-        `/api/talks/${videoId}`
-      );
+      const getResponse = await axios.get(`/api/talks/${videoId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
       const status = getResponse.data.status;
 
